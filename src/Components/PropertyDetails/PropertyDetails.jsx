@@ -36,8 +36,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 
 import AvatarImage from "@/assets/avatar.png";
-import Scketch1 from "@/assets/scketch_plan_1.png";
-import Scketch2 from "@/assets/scketch_plan_2.png";
+import ScketchOne from "@/assets/scketchplanone.png";
+import ScketchTow from "@/assets/scketchplantow.png";
 import Link from "next/link";
 
 // Import Swiper styles
@@ -952,7 +952,7 @@ const PropertyDetails = () => {
                                                     <Image 
                                                         onError={placeholderImage}
                                                         loading="lazy"
-                                                        src={Scketch1 || PlaceHolderImg}
+                                                        src={ScketchOne || PlaceHolderImg}
                                                         className="img-fluid"
                                                         style={{ objectFit: 'cover'}}
                                                         alt={`photo scketch-`}
@@ -998,7 +998,7 @@ const PropertyDetails = () => {
                                                     <Image 
                                                         onError={placeholderImage}
                                                         loading="lazy"
-                                                        src={Scketch2 || PlaceHolderImg}
+                                                        src={ScketchTow || PlaceHolderImg}
                                                         className="img-fluid"
                                                         style={{ objectFit: 'cover'}}
                                                         alt={`photo scketch-2`}
@@ -1045,7 +1045,7 @@ const PropertyDetails = () => {
                                                     <Image 
                                                         onError={placeholderImage}
                                                         loading="lazy"
-                                                        src={Scketch1 || PlaceHolderImg}
+                                                        src={ScketchOne || PlaceHolderImg}
                                                         className="img-fluid"
                                                         style={{ objectFit: 'cover'}}
                                                         alt={`photo scketch-`}
@@ -1091,7 +1091,7 @@ const PropertyDetails = () => {
                                                     <Image 
                                                         onError={placeholderImage}
                                                         loading="lazy"
-                                                        src={Scketch2 || PlaceHolderImg}
+                                                        src={ScketchTow || PlaceHolderImg}
                                                         className="img-fluid"
                                                         style={{ objectFit: 'cover'}}
                                                         alt={`photo scketch-2`}
