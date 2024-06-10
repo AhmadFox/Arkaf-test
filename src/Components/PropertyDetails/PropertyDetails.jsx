@@ -36,8 +36,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 
 import AvatarImage from "@/assets/avatar.png";
-import scketch1 from "@/assets/images/scketch_plan_1.png";
-import scketch2 from "@/assets/images/scketch_plan_2.png";
+import scketch1 from "@/assets/scketch_plan_1.png";
+import scketch2 from "@/assets/scketch_plan_2.png";
 import Link from "next/link";
 
 // Import Swiper styles

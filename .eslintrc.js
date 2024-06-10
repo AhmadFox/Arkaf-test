@@ -4,7 +4,8 @@ module.exports = {
     es6: true,
     browser: true
   },
-  parser: '@babel/eslint-parser',
+  // parser: '@babel/eslint-parser',
+  parser: '@babel/eslint-sandbox',
   extends: ['next/core-web-vitals', 'prettier'],
   parserOptions: {
     ecmaVersion: 11,

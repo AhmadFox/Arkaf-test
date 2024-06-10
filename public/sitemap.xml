@@ -1,242 +1,242 @@
 <?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-    <loc>undefined/404</loc>
-    <lastmod>2024-06-10T06:58:13.479Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/404</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/about-us</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/about-us</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/all-personalized-feeds</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/all-personalized-feeds</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/articles</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/article-details/[slug]</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/all-projects</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/all-projects</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/all-categories</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/all-categories</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/article-details/[slug]</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/articles</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/contact-us</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/contact-us</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/featured-properties</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/featured-properties</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/most-favorite-properties</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/most-favorite-properties</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/most-viewed-properties</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/most-viewed-properties</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/project-details/[slug]</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/privacy-policy</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/privacy-policy</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/project-details/[slug]</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/properties-details/[slug]</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/properties-details/[slug]</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/properties-nearby-city</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/properties-nearby-city</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/properties-on-map</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/properties-on-map</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/search</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/subscription-plan</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/subscription-plan</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/search</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/terms-and-condition</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user-register</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user-register</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/terms-and-condition</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/properties/all-properties</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/properties/categories/[slug]</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/properties/categories/[slug]</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/properties/all-properties</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/properties/city/[slug]</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/properties/city/[slug]</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/add-project</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/advertisement</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/advertisement</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/add-project</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/dashboard</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/chat</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/chat</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/dashboard</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/edit-project/[slug]</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/edit-project/[slug]</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/edit-property/[slug]</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/edit-property/[slug]</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/intrested/[slug]</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/favorites-properties</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/favorites-properties</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/intrested/[slug]</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/notifications</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/notifications</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/personalize-feed</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/personalize-feed</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/profile</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/profile</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/projects</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/projects</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/properties</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/subscription</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/transaction-history</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/properties</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>undefined/user/subscription</loc>
-    <lastmod>2024-06-10T06:58:13.480Z</lastmod>
+    <loc>https://arkaf.namacoders-clients.xyz/user/transaction-history</loc>
+    <lastmod>2024-06-10T07:32:20.416Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
