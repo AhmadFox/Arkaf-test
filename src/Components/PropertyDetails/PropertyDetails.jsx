@@ -29,7 +29,7 @@ import Layout from "../Layout/Layout";
 import { message } from "antd";
 import LoginModal from "../LoginModal/LoginModal";
 import useSWR from "swr";
-import setPropertyTotalClicksApi from "Scketch1@/hooks/setPropertyTotalClicksApi";
+import setPropertyTotalClicksApi from "@/hooks/setPropertyTotalClicksApi";
 import { formatNumberWithCommas } from "@/utils";
 import TimeComponent from "../Cards/TimeComponent";
 import { Swiper, SwiperSlide } from 'swiper/react';
