@@ -15,14 +15,14 @@ const PushNotificationLayout = ({ children, onNotificationReceived }) => {
 
   const FcmToken = useSelector(Fcmtoken)
 
-  useEffect(() => {
-    handleFetchToken()
-  }, [])
+  // useEffect(() => {
+  //   handleFetchToken()
+  // }, [])
 
-  const handleFetchToken = async () => {
-    await fetchToken(setTokenFound, setFcmToken)
+  // const handleFetchToken = async () => {
+  //   await fetchToken(setTokenFound, setFcmToken)
 
-  }
+  // }
 
   useEffect(() => {
     if (typeof window !== undefined) {

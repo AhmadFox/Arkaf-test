@@ -26,7 +26,9 @@ const nextConfig = {
     }
     
     // Enable source maps in development and production
-    config.devtool = 'source-map';
+    if (!dev) {
+      config.devtool = 'source-map';
+    }
 
     config.resolve.alias = {
       ...config.resolve.alias,
