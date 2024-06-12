@@ -15,19 +15,19 @@ const OurServices = () => {
 			image: pgIcon,
 			title: "professionalPhotography",
 			subtitle: "serviceBody1",
-			url: "service-1",
+			url: "#",
 		},
 		{
 			image: vrIcon,
 			title: "virtualTour",
 			subtitle: "serviceBody1",
-			url: "service-2",
+			url: "#",
 		},
 		{
 			image: pmIcon,
-			title: "propertyManagement",
+			title: "Property Staging",
 			subtitle: "serviceBody1",
-			url: "service-3",
+			url: "#",
 		}
 	]
 	return (
@@ -49,7 +49,7 @@ const OurServices = () => {
 									<CardSubtitle>{translate(item.subtitle)}</CardSubtitle>
 
 									<div className="card-footer">
-										<button className='button button-outline' aria-label={`Learn more about ${item.title}`}>
+										<button className='button button-outline' aria-label={`Learn more about ${item.title}`} disabled={idx === 2}>
 											{translate('seeMore')}
 											<span className="hidden-text-seo">Learn more about Service {item.title}</span>
 										</button>

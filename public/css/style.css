@@ -9742,6 +9742,10 @@ figcaption {
   text-align: center;
 }
 
+.button[disabled] {
+  opacity: 0.45;
+}
+
 /* Solid Button Styles */
 .button.button-solid {
   color: white; /* !text-white */
@@ -9749,7 +9753,7 @@ figcaption {
   border: 1px solid #34484F; /* border border-[#34484F] */
 }
 
-.button.button-solid:hover {
+.button.button-solid:hover:not([disabled]) {
   background-color: #3c555e; /* hover:bg-[#3c555e] */
   border-color: #3c555e; /* hover:border-[#3c555e] */
 }
@@ -9761,7 +9765,7 @@ figcaption {
   border: 1px solid #C1C7D0;
 }
 
-.button.button-outline:hover {
+.button.button-outline:hover:not([disabled]) {
   background-color: #3c555e; /* hover:bg-[#3c555e] */
   color: white; /* hover:!text-white */
   border-color: #3c555e; /* hover:border-[#3c555e] */
