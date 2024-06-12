@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    /* Custom utility to hide number input buttons */
+    .input-otp::-webkit-inner-spin-button,
+    .input-otp::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .input-otp {
+        -moz-appearance: textfield; /* Firefox */
+    }
+}
+
+html, body, #__next {
+	@apply h-full
+}
+
+#__next > div:first-of-type {
+	@apply h-full
+}
+
+.auth-swiper .swiper-pagination-bullets {
+	@apply block !left-auto !right-0 !w-auto;
+}
+
+.auth-swiper .swiper-pagination-bullet {
+	@apply opacity-100 border border-white !outline-none ease-in-out duration-200 !bg-transparent;
+}
+
+.auth-swiper  .swiper-pagination-bullet-active {
+	@apply !bg-white
+}

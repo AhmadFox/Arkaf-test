@@ -1,9 +1,3 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
-/* @import url("../../src/assets/Images/Category_BG.jpg"); */
-
 :root {
   --primary-color: #34484F;
   --secondary-color: #F6F8FA;
@@ -84,50 +78,6 @@
   transform: translateY(-50%);
   transition: all 0.2s ease-in-out;
 }
-
-.button {
-  @apply py-2.5 text-sm px-6 rounded-[6px] capitalize font-medium ease-in-out duration-200 text-center
-}
-
-.button.button-solid {
-  @apply !text-white bg-[#34484F] hover:bg-[#3c555e] border border-[#34484F] hover:border-[#3c555e]
-}
-
-.button.button-outline {
-  @apply !text-[#34484F] bg-transparent hover:bg-[#3c555e] bg-white hover:!text-white hover:border-[#3c555e];
-  border: 1px solid #C1C7D0;
-}
-
-.button.button-outline:hover svg path {
-  transition: all 0.25s ease-in-out;
-}
-
-.button.button-outline:hover svg path {
-  fill: #fff
-}
-
-.news-letter form {
-  @apply flex flex-col md:flex-row flex-shrink gap-3 md:gap-2
-}
-
-.news-letter .input-field {
-  @apply relative w-full
-}
-
-.news-letter .title {
-  @apply text-center md:text-start font-medium text-[#272835] text-base md:text-lg lg:text-2xl
-}
-
-.news-letter .input-field input {
-  @apply py-2.5 ps-10 border border-[#DFE1E7] shadow-none  !outline-none rounded-md w-full;
-  border: 1px solid #DFE1E7;
-}
-
-.news-letter .input-field svg {
-  @apply absolute -translate-y-1/2 top-1/3 start-3
-}
-
-
 
 body {
   background-color: var(--primary-background) !important;
@@ -1064,6 +1014,7 @@ body {
   width: 109px;
   height: auto;
   padding: 16px 1px;
+  max-width: unset;
 }
 .is-sticky .nav_logo {
   filter: none;
@@ -9771,14 +9722,6 @@ figcaption {
   color: #666D80;
 }
 
-.pb-80 {
-  padding-bottom: 80%;
-}
-
-.pb-40  {
-  padding-bottom: 80%;
-}
-
 .offcanvas-backdrop {
   backdrop-filter: blur(9.1px);
   -webkit-backdrop-filter: blur(9.1px);
@@ -9788,6 +9731,107 @@ figcaption {
 .offcanvas-backdrop.show {
   opacity: 1;
 }
+/* Base Button Styles */
+.button {
+  padding: 10px 24px; /* py-2.5, px-6 */
+  font-size: 0.875rem; /* text-sm */
+  border-radius: 6px; /* rounded-[6px] */
+  text-transform: capitalize;
+  font-weight: 500; /* font-medium */
+  transition: all 0.2s ease-in-out; /* ease-in-out duration-200 */
+  text-align: center;
+}
+
+/* Solid Button Styles */
+.button.button-solid {
+  color: white; /* !text-white */
+  background-color: #34484F; /* bg-[#34484F] */
+  border: 1px solid #34484F; /* border border-[#34484F] */
+}
+
+.button.button-solid:hover {
+  background-color: #3c555e; /* hover:bg-[#3c555e] */
+  border-color: #3c555e; /* hover:border-[#3c555e] */
+}
+
+/* Outline Button Styles */
+.button.button-outline {
+  color: #34484F; /* !text-[#34484F] */
+  background-color: transparent; /* bg-transparent */
+  border: 1px solid #C1C7D0;
+}
+
+.button.button-outline:hover {
+  background-color: #3c555e; /* hover:bg-[#3c555e] */
+  color: white; /* hover:!text-white */
+  border-color: #3c555e; /* hover:border-[#3c555e] */
+}
+
+.button.button-outline:hover svg path {
+  transition: all 0.25s ease-in-out;
+  fill: #fff;
+}
+
+/* News-Letter Form Styles */
+.news-letter form {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 12px; /* gap-3 */
+}
+
+@media (min-width: 768px) { /* md: breakpoint */
+  .news-letter form {
+    flex-direction: row;
+    gap: 8px; /* md:gap-2 */
+  }
+}
+
+/* Input Field Styles */
+.news-letter .input-field {
+  position: relative;
+  width: 100%;
+}
+
+.news-letter .title {
+  text-align: center;
+  font-weight: 500;
+  color: #272835;
+  font-size: 16px; /* text-base */
+}
+
+@media (min-width: 768px) { /* md: breakpoint */
+  .news-letter .title {
+    text-align: start;
+    font-size: 18px; /* md:text-lg */
+  }
+}
+
+@media (min-width: 1024px) { /* lg: breakpoint */
+  .news-letter .title {
+    font-size: 24px; /* lg:text-2xl */
+  }
+}
+
+/* Specific Input Field Styles */
+.news-letter .input-field input {
+  padding: 10px 40px; /* py-2.5, ps-10 */
+  border: 1px solid #DFE1E7;
+  outline: none;
+  border-radius: 4px; /* rounded-md */
+  width: 100%;
+  box-shadow: none;
+}
+
+/* SVG Positioning in Input Field */
+.news-letter .input-field svg {
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
+  left: 12px;
+}
+
+
 /* 
 .image-wrapper {
   position: relative;
@@ -9815,3 +9859,19 @@ figcaption {
   height: 100%;
   object-fit: cover;
 } */
+
+.collapse {
+  visibility: visible !important;
+}
+
+.navbar-brand img {
+  display: unset;
+}
+
+.bs-pb-80 {
+  padding-bottom: 80%;
+}
+
+.bs-pb-40  {
+  padding-bottom: 80%;
+}

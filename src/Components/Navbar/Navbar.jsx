@@ -382,8 +382,8 @@ const Nav = () => {
                                             // Check if signupData.data is null
                                             signupData?.data === null ? (
                                                 <div className="d-flex gap-3">
-                                                    <Link href="/log-in" className="button button-outline">{translate("SignIn")}</Link>
-                                                    <Link href="/sign-up" className="button button-solid">{translate("SignUp")}</Link>
+                                                    <Link href="/login" className="button button-outline">{translate("SignIn")}</Link>
+                                                    <Link href="/register" className="button button-solid">{translate("SignUp")}</Link>
                                                 </div>
                                             ) : // Check if mobile and firebase_id are present
                                                 signupData?.data?.data.mobile && signupData?.data?.data.firebase_id && signupData?.data?.data.name === "" ? (

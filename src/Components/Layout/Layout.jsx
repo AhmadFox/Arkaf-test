@@ -1,3 +1,4 @@
+// Layout.jsx
 import { Fragment, Suspense, useEffect, useRef, useState } from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -136,5 +137,4 @@ const Layout = ({ children }) => {
         </div>
     );
 };
-
 export default Layout;

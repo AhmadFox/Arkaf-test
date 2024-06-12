@@ -500,7 +500,7 @@ const PropertyDetails = () => {
                                         onSlideChange={() => console.log('slide change')}
                                         >
                                             <SwiperSlide>
-                                                <div className="pb-80 position-relative overflow-hidden rounded-3">
+                                                <div className="bs-pb-80 position-relative overflow-hidden rounded-3">
                                                     <Image
                                                         onError={placeholderImage}
                                                         loading="lazy"
@@ -517,7 +517,7 @@ const PropertyDetails = () => {
                                             {
                                                 galleryPhotos.map((item, idx) => (
                                                     <SwiperSlide>
-                                                        <div className="pb-80 position-relative overflow-hidden rounded-3">
+                                                        <div className="bs-pb-80 position-relative overflow-hidden rounded-3">
                                                             <Image
                                                                 onError={placeholderImage}
                                                                 loading="lazy"
@@ -582,7 +582,7 @@ const PropertyDetails = () => {
                                     ) : (
                                         <Fragment>
                                             <div className="col-lg-8 col-xl-6 col-sm-12 text-center pe-1 pe-xl-2" id="prop-main-image">
-                                                <div className="pb-80 position-relative overflow-hidden rounded-3">
+                                                <div className="bs-pb-80 position-relative overflow-hidden rounded-3">
                                                     <Image
                                                         onError={placeholderImage}
                                                         loading="lazy"
@@ -597,7 +597,7 @@ const PropertyDetails = () => {
                                                 
                                             </div>
                                             <div className="col-lg-4 col-xl-3 col-sm-12 d-flex flex-column gap-3 gap-xl-4">
-                                                <div className="pb-40 position-relative overflow-hidden rounded-3">
+                                                <div className="bs-pb-40 position-relative overflow-hidden rounded-3">
                                                     <Image
                                                         onError={placeholderImage}
                                                         loading="lazy"
@@ -609,7 +609,7 @@ const PropertyDetails = () => {
                                                         onClick={() => openLightbox(1)}
                                                     />
                                                 </div>
-                                                <div className="pb-40 position-relative overflow-hidden rounded-3" id="prop-left-images">
+                                                <div className="bs-pb-40 position-relative overflow-hidden rounded-3" id="prop-left-images">
                                                     <Image
                                                         onError={placeholderImage}
                                                         loading="lazy"
@@ -629,7 +629,7 @@ const PropertyDetails = () => {
                                                 </div>
                                             </div>
                                             <div className="col-lg-3 col-sm-12 flex-column d-none d-xl-flex  gap-3 gap-xl-4">
-                                                <div className="pb-40 position-relative overflow-hidden rounded-3">
+                                                <div className="bs-pb-40 position-relative overflow-hidden rounded-3">
                                                     <Image
                                                         onError={placeholderImage}
                                                         loading="lazy"
@@ -641,7 +641,7 @@ const PropertyDetails = () => {
                                                         onClick={() => openLightbox(3)}
                                                     />
                                                 </div>
-                                                <div className="pb-40 position-relative overflow-hidden rounded-3" id="prop-left-images">
+                                                <div className="bs-pb-40 position-relative overflow-hidden rounded-3" id="prop-left-images">
                                                     <Image
                                                         onError={placeholderImage}
                                                         loading="lazy"

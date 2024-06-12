@@ -1,6 +1,10 @@
 export const publicRoutes = [
     '/',
     '/about-us/',
+    '/login/',
+    '/register/',
+    '/verify-account',
+    '/success-create-account',
     '/all-categories/',
     '/all-projects/',
     '/article-details/',
