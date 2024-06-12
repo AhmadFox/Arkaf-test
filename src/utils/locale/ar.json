@@ -141,6 +141,8 @@
 	"sell": "بيع",
 	"rent": "إيجار",
 	"buy": "اشتر",
+	"addProperty": "اضافة عقار",
+	"propertyRequest": "طلب عقار",
 	"addListing": "إضافة قائمة",
 	"addRequest": "إضافة طلب",
 	"findAgent": "البحث عن وكيل",

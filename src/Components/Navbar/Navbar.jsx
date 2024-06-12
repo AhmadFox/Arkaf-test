@@ -295,10 +295,10 @@ const Nav = () => {
                                         <Link href="/buy" className="nav-link">{translate("buy")}</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" href="/add-listing">{translate("addListing")}</Link>
+                                        <Link className="nav-link" href="/add-listing">{translate("addProperty")}</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" href="/add-request">{translate("addRequest")}</Link>
+                                        <Link className="nav-link" href="/add-request">{translate("propertyRequest")}</Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link className="nav-link" href="/find-agent">{translate("findAgent")}</Link>
@@ -462,10 +462,14 @@ const Nav = () => {
                                         {translate("buy")}
                                     </Link>
                                 </li>
-
                                 <li className="nav-item">
-                                    <Link className="nav-link" href="/add-request" onClick={handleClose}>
-                                        {translate("addRequest")}
+                                    <Link className="nav-link" href="/add-property" onClick={handleClose}>
+                                        {translate("addProperty")}
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" href="/property-request" onClick={handleClose}>
+                                        {translate("propertyRequest")}
                                     </Link>
                                 </li>
                                 <li className="nav-item">

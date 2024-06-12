@@ -27,7 +27,7 @@
     width: 16vw !important;
   }
   .navbar-nav {
-    gap: 22px !important;
+    gap: 15px !important;
   }
 
   /* HEADER CSS END  */
@@ -1011,7 +1011,10 @@
 
 @media only screen and (min-width: 1200px) and (max-width: 1391px) {
   .navbar-expand-lg .navbar-nav {
-    gap: 12px !important;
+    gap: 9px !important;
+  }
+  .navbar-nav .nav-item {
+    font-size: 12px !important;
   }
 }
 
