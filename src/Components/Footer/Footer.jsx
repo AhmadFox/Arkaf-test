@@ -33,7 +33,7 @@ const Footer = () => {
         <section id="footer">
             <div className="container">
 
-                <div className="news-letter">
+                {/* <div className="news-letter">
                     <div className="row">
                         <div className="col-12 col-md-6">
                             <p className="title">{translate("startYourJourney")} <br className="d-none d-md-block" /> {translate("andJoin")}</p>
@@ -51,7 +51,7 @@ const Footer = () => {
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="footer-widgets" id="footer_deatils">
 

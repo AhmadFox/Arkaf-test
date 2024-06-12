@@ -3059,7 +3059,7 @@ div#article_card_footer .article_footer_text p {
 #footer_deatils {
   display: flex;
   gap: 5rem;
-  margin: 3rem 4rem 3rem 0;
+  margin: 0rem 4rem 3rem 0;
 }
 
 #widget_logo {
