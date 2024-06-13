@@ -221,7 +221,7 @@ function VerticalCard({ ele, removeCard, onImageLoad }) {
                             )}
 
                         </div> */}
-                        <span className="feature_body_title"> {ele?.title && ele?.title} </span>
+                        <span className="feature_body_title"> {ele?.category && ele?.category.category} </span>
                         <TimeComponent timeAgo={ele?.post_created} />
                     </div>
 

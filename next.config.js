@@ -5,7 +5,7 @@ const path = require('path');
 
 const nextConfig = {
   images: {
-    domains: ['arkaf-admin.namacoders-clients.xyz'],
+    domains: ['arkaf-admin.namacoders-clients.xyz', 'ebroker.wrteam.me', 'lh3.googleusercontent.com'],
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {

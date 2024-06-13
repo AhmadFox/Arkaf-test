@@ -694,6 +694,22 @@ const PropertyDetails = () => {
                                         <span className="text-muted">{translate("listedOn")} {` `} <TimeComponent timeAgo={getPropData.post_created} /></span>
 
                                         <div className="d-flex gap-2 flex-wrap mt-3">
+                                            <div className="features-and-amenities">
+
+                                                {/* Category Name */}
+                                                <div className="feature_img_value">
+                                                    {themeEnabled ? (
+
+                                                        <ImageToSvg imageUrl={getPropData.category.image !== undefined && getPropData.category.image !== null ? getPropData.category.image : PlaceHolderImg} className="custom-svg" />
+                                                    ) : (
+                                                        <Image loading="lazy" src={getPropData.category?.image} alt="no_img" width={20} height={16} onError={placeholderImage} />
+                                                    )}
+                                                    <p>
+                                                        <span> {getPropData.category.category}</span>
+                                                    </p>
+                                            </div>
+                                            
+                                        </div>
                                             {getPropData &&
                                                 getPropData.parameters.map((elem, index) =>
                                                     elem.value !== "" && elem.value !== "0" ? (
@@ -764,8 +780,8 @@ const PropertyDetails = () => {
                                                         className="rounded-pill"
                                                     />
                                                     <div className="">
-                                                        <p className="fs-5 fw-normal mb-0 text-black">Faisal Tirta</p>
-                                                        <p className="text-muted mb-0">Kumar Real Estate LLC</p>
+                                                        <p className="fs-5 fw-normal mb-0 text-black">{getPropData.customer_name}</p>
+                                                        <p className="text-muted mb-0">{getPropData.mobile}</p>
                                                     </div>
                                                 </div>
                                                 <button className="button button-outline">{translate("getMoreInfo")}</button>
@@ -943,206 +959,78 @@ const PropertyDetails = () => {
                                         </Fragment>
                                     ) : null}
 
-                                    <hr className="my-3" />
-                                    <div className="h4">{translate("propertyLayout")} (3)</div>
-                                    <div className="">
-                                        <div className="d-flex flex-column gap-4" style={{ overflow: 'hidden', maxHeight: expandedLayout ? 'none' : '23em' }}>
-                                            <div className="border rounded-4 p-4 d-flex align-items-center gap-4">
-                                                <div className="overflow-hidden position-relative rounded-3" style={{ paddingBlockEnd: 120, width: 120 }}>
-                                                    <Image 
-                                                        onError={placeholderImage}
-                                                        loading="lazy"
-                                                        src={ScketchOne || PlaceHolderImg}
-                                                        className="img-fluid"
-                                                        style={{ objectFit: 'cover'}}
-                                                        alt={`photo scketch-`}
-                                                        fill
-                                                    />
-                                                </div>
-                                                <div className="d-flex flex-column justify-content-between">
-                                                    <p className="fs-5 fw-normal mb-0 text-black">Camelia Layout</p>
-                                                    
-                                                    <div className="d-flex gap-2 flex-wrap my-2">
-                                                        {getPropData &&
-                                                            getPropData.parameters.map((elem, index) =>
-                                                                elem.value !== "" && elem.value !== "0" ? (
-                                                                <div className="features-and-amenities" key={index}>
-                                                                    {/* <div className="feature_img_value">
-                                                                        <p><span> {elem?.name}</span></p>
-                                                                    </div> */}
-                                                                    <div className="feature_img_value">
-                                                                        {themeEnabled ? (
-
-                                                                            <ImageToSvg imageUrl={elem.image !== undefined && elem.image !== null ? elem.image : PlaceHolderImg} className="custom-svg" />
-                                                                        ) : (
-                                                                            <Image loading="lazy" src={elem?.image} alt="no_img" width={20} height={16} onError={placeholderImage} />
-                                                                        )}
-                                                                        <p>
-                                                                            {Array.isArray(elem?.value) ? elem.value.slice(0, 2).join(', ') : elem.value}
-                                                                            {
-                                                                                elem?.name !== 'Size' &&
-                                                                                <span> {elem?.name}</span>
-                                                                            }
-                                                                        </p>
+                                    {getPropData && getPropData.layout ? (
+                                        <Fragment>
+                                            <hr className="my-3" />
+                                            <div className="h4">{translate("propertyLayout")} ({getPropData.layout.length})</div>
+                                                <div className="">
+                                                    <div className="d-flex flex-column gap-4" style={{ overflow: 'hidden', maxHeight: expandedLayout ? 'none' : '23em' }}>
+                                                        {
+                                                            getPropData.layout.map((item, idx) => (
+                                                                <div className="border rounded-4 p-4 d-flex align-items-center gap-4" kry={idx}>
+                                                                    <div className="overflow-hidden position-relative rounded-3" style={{ paddingBlockEnd: 120, width: 120 }}>
+                                                                        <Image 
+                                                                            onError={placeholderImage}
+                                                                            loading="lazy"
+                                                                            src={item.image_url || PlaceHolderImg}
+                                                                            className="img-fluid"
+                                                                            style={{ objectFit: 'cover'}}
+                                                                            alt={`photo Layout ${idx}`}
+                                                                            fill
+                                                                        />
                                                                     </div>
-                                                                    
-                                                                </div>
+                                                                    <div className="d-flex flex-column justify-content-between">
+                                                                        <p className="fs-5 fw-normal mb-0 text-black">Camelia Layout</p>
+                                                                        
+                                                                        <div className="d-flex gap-2 flex-wrap my-2">
+                                                                            {getPropData &&
+                                                                                getPropData.parameters.map((elem, index) =>
+                                                                                    elem.value !== "" && elem.value !== "0" ? (
+                                                                                    <div className="features-and-amenities" key={index}>
+                                                                                        {/* <div className="feature_img_value">
+                                                                                            <p><span> {elem?.name}</span></p>
+                                                                                        </div> */}
+                                                                                        <div className="feature_img_value">
+                                                                                            {themeEnabled ? (
 
-                                                        ): '')}
-                                                    </div>
-                                                    <p className="fs-5 fw-semibold mb-0 text-black">56,732.06 SAR</p>
-                                                </div>
-                                            </div>
-                                            <div className="border rounded-4 p-4 d-flex align-items-center gap-4">
-                                                <div className="overflow-hidden position-relative rounded-3" style={{ paddingBlockEnd: 120, width: 120 }}>
-                                                    <Image 
-                                                        onError={placeholderImage}
-                                                        loading="lazy"
-                                                        src={ScketchTow || PlaceHolderImg}
-                                                        className="img-fluid"
-                                                        style={{ objectFit: 'cover'}}
-                                                        alt={`photo scketch-2`}
-                                                        fill
-                                                    />
-                                                </div>
-                                                <div className="d-flex flex-column justify-content-between">
-                                                    <p className="fs-5 fw-normal mb-0 text-black">Coorma Layout</p>
-                                                    
-                                                    <div className="d-flex gap-2 flex-wrap my-2">
-                                                        {getPropData &&
-                                                            getPropData.parameters.map((elem, index) =>
-                                                                elem.value !== "" && elem.value !== "0" ? (
-                                                                <div className="features-and-amenities" key={index}>
-                                                                    {/* <div className="feature_img_value">
-                                                                        <p><span> {elem?.name}</span></p>
-                                                                    </div> */}
-                                                                    <div className="feature_img_value">
-                                                                        {themeEnabled ? (
+                                                                                                <ImageToSvg imageUrl={elem.image !== undefined && elem.image !== null ? elem.image : PlaceHolderImg} className="custom-svg" />
+                                                                                            ) : (
+                                                                                                <Image loading="lazy" src={elem?.image} alt="no_img" width={20} height={16} onError={placeholderImage} />
+                                                                                            )}
+                                                                                            <p>
+                                                                                                {Array.isArray(elem?.value) ? elem.value.slice(0, 2).join(', ') : elem.value}
+                                                                                                {
+                                                                                                    elem?.name !== 'Size' &&
+                                                                                                    <span> {elem?.name}</span>
+                                                                                                }
+                                                                                            </p>
+                                                                                        </div>
+                                                                                        
+                                                                                    </div>
 
-                                                                            <ImageToSvg imageUrl={elem.image !== undefined && elem.image !== null ? elem.image : PlaceHolderImg} className="custom-svg" />
-                                                                        ) : (
-                                                                            <Image loading="lazy" src={elem?.image} alt="no_img" width={20} height={16} onError={placeholderImage} />
-                                                                        )}
-                                                                        <p>
-                                                                            {Array.isArray(elem?.value) ? elem.value.slice(0, 2).join(', ') : elem.value}
-                                                                            {
-                                                                                elem?.name !== 'Size' &&
-                                                                                <span> {elem?.name}</span>
-                                                                            }
-                                                                        </p>
+                                                                            ): '')}
+                                                                        </div>
+                                                                        <p className="fs-5 fw-semibold mb-0 text-black">56,732.06 SAR</p>
                                                                     </div>
-                                                                    
                                                                 </div>
-
-                                                        ): '')}
+                                                            ))
+                                                        }
+                                                        
                                                     </div>
-                                                    
-                                                    <p className="fs-5 fw-semibold mb-0 text-black">56,732.06 SAR</p>
+                                                    {
+                                                        getPropData.layout.length > 2 &&
+                                                        <button className="seemore-btn mx-auto" onClick={() => setExpandedLayout(!expandedLayout)} style={{ outline: 'none' }}>
+                                                            {expandedLayout ? translate("showLess") : translate("showMore")}
+                                                            {/* <AiOutlineArrowRight className="mx-2" size={18} /> */}
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" style={{ transform: expandedLayout ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                                            </svg>
+                                                        </button>
+                                                    }
                                                 </div>
-                                            </div>
-                                            <div className="border rounded-4 p-4 d-flex align-items-center gap-4">
-                                                <div className="overflow-hidden position-relative rounded-3" style={{ paddingBlockEnd: 120, width: 120 }}>
-                                                    <Image 
-                                                        onError={placeholderImage}
-                                                        loading="lazy"
-                                                        src={ScketchOne || PlaceHolderImg}
-                                                        className="img-fluid"
-                                                        style={{ objectFit: 'cover'}}
-                                                        alt={`photo scketch-`}
-                                                        fill
-                                                    />
-                                                </div>
-                                                <div className="d-flex flex-column justify-content-between">
-                                                    <p className="fs-5 fw-normal mb-0 text-black">Camelia Layout</p>
-                                                    
-                                                    <div className="d-flex gap-2 flex-wrap my-2">
-                                                        {getPropData &&
-                                                            getPropData.parameters.map((elem, index) =>
-                                                                elem.value !== "" && elem.value !== "0" ? (
-                                                                <div className="features-and-amenities" key={index}>
-                                                                    {/* <div className="feature_img_value">
-                                                                        <p><span> {elem?.name}</span></p>
-                                                                    </div> */}
-                                                                    <div className="feature_img_value">
-                                                                        {themeEnabled ? (
+                                        </Fragment>
 
-                                                                            <ImageToSvg imageUrl={elem.image !== undefined && elem.image !== null ? elem.image : PlaceHolderImg} className="custom-svg" />
-                                                                        ) : (
-                                                                            <Image loading="lazy" src={elem?.image} alt="no_img" width={20} height={16} onError={placeholderImage} />
-                                                                        )}
-                                                                        <p>
-                                                                            {Array.isArray(elem?.value) ? elem.value.slice(0, 2).join(', ') : elem.value}
-                                                                            {
-                                                                                elem?.name !== 'Size' &&
-                                                                                <span> {elem?.name}</span>
-                                                                            }
-                                                                        </p>
-                                                                    </div>
-                                                                    
-                                                                </div>
-
-                                                        ): '')}
-                                                    </div>
-                                                    <p className="fs-5 fw-semibold mb-0 text-black">56,732.06 SAR</p>
-                                                </div>
-                                            </div>
-                                            <div className="border rounded-4 p-4 d-flex align-items-center gap-4">
-                                                <div className="overflow-hidden position-relative rounded-3" style={{ paddingBlockEnd: 120, width: 120 }}>
-                                                    <Image 
-                                                        onError={placeholderImage}
-                                                        loading="lazy"
-                                                        src={ScketchTow || PlaceHolderImg}
-                                                        className="img-fluid"
-                                                        style={{ objectFit: 'cover'}}
-                                                        alt={`photo scketch-2`}
-                                                        fill
-                                                    />
-                                                </div>
-                                                <div className="d-flex flex-column justify-content-between">
-                                                    <p className="fs-5 fw-normal mb-0 text-black">Coorma Layout</p>
-                                                    
-                                                    <div className="d-flex gap-2 flex-wrap my-2">
-                                                        {getPropData &&
-                                                            getPropData.parameters.map((elem, index) =>
-                                                                elem.value !== "" && elem.value !== "0" ? (
-                                                                <div className="features-and-amenities" key={index}>
-                                                                    {/* <div className="feature_img_value">
-                                                                        <p><span> {elem?.name}</span></p>
-                                                                    </div> */}
-                                                                    <div className="feature_img_value">
-                                                                        {themeEnabled ? (
-
-                                                                            <ImageToSvg imageUrl={elem.image !== undefined && elem.image !== null ? elem.image : PlaceHolderImg} className="custom-svg" />
-                                                                        ) : (
-                                                                            <Image loading="lazy" src={elem?.image} alt="no_img" width={20} height={16} onError={placeholderImage} />
-                                                                        )}
-                                                                        <p>
-                                                                            {Array.isArray(elem?.value) ? elem.value.slice(0, 2).join(', ') : elem.value}
-                                                                            {
-                                                                                elem?.name !== 'Size' &&
-                                                                                <span> {elem?.name}</span>
-                                                                            }
-                                                                        </p>
-                                                                    </div>
-                                                                    
-                                                                </div>
-
-                                                        ): '')}
-                                                    </div>
-                                                    
-                                                    <p className="fs-5 fw-semibold mb-0 text-black">56,732.06 SAR</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button className="seemore-btn mx-auto" onClick={() => setExpandedLayout(!expandedLayout)} style={{ outline: 'none' }}>
-                                            {expandedLayout ? translate("showLess") : translate("showMore")}
-                                            {/* <AiOutlineArrowRight className="mx-2" size={18} /> */}
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" style={{ transform: expandedLayout ? 'rotate(180deg)' : 'rotate(0deg)' }}>
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                            </svg>
-
-                                        </button>
-                                    </div>
+                                    ): null}
 
                                     
                                     <hr className="my-3" />                                      

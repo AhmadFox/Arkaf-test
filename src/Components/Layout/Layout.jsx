@@ -100,6 +100,7 @@ const Layout = ({ children }) => {
             {isLoading ? (
                 <Loader />
             ) : (
+                // add the Fragment wraper her if you want loader pages
                 <Fragment>
                     {settingsError ? ( // Check for error while fetching settings
                         <div className="somthing_wentWrong">

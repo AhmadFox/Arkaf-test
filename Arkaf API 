@@ -1,0 +1,100 @@
+#--- Home Page Requist API ---#
+
+#Categoris Count (1x) OFF
+url: api/get_count_by_cities_categoris
+method: GET
+status: 200
+message: Data Fetch Successfully 
+response data: obj #{ "category_data": [ { "category": "Villa", "Count": 6 }, { "category": "Condo", "Count": 1 }, { "category": "Roof", "Count": 1 }, { "category": "Single Family Home", "Count": 1 }, { "category": "Ranch", "Count": 1 } ]"
+Note1: use for search filter & card list category
+Note2: Empty params in API call
+
+#Get user recommendation (1x) OFF
+url: api/get_user_recommendation?offset=&limit=
+method: GET
+status: 200
+message: Data Fetch Successfully","total":0,"data":[]
+response data: empty
+Note: this API only on logged in users
+
+#Get system settings (1x)
+url: api/get_system_settings
+method: POST
+status: 200
+message: Data Fetch Successfully", total: 30, "data": {...}
+response data: obj
+
+#Get slider (header home page slider) -  (1x) OFF
+url: api/get_slider
+method: GET
+status: 200
+message: No data found!, total: 0, "data":[]}
+response data: obj
+Note: only ON hero slider section on homepage have slide created
+
+#Get categories (1x) OFF
+url: api/get_categories
+method: GET
+status: 200
+message: Data Fetch Successfully", "total": 9, "data": [{...}]
+response data: obj
+
+#Get promoted property (4x)
+url: api/get_property${...}
+method: GET
+status: 200
+message: Data Fetch Successfully", "total": 8, "data": [{...}]
+response data: obj
+
+#Get articles (1x) OFF
+url: api/get_articles
+method: GET
+status: 200
+message: Data Fetch Successfully", "total": 0, "data": []
+response data: obj
+
+#Get projects (1x) OFF
+url: api/get_projects
+method: GET
+status: 200
+message: Data Fetch Successfully", "total": 0, "data": []
+response data: obj
+
+#Get cities data (1x) "Important for (Best places on each city) section"
+Note: this API end-point NOT exist in frontend Next.js app from original code
+url: api/get-cities-data
+method: GET
+status: 200
+response:  
+"data": [
+	{
+			"City": "Bhuj",
+			"Count": 2,
+			"image": "https://..."
+	},
+	{
+			"City": "Dubai",
+			"Count": 2,
+			"image": "https://..."
+	},
+	...
+]
+
+#Get language (1x) "Important for multible language frontend"
+Note: this API return empty Arabic language #api/get_languages?language_code=ar&web_language_file=2
+url: api/get_languages?language_code=en&web_language_file=1
+method: GET
+status: 200
+message: Data Fetch Successfully
+response:  
+"data": {
+	"id": 12,
+	"name": "English",
+	"code": "en",
+	"file_name": {...},
+	"status": 0,
+	"rtl": 0,
+	"created_at": "",
+	"updated_at": "",
+	"deleted_at": null
+}

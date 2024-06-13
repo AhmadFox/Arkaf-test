@@ -2193,12 +2193,7 @@ border-radius: 20px;
 /* ================================================================== */
 /* FEATURE CSS */
 #feature {
-  /* background-color: var(--primary-background); */
-  height: fit-content;
-  position: relative;
-  bottom: 0;
-  padding-bottom: 130px;
-  overflow-x: hidden;
+  padding: 60px 0 0;
 }
 
 #main_features {
@@ -2263,9 +2258,8 @@ border-radius: 20px;
 }
 
 #feature_cards {
-  position: relative;
-  top: 30px;
-  gap: 20px 0px;
+  gap: 30px 0px;
+  margin-top: 2rem;
 }
 
 .hovertext1 {
@@ -2440,7 +2434,7 @@ border-radius: 20px;
   overflow-x: hidden;
   position: relative;
   height: fit-content;
-  padding: 60px 0 0;
+  padding: 70px 0 0;
 }
 .properties_section {
   padding: 60px 0px;
@@ -2750,7 +2744,7 @@ h3 {
 #most_fav,
 #personalize_feed {
   height: fit-content;
-  padding: 60px 0;
+  padding: 70px 0;
   overflow-x: hidden;
 }
 
@@ -3011,6 +3005,9 @@ div#article_card_footer .article_footer_text p {
   margin: 1.4rem;
   border-radius: 24px;
   padding: 3rem;
+  position: relative;
+  bottom: 2rem;
+  margin-top: 4rem;
 }
 #footer_logo_section {
   display: flex;
