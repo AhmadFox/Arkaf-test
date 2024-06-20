@@ -1,11 +1,11 @@
-import React from "react";
-import UserRegister from "@/Components/UserRegister/UserRegister";
 import Meta from "@/Components/Seo/Meta";
+import UserRegister from "@/Components/UserRegister/UserRegister";
+import { Fragment } from "react";
 const Index = () => {
 
 
     return (
-        <>
+        <Fragment>
             <Meta
                 title=""
                 description=""
@@ -14,7 +14,7 @@ const Index = () => {
                 pathName=""
             />
             <UserRegister />
-        </>
+        </Fragment>
     );
 };
 

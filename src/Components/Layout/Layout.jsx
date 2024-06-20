@@ -17,7 +17,7 @@ import { loadSystemSettings } from "@/store/reducer/settingsSlice";
 
 const Layout = ({ children }) => {
     const isLoggedIn = useSelector((state) => state.User_signup);
-    const userCurrentId = isLoggedIn && isLoggedIn.data ? isLoggedIn.data.data.id : null;
+    const userCurrentId = isLoggedIn && isLoggedIn.data ? isLoggedIn?.data?.data?.id : null;
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [settingsError, setSettingsError] = useState(false);

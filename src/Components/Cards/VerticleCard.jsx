@@ -191,9 +191,9 @@ function VerticalCard({ ele, removeCard, onImageLoad }) {
 
                     <span className="like_tag">
                         {isLiked ? (
-                            <AiFillHeart size={25} className="liked_property" onClick={handleDislike} />
+                            <AiFillHeart size={25} className="liked-property" onClick={handleDislike} />
                         ) : isDisliked ? (
-                            <AiOutlineHeart size={25} className="disliked_property" onClick={handleLike} />
+                            <AiOutlineHeart size={25} className="disliked-property" onClick={handleLike} />
                         ) : (
                             <AiOutlineHeart size={25} onClick={handleLike} />
                         )}

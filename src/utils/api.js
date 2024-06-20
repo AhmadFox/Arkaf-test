@@ -1,7 +1,12 @@
 import { store } from "@/store/store"
 
 export const GET_SETTINGS = "get_system_settings"
-export const USER_SIGNUP = "user_signup"
+export const USER_SIGNUP = "register"
+export const USER_VERIFY_CODE = "verify-code"
+export const USER_RESEND_CODE = "resend-code"
+export const USER_LOGIN = "login"
+export const FORGOT_PASSWORD = "forgot-password"
+export const RESET_PASSWORD = 'change-password'
 export const UPDATE_PROFILE = "update_profile"
 export const GET_SLIDERS = "get_slider"
 export const GET_CATEGORES = "get_categories"
@@ -45,7 +50,6 @@ export const USER_INTREST = "personalised-fields"
 export const GET_USER_RECOMMENDATION = "get_user_recommendation"
 
 
-
 // is login user check
 export const getUserID = () => {
     let user = store.getState()?.User_signup
@@ -61,8 +65,6 @@ export const getUserID = () => {
 
 }
 
-
-
 // GET SETTINGS
 export const getSettingApi = (user_id) => {
     return {
@@ -76,19 +78,17 @@ export const getSettingApi = (user_id) => {
 
     }
 }
-
 // USER SIGNUP
-export const user_signupApi = (name, email, mobile, type, address, firebase_id, logintype, profile, fcm_id) => {
+// export const user_signupApi = (name, email, mobile, type, address, firebase_id, logintype, profile, fcm_id) => {
+export const user_signupApi = (name, email, mobile, password, password_confirmation, type, firebase_id) => {
     let data = new FormData();
     data.append("name", name);
     data.append("email", email);
     data.append("mobile", mobile);
-    data.append("firebase_id", firebase_id);
-    data.append("address", address);
-    data.append("logintype", logintype);
+    data.append("password", password);
+    data.append("password_confirmation", password_confirmation);
     data.append("type", type);
-    data.append("profile", profile);
-    data.append("fcm_id", fcm_id);
+    data.append("firebase_id", firebase_id);
     return {
         url: `${USER_SIGNUP}`,
         method: 'POST',
@@ -97,6 +97,78 @@ export const user_signupApi = (name, email, mobile, type, address, firebase_id, 
 
     }
 }
+
+// USER VERIFY
+export const user_verifyCodeApi = (email, code) => {
+    let data = new FormData();
+    data.append("email", email);
+    data.append("code", code);
+    return {
+        url: `${USER_VERIFY_CODE}`,
+        method: 'POST',
+        data,
+        authorizationHeader: false,
+
+    }
+}
+
+// USER RESEND
+export const user_resendCodeApi = (email) => {
+    console.log('email ==>', email);
+    let data = new FormData();
+    data.append("email", email);
+    return {
+        url: `${USER_RESEND_CODE}`,
+        method: 'POST',
+        data,
+        authorizationHeader: false,
+
+    }
+}
+
+// USER LOGIN
+export const user_loginApi = (email, password) => {
+    let data = new FormData();
+    data.append("email", email);
+    data.append("password", password);
+    return {
+        url: `${USER_LOGIN}`,
+        method: 'POST',
+        data,
+        authorizationHeader: false,
+
+    }
+}
+
+// USER FORGOT_PASSWORD
+export const user_forgotPasswordApi = (email) => {
+    let data = new FormData();
+    data.append("email", email);
+    return {
+        url: `${FORGOT_PASSWORD}`,
+        method: 'POST',
+        data,
+        authorizationHeader: false,
+
+    }
+}
+
+// USER RESET_PASSWORD
+export const user_resetPasswordApi = (email, code, password, passwordConfirmation) => {
+    let data = new FormData();
+    data.append("email", email);
+    data.append("code", code);
+    data.append("password", password);
+    data.append("password_confirmation", passwordConfirmation);
+    return {
+        url: `${RESET_PASSWORD}`,
+        method: 'POST',
+        data,
+        authorizationHeader: false,
+
+    }
+}
+
 // UPDATE PROFILE
 export const update_profile = (userid, name, email, mobile, address, firebase_id, profile, latitude, longitude, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, fcm_id, notification, city, state, country) => {
     let data = new FormData();

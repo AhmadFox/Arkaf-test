@@ -4,7 +4,10 @@ export const publicRoutes = [
     '/login/',
     '/register/',
     '/verify-account',
+    '/forgot-password',
+    '/reset-password',
     '/success-create-account',
+    '/complete-account',
     '/all-categories/',
     '/all-projects/',
     '/article-details/',
@@ -27,12 +30,12 @@ export const publicRoutes = [
 ]
 
 export const isSubscribeRoutes = [
-    '/user/dashboard/',
-    '/user/advertisement/',
-    '/user/properties/',
-    '/user/subscription/',
-    '/user/transaction-history/',
-    '/user/intrested/',
+    // '/user/dashboard/',
+    // '/user/advertisement/',
+    // '/user/properties/',
+    // '/user/subscription/',
+    // '/user/transaction-history/',
+    // '/user/intrested/',
 ];
 
 export const protectedRoutes = [
@@ -40,6 +43,13 @@ export const protectedRoutes = [
     '/user-register/',
     '/user/profile/',
     '/user/favorites-properties/',
-    '/user/personalize-feed/'
+    '/user/personalize-feed/',
+
+    '/user/dashboard/',
+    '/user/advertisement/',
+    '/user/properties/',
+    '/user/subscription/',
+    '/user/transaction-history/',
+    '/user/intrested/',
 
 ]

@@ -198,11 +198,11 @@ const Breadcrumb = (props) => {
                                         <div>
                                             {isLiked ? (
                                                 <button onClick={handleDislike}>
-                                                    <AiFillHeart size={25} className="liked_property" />
+                                                    <AiFillHeart size={25} className="liked-property" />
                                                 </button>
                                             ) : isDisliked ? (
                                                 <button onClick={handleLike}>
-                                                    <AiOutlineHeart size={25} className="disliked_property" />
+                                                    <AiOutlineHeart size={25} className="disliked-property" />
                                                 </button>
                                             ) : (
                                                 <button onClick={handleLike}>
@@ -213,7 +213,7 @@ const Breadcrumb = (props) => {
                                         {process.env.NEXT_PUBLIC_SEO === "true" ? (
                                             <Dropdown overlay={shareMenu} placement="bottomCenter" arrow>
                                                 <button>
-                                                    <RxShare2 size={25} className="disliked_property" />
+                                                    <RxShare2 size={25} className="disliked-property" />
                                                 </button>
                                             </Dropdown>
                                         ) : null}

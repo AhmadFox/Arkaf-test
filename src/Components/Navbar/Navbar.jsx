@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect, Fragment } from "react";
-import arkafLogo from "@/assets/Logo_Color.png";
+
 import { RiUserSmileLine } from "react-icons/ri";
 import { CloseButton, Dropdown } from "react-bootstrap";
 import Offcanvas from "react-bootstrap/Offcanvas";
@@ -30,6 +30,10 @@ import { CiFacebook } from "react-icons/ci";
 import { ImPinterest2 } from "react-icons/im";
 import { FaXTwitter } from "react-icons/fa6";
 
+import arkafLogo from "@/assets/Logo_Color.png";
+import ArkafAvatar from "@/assets/arkaf_avatar.png";
+import dummyimg from '@/assets/Images/user_profile.png'
+
 
 
 
@@ -55,12 +59,11 @@ const Nav = () => {
     const [areaconverterModal, setAreaConverterModal] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = useState();
     const [defaultlang, setDefaultlang] = useState(language.name);
-        const [show, setShow] = useState(false);
-        const [headerTop, setHeaderTop] = useState(0);
-        const [scroll, setScroll] = useState(0);
-        const handleClose = () => setShow(false);
-        const handleShow = () => setShow(true);
-
+    const [show, setShow] = useState(false);
+    const [headerTop, setHeaderTop] = useState(0);
+    const [scroll, setScroll] = useState(0);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     useEffect(() => {
         if (language && language.rtl === 1) {
@@ -283,9 +286,9 @@ const Nav = () => {
             <header className="sticy">
                 <nav className={`navbar header navbar-expand-lg navbar-light`}>
                 {/* ${scroll > headerTop || (isHomePage && (!sliderdata || sliderdata.length === 0)) ? "is-sticky" : ""} */}
-                    <div className="container">
+                    <div className="container max-w-full xl:px-9">
 
-                    <div className="center-side">
+                        <div className="center-side">
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                     <li className="nav-item">
@@ -321,22 +324,39 @@ const Nav = () => {
                                         </Link>
                                     </div>
                                 ) : // Check if mobile and firebase_id are present
-                                    signupData?.data?.data.mobile && signupData?.data?.data.firebase_id && signupData?.data?.data.name === "" ? (
-                                        <span className="nav-link">{translate("welcmGuest")}</span>
-                                ) :
-                                signupData?.data?.data.name ? (
-                                    <Dropdown>
-                                        <Dropdown.Toggle id="dropdown-basic01">
-                                            <RiUserSmileLine size={20} className="icon01" />
+                                signupData?.data?.data.mobile && signupData?.data?.data.firebase_id ? (
+                                        <Dropdown>
+                                            <Dropdown.Toggle id="dropdown-basic01">
+                                                {/* <RiUserSmileLine size={20} className="icon01" /> */}
 
-                                            {signupData.data.data.name}
-                                        </Dropdown.Toggle>
+                                                {/* {signupData.data.data.name} */}
+                                                <div className="border rounded-full py-0.5 px-1 flex gap-x-1 items-center justify-between">
+                                                    <Image
+                                                        src={signupData?.data?.data.image ? signupData?.data?.data.image : ArkafAvatar}
+                                                        alt={'User Profile Picture'}
+                                                        width={30}
+                                                        height={30}
+                                                        className="object-fit rounded-full"
+                                                    />
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#333" className="size-4">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                                    </svg>
+                                                </div>
+                                            </Dropdown.Toggle>
 
-                                        <Dropdown.Menu id="language">
-                                            <Dropdown.Item onClick={handleShowDashboard}>{translate("dashboard")}</Dropdown.Item>
-                                            <Dropdown.Item onClick={handleLogout}>{translate("logout")}</Dropdown.Item>
-                                        </Dropdown.Menu>
-                                    </Dropdown>
+                                                <Dropdown.Menu id="language">
+                                                    <Dropdown.Item onClick={handleShowDashboard} className="group hover:bg-slate-400 ease-in-out duration-200">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+                                                            <g id="Group_6" data-name="Group 6" transform="translate(-728 -443)">
+                                                                <rect id="Rectangle_4" data-name="Rectangle 4" width="21" height="21" transform="translate(728 443)" fill="none"/>
+                                                                <path id="Vector" d="M.5.833A.833.833,0,0,1,1.333,0h5a.833.833,0,0,1,.833.833v5a.833.833,0,0,1-.833.833h-5A.833.833,0,0,1,.5,5.833Zm0,8.333a.833.833,0,0,1,.833-.833h5a.833.833,0,0,1,.833.833v5A.833.833,0,0,1,6.333,15h-5A.833.833,0,0,1,.5,14.167ZM8.833.833A.833.833,0,0,1,9.667,0h5A.833.833,0,0,1,15.5.833v5a.833.833,0,0,1-.833.833h-5a.833.833,0,0,1-.833-.833Zm0,8.333a.833.833,0,0,1,.833-.833h5a.833.833,0,0,1,.833.833v5a.833.833,0,0,1-.833.833h-5a.833.833,0,0,1-.833-.833Zm1.667-7.5V5h3.333V1.667ZM10.5,10v3.333h3.333V10ZM2.167,1.667V5H5.5V1.667Zm0,8.333v3.333H5.5V10Z" transform="translate(730.5 446)" fill="#272835"/>
+                                                            </g>
+                                                        </svg>
+                                                        {translate("dashboard")}
+                                                    </Dropdown.Item>
+                                                    <Dropdown.Item onClick={handleLogout}>{translate("logout")}</Dropdown.Item>
+                                                </Dropdown.Menu>
+                                        </Dropdown>
                                 ) : null
                             }
                             </div>
@@ -349,8 +369,6 @@ const Nav = () => {
                                 </svg>
                             </span>
                         </div>
-
-                        
 
                         <div className="right-side">
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -386,37 +404,90 @@ const Nav = () => {
                                                     <Link href="/register" className="button button-solid">{translate("SignUp")}</Link>
                                                 </div>
                                             ) : // Check if mobile and firebase_id are present
-                                                signupData?.data?.data.mobile && signupData?.data?.data.firebase_id && signupData?.data?.data.name === "" ? (
-                                                    <>
-
-                                                        <span className="nav-link">{translate("welcmGuest")}</span>
-
-                                                    </>
-                                                ) :
-                                                    signupData?.data?.data.name ? (
+                                            signupData &&  signupData?.data?.data.mobile && signupData?.data?.data.firebase_id ? (
+                                                    <div className="flex items-center justify-center gap-x-3">
+                                                        <Link href="/chat" className="p-2.5 border rounded-full hover:bg-[#34484F] hover:border-[#34484F] ease-in-out duration-200 group">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+                                                                <g id="Group_2"  transform="translate(-749 -415)">
+                                                                    <rect id="Rectangle_3" data-name="Rectangle 3" width="21" height="21" transform="translate(749 415)" fill="none"/>
+                                                                    <path id="chatIcon" d="M8,0h4a8,8,0,0,1,0,16v3.5C7,17.5,0,14.5,0,8A8,8,0,0,1,8,0Zm2,14h2A6,6,0,0,0,12,2H8A6,6,0,0,0,2,8c0,3.61,2.462,5.966,8,8.48Z" transform="translate(749.5 415.75)" className="fill-[#34484F] group-hover:fill-white ease-in-out duration-200" />
+                                                                </g>
+                                                            </svg>
+                                                            <span className="sr-only">Chat link redirect</span>
+                                                        </Link>
+                                                        <Link href="/chat" className="p-2.5 border rounded-full hover:bg-[#34484F] hover:border-[#34484F] ease-in-out duration-200 group">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+                                                                <g id="Group_3" data-name="Group 3" transform="translate(-714 -415)">
+                                                                    <rect id="Rectangle_2" data-name="Rectangle 2" width="21" height="21" transform="translate(714 415)" fill="none"/>
+                                                                    <path id="notifecationIcon" d="M19.16,17h1.907v2H2V17H3.907V10a7.82,7.82,0,0,1,7.627-8,7.82,7.82,0,0,1,7.627,8Zm-1.907,0V10a5.865,5.865,0,0,0-5.72-6,5.865,5.865,0,0,0-5.72,6v7Zm-8.58,4h5.72v2H8.673Z" transform="translate(712.933 413)" className="fill-[#34484F] group-hover:fill-white ease-in-out duration-200"/>
+                                                                </g>
+                                                            </svg>
+                                                            <span className="sr-only">Chat link redirect</span>
+                                                        </Link>
                                                         <Dropdown>
                                                             <Dropdown.Toggle id="dropdown-basic01">
-                                                                <RiUserSmileLine size={20} className="icon01" />
+                                                                {/* <RiUserSmileLine size={20} className="icon01" /> */}
 
-                                                                {signupData.data.data.name}
+                                                                {/* {signupData.data.data.name} */}
+                                                                <div className="border rounded-full py-1.5 px-2.5 flex gap-x-2 items-center justify-between">
+                                                                    <Image
+                                                                        src={signupData?.data?.data.image ? signupData?.data?.data.image : dummyimg.src}
+                                                                        alt={'User Profile Picture'}
+                                                                        width={32}
+                                                                        height={32}
+                                                                        className="object-fit rounded-full"
+                                                                    />
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#333" className="size-4">
+                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                                                    </svg>
+                                                                </div>
                                                             </Dropdown.Toggle>
 
-                                                            <Dropdown.Menu id="language">
-                                                                <Dropdown.Item onClick={handleShowDashboard}>{translate("dashboard")}</Dropdown.Item>
-                                                                <Dropdown.Item onClick={handleLogout}>{translate("logout")}</Dropdown.Item>
-                                                            </Dropdown.Menu>
+                                                                <Dropdown.Menu id="language" className="px-2 rounded-lg !flex flex-col !gap-y-2 !w-[200px]">
+                                                                    <Dropdown.Item onClick={handleShowDashboard} className="flex py-2 items-center gap-x-2 group !text-[#5A727B] hover:!bg-[#F6F6F6] rounded-sm hover:m-0 focus:m-0 ease-in-out duration-200">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+                                                                            <g id="Group_6" data-name="Group 6" transform="translate(-728 -443)">
+                                                                                <rect id="Rectangle_4" data-name="Rectangle 4" width="21" height="21" transform="translate(728 443)" fill="none"/>
+                                                                                <path id="Vector" d="M.5.833A.833.833,0,0,1,1.333,0h5a.833.833,0,0,1,.833.833v5a.833.833,0,0,1-.833.833h-5A.833.833,0,0,1,.5,5.833Zm0,8.333a.833.833,0,0,1,.833-.833h5a.833.833,0,0,1,.833.833v5A.833.833,0,0,1,6.333,15h-5A.833.833,0,0,1,.5,14.167ZM8.833.833A.833.833,0,0,1,9.667,0h5A.833.833,0,0,1,15.5.833v5a.833.833,0,0,1-.833.833h-5a.833.833,0,0,1-.833-.833Zm0,8.333a.833.833,0,0,1,.833-.833h5a.833.833,0,0,1,.833.833v5a.833.833,0,0,1-.833.833h-5a.833.833,0,0,1-.833-.833Zm1.667-7.5V5h3.333V1.667ZM10.5,10v3.333h3.333V10ZM2.167,1.667V5H5.5V1.667Zm0,8.333v3.333H5.5V10Z" transform="translate(730.5 446)" className="fill-[#5A727B]"/>
+                                                                            </g>
+                                                                        </svg>
+                                                                        {translate("dashboard")}
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item className="flex py-2 items-center gap-x-2 group !text-[#5A727B] hover:!bg-[#F6F6F6] rounded-sm hover:m-0 focus:m-0 ease-in-out duration-200">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+                                                                            <g id="Group_5" data-name="Group 5" transform="translate(-749 -443)">
+                                                                                <rect id="Rectangle_5" data-name="Rectangle 5" width="21" height="21" transform="translate(749 443)" fill="none"/>
+                                                                                <path id="Vector_1_" data-name="Vector (1)" d="M1.634,2.224A5.417,5.417,0,0,1,9,1.951a5.416,5.416,0,0,1,7.648,7.628l-6.47,6.493a1.667,1.667,0,0,1-2.266.085l-.091-.085L1.351,9.579A5.417,5.417,0,0,1,1.634,2.224ZM2.813,3.4a3.75,3.75,0,0,0-.122,5.176l.122.128L9,14.893l4.419-4.42L10.473,7.527l-.884.884A2.5,2.5,0,0,1,6.054,4.876L7.8,3.124a3.751,3.751,0,0,0-4.864.157ZM9.884,5.76a.833.833,0,0,1,1.178,0L14.6,9.295l.59-.589a3.75,3.75,0,0,0-5.175-5.425L9.884,3.4,7.232,6.054A.833.833,0,0,0,7.168,7.16l.065.073A.833.833,0,0,0,8.338,7.3l.073-.065Z" transform="translate(750.5 444.901)" className="fill-[#5A727B]"/>
+                                                                            </g>
+                                                                        </svg>
+                                                                        {translate("applyRequest")}
+                                                                    </Dropdown.Item>
+                                                                    <Dropdown.Item onClick={handleLogout} className="flex py-2 items-center gap-x-2 group hover:!bg-[#F6F6F6] rounded-sm hover:m-0 focus:m-0 ease-in-out duration-200">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+                                                                            <g id="Group_4" data-name="Group 4" transform="translate(-770 -443)">
+                                                                                <rect id="Rectangle_6" data-name="Rectangle 6" width="21" height="21" transform="translate(770 443)" fill="none"/>
+                                                                                <path id="Vector_2_" data-name="Vector (2)" d="M3.333,13.5H5v1.667H15V1.834H5V3.5H3.333V1A.833.833,0,0,1,4.166.167H15.833A.833.833,0,0,1,16.666,1V16a.833.833,0,0,1-.833.833H4.166A.833.833,0,0,1,3.333,16ZM5,7.667h5.833V9.334H5v2.5L.833,8.5,5,5.167Z" transform="translate(772.167 444.833)" fill="red"/>
+                                                                            </g>
+                                                                        </svg>
+                                                                        <span className="text-red-500">{translate("logout")}</span>
+                                                                        
+                                                                    </Dropdown.Item>
+                                                                </Dropdown.Menu>
                                                         </Dropdown>
-                                                    ) : null
+                                                    </div>
+
+                                                ) : null
+                                                
                                         }
                                     </li>
-                                    {signupData?.data?.data.name && settingData && (
+                                    {/* {signupData?.data?.data.name && settingData && (
                                         <li className="nav-item">
                                             <button className="btn" id="addbutton" onClick={handleAddProperty}>
                                                 <FiPlusCircle size={20} className="mx-2 add-nav-button" />
                                                 {translate("addProp")}
                                             </button>
                                         </li>
-                                    )}
+                                    )} */}
                                 </ul>
                             </div>
                         </div>
@@ -479,43 +550,6 @@ const Nav = () => {
                                 </li>
 
                                 <li><hr className="dropdown-divider" /></li>
-
-                                <li className="nav-item">
-                                    {
-                                        // Check if signupData.data is null
-                                        signupData?.data === null ? (
-                                            <a className="nav-link" to="/" onClick={handleOpenModal}>
-                                                <RiUserSmileLine size={20} className="icon" />
-                                                {translate("login&Regiser")}
-                                            </a>
-                                        ) : // Check if mobile and firebase_id are present
-                                            signupData?.data?.data.mobile && signupData?.data?.data.firebase_id && signupData?.data?.data.name === "" ? (
-                                                <span className="nav-link">{translate("welcmGuest")}</span>
-                                            ) : // If name is present, show "Welcome, {name}"
-                                                signupData?.data?.data.name ? (
-                                                    <Dropdown>
-                                                        <Dropdown.Toggle id="dropdown-basic01">
-                                                            <RiUserSmileLine size={20} className="icon01" />
-                                                            {/* <Avatar size={16} src={signupData.data.data.profile}/> */}
-                                                            {signupData.data.data.name}
-                                                        </Dropdown.Toggle>
-
-                                                        <Dropdown.Menu id="language">
-                                                            <Dropdown.Item onClick={handleShowDashboard}>{translate("dashboard")}</Dropdown.Item>
-                                                            <Dropdown.Item onClick={handleLogout}>{translate("logout")}</Dropdown.Item>
-                                                        </Dropdown.Menu>
-                                                    </Dropdown>
-                                                ) : null // Handle any other cases or conditions here
-                                    }
-                                </li>
-                                {signupData?.data?.data.name && settingData && (
-                                    <li className="nav-item">
-                                        <button className="btn" id="addbutton-mobile" onClick={handleAddProperty}>
-                                            <FiPlusCircle size={20} className="mx-2 add-nav-button" />
-                                            {translate("addProp")}
-                                        </button>
-                                    </li>
-                                )}
 
                                 <li className="nav-item nav-lang  justify-content-center mt-3">
                                     <span>EN</span>

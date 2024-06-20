@@ -929,7 +929,7 @@ export default function EditPropertyTabs() {
                                     <div className="col-sm-12 col-md-6">
                                         <div className="add_prop_fields">
                                             <span>{translate("propStatus")}</span>
-                                            <span class="switch mt-2">
+                                            <span className="switch mt-2">
                                                 <input id="switch-rounded"
                                                     type="checkbox"
                                                     checked={tab1.isPrivate}
@@ -981,7 +981,7 @@ export default function EditPropertyTabs() {
                                     <div className="col-sm-12 col-md-6 col-lg-4">
                                         <div className="add_prop_fields">
                                             <span>{translate("propStatus")}</span>
-                                            <span class="switch mt-2">
+                                            <span className="switch mt-2">
                                                 <input id="switch-rounded"
                                                     type="checkbox"
                                                     checked={tab1.isPrivate}

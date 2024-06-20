@@ -1096,7 +1096,6 @@
   }
   div.dropdown {
     width: 100%;
-    background-color: var(--primary-color);
     width: 100%;
     color: #ffffff !important;
     border-radius: 10px;

@@ -476,7 +476,7 @@ export default function VerticleLayout(props) {
 
     return (
         <Box sx={{ display: "flex" }}>
-            <CssBaseline />
+            {/* <CssBaseline /> */}
 
             <AppBar
                 position="fixed"

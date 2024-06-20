@@ -1,61 +1,142 @@
-import { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
+import Swal from "sweetalert2";
+import { toast } from "react-hot-toast";
+
 import { translate } from "@/utils";
+import { signupLoaded } from "@/store/reducer/authSlice";
+
+import InputTel from "../ui/InputTel";
+import InputPassword from "../ui/InputPassword";
+import InputEmail from "../ui/InputEmail";
+import SubmitButton from "./SubmitButton";
 
 const SignupForm = () => {
 
-	const [ showPassword, setShowPassword ] = useState(true);
-	const passwordElem = useRef()
+	const navigate = useRouter();
 
-	const showPasswordToggel = (e) => {
-		e.preventDefault();
-		setShowPassword(!showPassword);
-		showPassword ? passwordElem.current.type = 'text' : passwordElem.current.type = 'password'
-	}
+	const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+	const [formData, setFormData] = useState({});
+	const [isLoading, setIsLoading] = useState(false);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+    const handlePhone = (valid, value) => {
+		valid ? setPhone(value) : setPhone('');
+	};
+	const handleEmail = (valid, value) => {
+		valid ? setEmail(value) : setEmail('');
+	};
+	const handlePassword = (valid, value) => {
+		valid ? setPassword(value) : setPassword('');
+	};
+
+	useEffect(() => {
+
+		phone && email && password ? 
+			setIsButtonDisabled(false) :
+			setIsButtonDisabled(true);
+
+		setFormData({
+			type: 0,
+			name: '-',
+            phone,
+            email,
+            password,
+            password_confirmation: password,
+			firebase_id: 2
+        });
+
+	}, [phone, email, password])
+
+
+	const handleSubmit = async (e) => {
+        e.preventDefault();
+		setIsLoading(true);
+
+		try {
+			signupLoaded(
+				formData.name,
+				formData.email,
+				formData.phone,
+				formData.password,
+				formData.password_confirmation,
+				formData.type,
+				formData.firebase_id,
+				(res) => {
+					setIsLoading(false);
+					navigate.push("/verify-account")
+					toast.success(res.message);
+				},
+				(errr) => {
+					console.log(errr);
+					if (errr.message === 'Account Deactivated by Administrative please connect to them') {
+						Swal.fire({
+							title: "Opps!",
+							text: "Account Deactivated by Administrative please connect to them",
+							icon: "warning",
+							showCancelButton: false,
+							customClass: {
+								confirmButton: 'Swal-confirm-buttons',
+								cancelButton: "Swal-cancel-buttons"
+							},
+							confirmButtonText: "Ok",
+						}).then((result) => {
+							if (result.isConfirmed) {
+								navigate.push("/");
+							}
+						});
+					}else if (errr.message === 'validation.unique') {
+						toast.error(translate("Email address already taken!"));
+            			return;
+					} else {
+						toast.error(translate("SomthingWenWrong"));
+					}
+				}
+			);
+		} catch (error) {
+			console.error(error);
+		}
+    };
 
 	return (
-		<form className='mb-4 grid gap-4'>
-			<div className="">
-				<label className='d-block mb-1 text-[#272835] text-sm'>{translate('phone')}</label>
-				<input type="tel" className='p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]' placeholder='Ex:2831713123'/>
+		<form className='mb-4 grid gap-4' onSubmit={handleSubmit}>
+			<div>
+				<InputTel
+					code={'+966'}
+					label={'phone'}
+					value={phone}
+					placeholder={'Ex: +966 000 000 000'}
+					onValueChange={handlePhone}
+				/>
 			</div>
-			<div className="">
-				<label className='d-block mb-1 text-[#272835] text-sm'>{translate('email')}</label>
-				<input type="email" className='p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]' placeholder='Ex:arkaf@gmail.com'/>
+			<div>
+				<InputEmail 
+					label={'email'}
+					value={email}
+					placeholder={'Ex: username@afkaf.com'}
+					onValueChange={handleEmail}
+				/>
 			</div>
-			<div className="">
-				<label className='d-block mb-1 text-[#272835] text-sm'>{translate('password')}</label>
-				<div className="relative">
-					<input ref={passwordElem} type="password" className='p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]' placeholder={translate('passwordPlaceholder')}/>
-					<button onClick={(e) => showPasswordToggel(e)} className="absolute top-1/2 -translate-y-1/2 end-2">
-						{
-							showPassword ?
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#818898" className="size-6">
-								<path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-								<path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-							</svg>:
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#818898" className="size-6">
-								<path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
-							</svg>
-						  
-						}
-						<span className="sr-only">hide/show Password</span>
-					</button>
-				</div>
-				
-				{/* Password Role */}
-				<div className="flex flex-col gap-3 mt-2">
-					<p className="text-sm text-[#818898]">{translate('passwordRole')}</p>
-					<div className="grid grid-cols-4 gap-2">
-						<span className="w-full h-[8px] rounded-[8px] relative overflow-hidden bg-[#ECEFF3]" style={{ backgroundColor: '' }}></span>
-						<span className="w-full h-[8px] rounded-[8px] relative overflow-hidden bg-[#ECEFF3]" style={{ backgroundColor: '' }}></span>
-						<span className="w-full h-[8px] rounded-[8px] relative overflow-hidden bg-[#ECEFF3]" style={{ backgroundColor: '' }}></span>
-						<span className="w-full h-[8px] rounded-[8px] relative overflow-hidden bg-[#ECEFF3]" style={{ backgroundColor: '' }}></span>
-					</div>
-				</div>
+			<div>
+				<InputPassword
+					rule={true}
+					label={'password'}
+					value={password}
+					placeholder={'passwordPlaceholder'}
+					onValueChange={handlePassword}
+				/>
 			</div>
-			<button className='mt-2 py-3 px-4 rounded-[8px] bg-[#34484F] font-semibold capitalize hover:bg-[#405861] text-white text-center ease-out duration-300'>{translate('register')}</button>
+			<SubmitButton
+				caption={'register'}
+				loading={isLoading}
+				disabled={isButtonDisabled}
+				className={'tw-btn-solid'}
+			/>
 		</form>
-	)
-}
+	);
+};
 
-export default SignupForm
+export default SignupForm;

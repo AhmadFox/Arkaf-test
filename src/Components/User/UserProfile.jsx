@@ -13,10 +13,7 @@ import { placeholderImage, translate } from "@/utils";
 import { languageData } from "@/store/reducer/languageSlice";
 import Image from "next/image";
 import Swal from "sweetalert2";
-
-const VerticleLayout = dynamic(() => import('../../../src/Components/AdminLayout/VerticleLayout.jsx'), { ssr: false })
-
-
+import UserLayout from "../Layout/UserLayout.jsx";
 
 
 const UserProfile = () => {
@@ -147,148 +144,118 @@ const UserProfile = () => {
 
     };
 
+    const inputStyle = `
+        p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
+    `;
+
     return (
-        <VerticleLayout>
+        <UserLayout>
             <div className="container">
-                <div className="dashboard_titles">
-                    <h3>{translate("myProfile")}</h3>
-                </div>
-                <div className="profile_card">
-                    <form>
-                        <div className="row">
-                            <div className="col-sm-12 col-md-6">
-                                <div className="card" id="personal_info_card">
-                                    <div className="card-header">
-                                        <h4>{translate("personalInfo")}</h4>
-                                    </div>
-                                    <div className="card-body">
-                                        <div className="row">
-                                            <div className="col-sm-12">
-                                                <div className="add_profile_div">
-                                                    <div className="image_div">
-                                                        <Image loading="lazy" src={uploadedImage || PlaceHolderImg} alt="no_img" width={200} height={200} onError={placeholderImage}/>
-                                                    </div>
-                                                    <div className="add_profile">
-                                                        <input type="file" accept="image/jpeg, image/png" id="add_img" ref={fileInputRef} style={{ display: "none" }} onChange={handleImageUpload} />
-                                                        <button type="button" onClick={handleUploadButtonClick}>
-                                                            {translate("uploadImg")}
-                                                        </button>
-
-                                                        <p>{translate("Note:")}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="add_user_fields_div">
-                                                    <span>{translate("fullName")}</span>
-                                                    <input type="text" className="add_user_fields" name="fullName" placeholder="Enter Full Name" value={formData.fullName} onChange={handleInputChange} />
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="add_user_fields_div">
-                                                    <span>{translate("email")}</span>
-                                                    <input
-                                                        readOnly={userProfileData?.logintype === "0" ? true : false}
-                                                        type="text"
-                                                        className="add_user_fields"
-                                                        name="email"
-                                                        placeholder="Enter Email"
-                                                        value={formData.email}
-                                                        onChange={handleInputChange} />
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="add_user_fields_div">
-                                                    <span>{translate("phoneNumber")}</span>
-                                                    <input readOnly={userProfileData?.logintype === "1" ? true : false}
-                                                        type="text" 
-                                                        className="add_user_fields" 
-                                                        name="phoneNumber" 
-                                                        placeholder="Enter Phone Number" 
-                                                        value={formData.phoneNumber} 
-                                                        onChange={handlePhoneNumberChange} />
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="add_user_fields_div">
-                                                    <span>{translate("location")}</span>
-
-                                                    <LocationSearchBox onLocationSelected={handleLocationSelected}
-                                                        initialLatitude={userProfileData?.latitude}
-                                                        initialLongitude={userProfileData?.longitude}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12">
-                                                <div className="add_user_fields_div">
-                                                    <span>{translate("address")}</span>
-                                                    <textarea rows={4} className="add_user_fields" name="address" placeholder="Enter Address" value={formData.address} onChange={handleInputChange} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-sm-12 col-md-6">
-                                <div className="card" id="about_me_card">
-                                    <div className="card-header">
-                                        <h4>{translate("aboutMe")}</h4>
-                                    </div>
-                                    <div className="card-body">
-                                        <div className="add_user_fields_div">
-                                            <span>{translate("aboutMe")}</span>
-                                            <textarea rows={17} className="add_user_fields" name="aboutMe" placeholder="Tell us about yourself..." value={formData.aboutMe} onChange={handleInputChange} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-12">
-                                <div className="card" id="social_media_card">
-                                    <div className="card-header">
-                                        <h4>{translate("socialMedia")}</h4>
-                                    </div>
-                                    <div className="card-body">
-                                        <div className="row">
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="add_user_fields_div">
-                                                    <span>{translate("facebook")}</span>
-                                                    <input type="text" className="add_user_fields" name="facebook" placeholder="Enter Facebook URL" value={formData.facebook} onChange={handleInputChange} />
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="add_user_fields_div">
-                                                    <span>{translate("insta")}</span>
-                                                    <input type="text" className="add_user_fields" name="instagram" placeholder="Enter Instagram URL" value={formData.instagram} onChange={handleInputChange} />
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="add_user_fields_div">
-                                                    <span>{translate("pinterest")}</span>
-                                                    <input type="text" className="add_user_fields" name="pintrest" placeholder="Enter Pinterest URL" value={formData.pintrest} onChange={handleInputChange} />
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="add_user_fields_div">
-                                                    <span>{translate("twitter")}</span>
-                                                    <input type="text" className="add_user_fields" name="twiiter" placeholder="Enter LinkedIn URL" value={formData.twiiter} onChange={handleInputChange} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-12">
-                                    <div className="submit_div">
-                                        <button type="submit" onClick={handleUpdateProfile}>
-                                            {translate("updateProfile")}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+            <form>
+                <div className="">
+                    <div className="border rounded-xl" id="personal_info_card">
+                        <div className="border-b px-4 py-3">
+                            <h4 className="text-xl font-normal my-1">{translate("accountSettings")}</h4>
                         </div>
-                    </form>
+                        <div className="p-6 flex flex-col gap-y-6">
+                            {/* Profile Picture */}
+                            <div className="md:flex items-center gap-x-6">
+                                <div className="relative w-32 pb-32 overflow-hidden rounded-lg mb-2 md:mb-0">
+                                    <Image 
+                                        loading="lazy"
+                                        src={uploadedImage || PlaceHolderImg}
+                                        alt="no_img"
+                                        fill
+                                        sizes=""
+                                        onError={placeholderImage}
+                                    />
+                                </div>
+                                <div className="">
+                                    <input type="file" accept="image/jpeg, image/png" id="add_img" ref={fileInputRef} style={{ display: "none" }} onChange={handleImageUpload} />
+                                    <button type="button" className="tw-btn-outline !py-2 text-sm !px-6 mb-2" onClick={handleUploadButtonClick}>
+                                        {translate("ChangeProfilePicture")}
+                                    </button>
+
+                                    <p className="text-red-500 text-xs">{translate("Note:")}</p>
+                                </div>
+                            </div>
+                            {/* Form Fields */}
+                            <div className="">
+                                <label className='d-block mb-1 text-[#272835] text-sm'>{translate('fullName')}</label>
+                                <input
+                                    type="text"
+                                    name="fullName"
+                                    value={formData.fullName}
+                                    onChange={handleInputChange}
+                                    placeholder={translate('enterFullName')}
+                                    pattern="^[a-zA-Z]+$"
+                                    className={inputStyle}
+                                />
+                            </div>
+                            {/* <div className="">
+                                <label className='d-block mb-1 text-[#272835] text-sm'>{translate('email')}</label>
+                                <input
+                                    readOnly={userProfileData?.logintype === "0" ? true : false}
+                                    type="text"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    placeholder={translate('enterEmail')}
+                                    pattern="^[a-zA-Z]+$"
+                                    className={inputStyle}
+                                />
+                            </div> */}
+                            <div className="">
+                                <label className='d-block mb-1 text-[#272835] text-sm'>{translate('phoneNumber')}</label>
+                                <input
+                                    readOnly={userProfileData?.logintype === "0" ? true : false}
+                                    type="text"
+                                    name="phoneNumber"
+                                    value={formData.phoneNumber}
+                                    onChange={handlePhoneNumberChange}
+                                    placeholder={translate('enterPhone')}
+                                    className={inputStyle}
+                                />
+                            </div>
+                            <div className="">
+                                <label className='d-block mb-1 text-[#272835] text-sm'>{translate('address')}</label>
+                                <LocationSearchBox onLocationSelected={handleLocationSelected}
+                                    initialLatitude={userProfileData?.latitude}
+                                    initialLongitude={userProfileData?.longitude}
+                                    className={inputStyle}
+                                />
+                            </div>
+                            <div className="">
+
+                            </div>
+                            {/* <div className="">
+                                <label className='d-block mb-1 text-[#272835] text-sm'>{translate('address')}</label>
+                                <input
+                                    type="text"
+                                    rows={4}
+                                    className={inputStyle}
+                                    name="address"
+                                    placeholder={translate('enterAddress')}
+                                    value={formData.address}
+                                    onChange={handleInputChange}
+                                />
+                            </div> */}
+                        </div>
+                    </div>
                 </div>
+                <div className="mt-3 flex gap-x-2 justify-end">
+                    <button
+                        type="submit"
+                        onClick={handleUpdateProfile}
+                        className="tw-btn-solid w-32"
+                        disabled
+                    >
+                        {translate("save")}
+                    </button>
+                </div>
+            </form>
             </div>
-        </VerticleLayout>
+        </UserLayout>
     );
 };
 

@@ -18,9 +18,6 @@ const Index = ({ seoData, currentURL }) => {
                 pathName={''}
             />
 			<OTPform />
-            <div className="text-center mt-4">
-				<button className='!underline'>{translate('dontReceiveOTP')}</button>
-			</div>
 
         </AuthLayout>
     );

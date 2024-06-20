@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import { StandaloneSearchBox } from "@react-google-maps/api";
-import { loadGoogleMaps } from "@/utils";
+import { loadGoogleMaps, translate } from "@/utils";
+import MapCard from "../Cards/MapCard";
 
-const LocationSearchBox = ({ onLocationSelected, initialLatitude, initialLongitude, clearfilterLocation }) => {
+const LocationSearchBox = ({ onLocationSelected, initialLatitude, initialLongitude, clearfilterLocation, className }) => {
     const inputRef = useRef();
     const { isLoaded } = loadGoogleMaps();
     const [inputValue, setInputValue] = useState("");
@@ -148,13 +149,25 @@ const LocationSearchBox = ({ onLocationSelected, initialLatitude, initialLongitu
                 <StandaloneSearchBox onLoad={(ref) => (inputRef.current = ref)} onPlacesChanged={handlePlaceChanged}>
                     <input
                         type="text"
-                        className="searchLocationInput"
-                        placeholder="Enter Location"
+                        // className="searchLocationInput"
+                        placeholder={translate('enterAddress')}
+                        className={className}
                         onKeyPress={handleKeyPress}
                         onChange={handleInputChange}  // Use onChange event to update inputValue
                         value={inputValue} // Set the input value
                     />
                 </StandaloneSearchBox>
+                <div className="rounded-xl relative overflow-hidden mt-6 w-full xl:w-2/3 pb-[500px]">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3572.097002511012!2d50.12430497559179!3d26.452601979711872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e49fba26b61850f%3A0xee4957527c233d67!2zUnlhZGFoIFJlYWwgRXN0YXRlIC0g2LTYsdmD2Kkg2LHZitin2K_YqSDYp9mE2KjZhtmK2KfZhiDZhNmE2KrYt9mI2YrYsSDZiNin2YTYp9iz2KrYq9mF2KfYsSDYp9mE2LnZgtin2LHZig!5e0!3m2!1sen!2sjo!4v1718796190733!5m2!1sen!2sjo"
+                        loading="lazy"
+                        className=" absolute w-full h-full"
+                        allowFullScreen=""
+                        aria-hidden="false"
+                        tabIndex="0"
+                    ></iframe>
+                </div>
+
             </div>
         )
     );

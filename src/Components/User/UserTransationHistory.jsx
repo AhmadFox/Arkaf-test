@@ -17,7 +17,9 @@ import { translate } from "@/utils/index.js";
 import { languageData } from "@/store/reducer/languageSlice.js";
 import Loader from "@/Components/Loader/Loader";
 import dynamic from "next/dynamic.js";
-const VerticleLayout = dynamic(() => import('../../../src/Components/AdminLayout/VerticleLayout.jsx'), { ssr: false })
+// const VerticleLayout = dynamic(() => import('../../../src/Components/AdminLayout/VerticleLayout.jsx'), { ssr: false })
+
+import UserLayout from "../Layout/UserLayout.jsx";
 
 const UserTransationHistory = () => {
     const systemsettings = useSelector(settingsData);
@@ -64,7 +66,7 @@ const UserTransationHistory = () => {
 
 
     return (
-        <VerticleLayout>
+        <UserLayout>
             <div className="container">
                 <div className="tranction_title">
                     <h1>{translate("transactionHistory")}</h1>
@@ -158,7 +160,7 @@ const UserTransationHistory = () => {
                     </TableContainer>
                 </div>
             </div>
-        </VerticleLayout>
+        </UserLayout>
     );
 };
 

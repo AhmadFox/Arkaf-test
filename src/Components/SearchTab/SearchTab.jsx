@@ -118,8 +118,8 @@ const SearchTab = ({ getCategories }) => {
 
 
     return (
-        <div className="search-box">
-            <div id="searchbox" className="container">
+        <div className="search-box top-auto bottom-20">
+            <div id="" className="container">
                 {/* <ButtonGroup>
                     <ul className="nav nav-tabs" id="tabs">
                         <li className="">

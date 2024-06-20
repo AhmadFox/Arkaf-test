@@ -34,3 +34,47 @@ html, body, #__next {
 .auth-swiper  .swiper-pagination-bullet-active {
 	@apply !bg-white
 }
+
+.tw-btn-solid {
+    @apply mt-2 py-3 px-4 rounded-[8px] bg-[#34484F] border-[#34484F] font-medium capitalize hover:border-[#405861] hover:bg-[#405861] text-white text-center ease-out duration-300
+}
+
+.tw-btn-outline {
+    @apply mt-2 py-3 px-4 rounded-[8px] border font-medium capitalize hover:bg-[#405861] text-[#405861] hover:text-white text-center ease-out duration-300
+}
+
+.tw-btn-solid[disabled] {
+    @apply opacity-60 select-none hover:bg-[#34484F]
+}
+
+.tw-btn-outline[disabled] {
+    @apply opacity-60 select-none hover:bg-white
+}
+
+.pagination .previous {
+    @apply ms-0 me-auto
+}
+
+.pagination .next {
+    @apply ms-auto me-0
+}
+
+.pagination li:first-child a {
+    @apply rounded-[8px] bg-white border
+}
+
+.pagination li:last-child a {
+    @apply rounded-[8px] bg-white border
+}
+
+.pagination__link--disabled a {
+    @apply opacity-50
+}
+
+.pagination li a {
+    @apply rounded-full px-8 py-2.5
+}
+
+.liked-property {
+    @apply text-red-500;
+}

@@ -17,18 +17,19 @@ import {
 import { store } from "@/store/store";
 import { languageData } from "@/store/reducer/languageSlice";
 import { silderCacheData } from "@/store/reducer/momentSlice";
-import { placeholderImage, translate } from "@/utils";
+import { translate } from "@/utils";
 
 // Import Dynamic Components
 import Layout from "../Layout/Layout";
 import LoginModal from "../LoginModal/LoginModal";
-import SearchTab from "../SearchTab/SearchTab.jsx";
+
 import MobileHeadline from "../MobileHeadlines/MobileHeadline";
 import VerticalCard from "../Cards/VerticleCard";
 import VerticalCardSkeleton from "../Skeleton/VerticalCardSkeleton";
 import UserRecommendationCard from "../Cards/UserRecommendationCard";
 
 // Import Component Block Section
+import HeroHeader from "./HeroHeader";
 import OurServices from "./OurServices";
 import NearbyCityswiper from "../NearbyCitySwiper/NearbyCityswiper.jsx"
 
@@ -53,8 +54,6 @@ import city_5 from "@/assets/citys/5.png";
 import city_6 from "@/assets/citys/6.png";
 import city_7 from "@/assets/citys/7.png";
 import city_8 from "@/assets/citys/8.png";
-import headerImag from "@/assets/home_header.png";
-import headerImagMobile from "@/assets/home_header_mobile.png";
 
 
 const HomePage = () => {
@@ -71,8 +70,8 @@ const HomePage = () => {
     const [userRecommendationData, setUserRecommendationData] = useState();
 
     const isLoggedIn = useSelector((state) => state.User_signup);
-    const userCurrentId = isLoggedIn && isLoggedIn.data ? isLoggedIn.data.data.id : null;
-    const userCurrentLocation = isLoggedIn && isLoggedIn.data ? isLoggedIn.data.data.city : null;
+    const userCurrentId = isLoggedIn && isLoggedIn?.data ? isLoggedIn?.data?.data?.id : null;
+    const userCurrentLocation = isLoggedIn && isLoggedIn?.data ? isLoggedIn?.data?.data?.city : null;
     const language = store.getState().Language.languages;
     const sliderdata = useSelector(silderCacheData);
 
@@ -341,45 +340,7 @@ const HomePage = () => {
         <Layout>
 
             {/* HERO HEADER SECTION  */}
-            {
-                !isLoading &&
-                <section id="mainheroImage" className="bg-dark">
-                    {/* <div>
-                        <SliderComponent sliderData={sliderdata} />
-                    </div> */}
-
-                    <div className="hero-header overflow-hidden">
-                        <div className="hero-text">
-                            <h1>{translate("heroTitle")}</h1>
-                            <p>{translate("heroSubTitle")}</p>
-                        </div>
-                        <div className="d-none d-md-block">
-                            <Image
-                                loading="lazy"
-                                onError={placeholderImage}
-                                src={headerImag}
-                                alt="Hero Home Image"
-                                width={1440}
-                                height={1024}
-                                className="w-100"
-                            />
-                        </div>
-                        <div className="d-md-none" style={{ position: 'relative', width: '100%', height: '101vh' }}>
-                            <Image
-                                loading="lazy"
-                                onError={placeholderImage}
-                                src={headerImagMobile}
-                                alt="Hero Home Image Mobile"
-                                fill
-                            />
-                        </div>
-                    </div>
-                    {/* Sell Rent  */}
-                    
-
-                    <SearchTab getCategories={''} />
-                </section>
-            }
+            <HeroHeader />
 
             <div style={{ marginTop: sliderdata.length > 0 ? '0' : '0px' }}>
 

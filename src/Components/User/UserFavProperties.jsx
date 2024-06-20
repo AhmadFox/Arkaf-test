@@ -1,18 +1,17 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { GetFavPropertyApi } from "@/store/actions/campaign";
 import VerticalCardSkeleton from "@/Components/Skeleton/VerticalCardSkeleton";
 import VerticalCard from "@/Components/Cards/VerticleCard";
 import Link from "next/link";
 import { languageData } from "@/store/reducer/languageSlice";
-import Pagination from "@/Components/Pagination/ReactPagination";
 import { translate } from "@/utils";
 import NoData from "@/Components/NoDataFound/NoData";
 import dynamic from "next/dynamic.js";
 import TablePagination from "../Pagination/TablePagination.jsx";
 import ReactPagination from "@/Components/Pagination/ReactPagination";
-const VerticleLayout = dynamic(() => import('../../../src/Components/AdminLayout/VerticleLayout.jsx'), { ssr: false })
+import UserLayout from "../Layout/UserLayout.jsx";
 
 
 const UserFavProperties = () => {
@@ -64,48 +63,45 @@ const UserFavProperties = () => {
     };
 
     return (
-        <VerticleLayout>
+        <UserLayout>
             <div className="container">
-                <div className="dashboard_titles">
-                    <h3>{translate("fav")}</h3>
-                </div>
-                <div className="fav_card">
-                    <div className="row">
-                        {isLoading ? (
-                            Array.from({ length: 8 }).map((_, index) => (
-                                <div className="col-sm-12 col-md-6 col-lg-3 loading_data" key={index}>
-                                    <VerticalCardSkeleton />
-                                </div>
-                            ))
-                        ) : (
-                            <>
-                                {getFavProp?.length > 0 ? (
-                                    <>
-                                        {getFavProp?.map((ele, index) => (
-                                            <div className="col-sm-12 col-md-6 col-lg-3" key={index}>
-                                                <Link href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
+                <div className="border rounded-xl overflow-hidden">
+                    <div className="border-b py-3 px-4">
+                        <h3 className="text-xl md:text-2xl">{translate("favoriteList")}</h3>
+                    </div>
+                    <div className="py-4 px-4">
+                        <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                            {isLoading ? (
+                                Array.from({ length: 6 }).map((_, index) => (
+                                    <VerticalCardSkeleton key={index}/>
+                                ))
+                            ) : (
+                                <Fragment>
+                                    {getFavProp?.length > 0 ? (
+                                        <Fragment>
+                                            {getFavProp?.map((ele, index) => (
+                                                <Link key={index} href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
                                                     <VerticalCard ele={ele} removeCard={removeCard} />
                                                 </Link>
+                                            ))}
+                                        </Fragment>
+                                    ) : (
+                                        <div className="">
+                                            <div className="flex justify-center">
+                                                <NoData />
                                             </div>
-                                        ))}
-                                        <div className="col-12">
-                                          
-                                           <ReactPagination pageCount={Math.ceil(total / limit)} onPageChange={handlePageChange} s />
                                         </div>
-                                    </>
-                                ) : (
-                                    <div className="col-sm-12">
-                                        <div className="noDataFoundDiv">
-                                            <NoData />
-                                        </div>
-                                    </div>
-                                )}
-                            </>
-                        )}
+                                    )}
+                                </Fragment>
+                            )}
+                        </div>
+                    </div>
+                    <div className="px-4 py-8 border-t">  
+                        <ReactPagination pageCount={Math.ceil(total / limit)} onPageChange={handlePageChange} s />
                     </div>
                 </div>
             </div>
-        </VerticleLayout>
+        </UserLayout>
     );
 };
 

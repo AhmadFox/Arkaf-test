@@ -1063,10 +1063,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary-text-color01);
   border: none;
-  margin-top: 2px;
-  text-transform: capitalize;
+  padding: 0;
+}
+#dropdown-basic01:after {
+ display: none;
+}
+
+.dropdown-menu  .dropdown-item {
+  color: #333 !important;
 }
 .navbar-nav .dropdown-menu {
   width: max-content;
@@ -1087,7 +1092,7 @@ body {
   background: transparent;
 }
 #language {
-  width: 5vw !important;
+  /* width: 5vw !important; */
 }
 .dropdown-item:focus,
 .dropdown-item:hover {
@@ -1871,9 +1876,9 @@ button.learn-more .button-text {
   left: 0;
 }
 
-.liked_property {
+/* .liked-property {
   color: var(--primary-color);
-}
+} */
 
 .verticle_card .verticle_main_card .sell_teg {
   text-transform: capitalize;
@@ -3892,8 +3897,11 @@ option {
   max-height: 550px;
 }
 #prop-main-image01 {
-  height: 50vh;
+  height: 60vh;
   cursor: pointer;
+}
+#prop-main-image01 img {
+  object-fit: cover;
 }
 @media only screen and (max-width: 992px) {
   .left-imgs01 {
@@ -5746,13 +5754,13 @@ a {
   font-size: 14px;
 }
 
-.pagination {
+/* .pagination {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 30px;
   flex-wrap: wrap;
-}
+} */
 
 .pagination li.pagination__link--active a {
   background-color: var(--primary-color);
@@ -5763,7 +5771,7 @@ a {
   color: var(--primary-text-color01) !important;
 }
 
-.pagination li a {
+/* .pagination li a {
   position: relative;
   display: block;
   padding: 0px 15px;
@@ -5776,7 +5784,7 @@ a {
   border-radius: 5px;
   transition: all 0.5s ease-out 0s;
   text-decoration: none;
-}
+} */
 
 .pagination li.pagination__link01--active a {
   background-color: var(--primary-color);
@@ -5787,7 +5795,7 @@ a {
   color: var(--primary-text-color01) !important;
 }
 
-.pagination li a {
+/* .pagination li a {
   position: relative;
   display: block;
   padding: 0px 15px;
@@ -5800,19 +5808,19 @@ a {
   border-radius: 5px;
   transition: all 0.5s ease-out 0s;
   text-decoration: none;
-}
+} */
 
 /* Link hover styles */
-.pagination li a:hover {
+/* .pagination li a:hover {
   color: var(--primary-text-color02) !important;
-}
+} */
 
 /* Disabled link styles */
-.pagination__link--disabled a {
+/* .pagination__link--disabled a {
   cursor: not-allowed;
   background-color: #ebebe4 !important;
   color: #c6c6c6;
-}
+} */
 
 .tabel_pagination {
   display: flex;

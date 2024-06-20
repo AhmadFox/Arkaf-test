@@ -1,6 +1,5 @@
 "use client"
-import React, { useEffect, useRef, useState } from 'react'
-import Breadcrumb from "@/Components/Breadcrumb/Breadcrumb";
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import Location from "@/Components/Location/Location";
 import { useRouter } from "next/router";
 import { loadUpdateData, loadUpdateUserData, userSignUpData } from "../../store/reducer/authSlice";
@@ -13,7 +12,11 @@ import { placeholderImage, translate } from "@/utils";
 import LocationSearchBox from "@/Components/Location/LocationSearchBox";
 import Image from "next/image";
 import { Fcmtoken } from '@/store/reducer/settingsSlice';
-import Layout from '../Layout/Layout';
+import AuthLayout from '../Layout/AuthLayout';
+
+const inputStyle = `
+    p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
+`;
 
 const UserRegister = () => {
 
@@ -79,7 +82,7 @@ const UserRegister = () => {
     const handleSubmitInfo = (e) => {
         e.preventDefault();
 
-        if (signupData.data.data.logintype === "1") {
+        if (signupData && signupData?.data?.data?.logintype === "1") {
             if (!email.trim()) {
                 toast.error(translate("fillEmail"));
                 return; // Stop further execution
@@ -117,88 +120,79 @@ const UserRegister = () => {
     };
 
     return (
-        <Layout>
-            <Breadcrumb title={translate("basicInfo")} />
-            <section id="user_register">
-                <div className="container">
-                    <div className="row" id="register_main_card">
-                        <div className="col-sm-12 col-md-6">
-                            <div className="card">
-                                <div className="card-header">
-                                    <div className="card-title">{translate("addInfo")}</div>
+        <AuthLayout>
+            {/* <Breadcrumb title={translate("basicInfo")} /> */}
+            <section className='mt-12'>
+                <div className="border border-[#f2f2f2] rounded-lg md:rounded-xl bg-white shadow-[0px_11px_22px_rgba(0,0,0,0.07)] overflow-hidden">
+                    <div className="border-b px-4 py-3">
+                        <h4 className='text-xl md:text-2xl font-medium'>{translate('completeYourAccount')}</h4>
+                    </div>
+                    <div className="px-4 py-5">
+                        <form action="" className='grid sm:grid-cols-2 gap-3'>
+                            <div className="col-span-2 flex items-center gap-4">
+                                <div className="relative rounded-full overflow-hidden w-32 h-32 bg-[#f3f3f3]">
+                                    <Image
+                                        loading="lazy"
+                                        src={uploadedImage || dummyimg.src}
+                                        alt="user profile image or avatar" 
+                                        fill
+                                        sizes=''
+                                        className='objrct-fit'
+                                        onError={placeholderImage}/>
                                 </div>
-                                <div className="card-body">
-                                    <form action="">
-                                        <div className="form_all_fields">
-                                            <div className="row">
-                                                <div className="col-sm-12">
-                                                    <div className="add_profile_div">
-                                                        <div className="image_div">
-                                                            <Image loading="lazy" src={uploadedImage || dummyimg.src} alt="no_img" width={200} height={200} onError={placeholderImage}/>
-                                                        </div>
-                                                        <div className="add_profile">
-                                                            <input type="file" accept="image/jpeg, image/png" id="add_img" ref={fileInputRef} style={{ display: "none" }} onChange={handleImageUpload} />
-                                                            <button type="button" onClick={handleUploadButtonClick}>
-                                                                {translate("uploadImg")}
-                                                            </button>
+                                <div className="">
+                                    <input type="file" accept="image/jpeg, image/png" id="add_img" ref={fileInputRef} style={{ display: "none" }} onChange={handleImageUpload} />
+                                    <button type="button" className='tw-btn-outline text-sm !px-8 !py-2 mb-2' onClick={handleUploadButtonClick}>
+                                        {translate("uploadImg")}
+                                    </button>
 
-                                                            <p>{translate("Note:")}</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-sm-12 col-md-6">
-                                                    <div className="user_fields">
-                                                        <span>{translate("userName")}</span>
-                                                        <input type="text" name="uname" placeholder="Enter Your Name Please" value={username} onChange={(e) => setUsername(e.target.value)} required    />
-                                                    </div>
-                                                </div>
-                                                {signupData?.data?.data?.logintype === "1" ? (
-
-                                                    <div className="col-sm-12 col-md-6">
-                                                        <div className="user_fields">
-                                                            <span>{translate("email")}</span>
-                                                            <input type="email" name="email" placeholder="Enter Your Email Please" value={email} onChange={(e) => setEmail(e.target.value)} required/>
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <div className="col-sm-12 col-md-6">
-                                                        <div className="user_fields">
-                                                            <span>{translate("phoneNumber")}</span>
-                                                            <input type="text" name="mobile" placeholder="Enter Your Phone Number Please" value={mobile} onChange={(e) => setMobile(e.target.value)} required/>
-                                                        </div>
-                                                    </div>
-
-                                                )}
-                                                <div className="col-sm-12 col-md-12">
-                                                    <div className="user_fields">
-                                                        <span>{translate("location")}</span>
-                                     
-                                                        <LocationSearchBox onLocationSelected={handleSelectLocation} />
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-12 col-md-12">
-                                                    <div className="user_fields">
-                                                        <span>{translate("address")}</span>
-                                                        <textarea rows={4} className="current_address" placeholder="Enter address" value={address} onChange={(e) => setAddress(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div className="card-footer">
-                                    <div className="basic_submit">
-                                        <button onClick={handleSubmitInfo}>{translate("submit")}</button>
-                                    </div>
+                                    <p className='text-red-500 text-sm'>{translate("Note:")}</p>
                                 </div>
                             </div>
-                        </div>
+                            <div className="">
+                                <label htmlFor='userName' className='d-block mb-1 text-[#272835] text-sm'>{translate('userName')}</label>
+                                <input
+                                    required
+                                    id="userName"
+                                    type="text"
+                                    name="uname"
+                                    value={username}
+                                    className={inputStyle}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    placeholder={translate('enterYourNamePlease')}
+                                />
+                            </div>
+                            <div className="">
+                                <label htmlFor='userPhone' className='d-block mb-1 text-[#272835] text-sm'>{translate('phoneNumber')}</label>
+                                <input
+                                    required
+                                    id="userPhone"
+                                    type="text"
+                                    name="mobile"
+                                    value={mobile}
+                                    className={inputStyle}
+                                    onChange={(e) => setMobile(e.target.value)} 
+                                    placeholder={translate('enterYourPhoneNumberPlease')}
+                                />
+                            </div>
+                            <div className="col-span-2">
+                                <label htmlFor='userLocation' className='d-block mb-1 text-[#272835] text-sm'>{translate('location')}</label>
+                                <LocationSearchBox
+                                    className={inputStyle}
+                                    onLocationSelected={handleSelectLocation}
+                                />
+                            </div>
+                        </form>
                     </div>
                 </div>
+                {showCurrentLoc && <Location isOpen={true} onClose={handleCloseLocModal} onSelectLocation={handleSelectLocation} />}
             </section>
-            {showCurrentLoc && <Location isOpen={true} onClose={handleCloseLocModal} onSelectLocation={handleSelectLocation} />}
-        </Layout>
+            <div className="sticky bottom-0 left-0 py-3 w-full bg-white">
+                <div className="container flex flex-row-reverse justify-between items-center">
+                    <button className='tw-btn-solid w-40' onClick={handleSubmitInfo}>{translate("complete")}</button>
+                </div>
+            </div>
+        </AuthLayout>
     )
 }
 
