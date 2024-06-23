@@ -1,6 +1,7 @@
 import { store } from "@/store/store"
 
 export const GET_SETTINGS = "get_system_settings"
+export const GET_PROFILE = "get-user-data"
 export const USER_SIGNUP = "register"
 export const USER_VERIFY_CODE = "verify-code"
 export const USER_RESEND_CODE = "resend-code"
@@ -78,11 +79,11 @@ export const getSettingApi = (user_id) => {
 
     }
 }
+
 // USER SIGNUP
 // export const user_signupApi = (name, email, mobile, type, address, firebase_id, logintype, profile, fcm_id) => {
-export const user_signupApi = (name, email, mobile, password, password_confirmation, type, firebase_id) => {
+export const user_signupApi = (email, mobile, password, password_confirmation, type, firebase_id) => {
     let data = new FormData();
-    data.append("name", name);
     data.append("email", email);
     data.append("mobile", mobile);
     data.append("password", password);
@@ -114,7 +115,6 @@ export const user_verifyCodeApi = (email, code) => {
 
 // USER RESEND
 export const user_resendCodeApi = (email) => {
-    console.log('email ==>', email);
     let data = new FormData();
     data.append("email", email);
     return {
@@ -170,27 +170,27 @@ export const user_resetPasswordApi = (email, code, password, passwordConfirmatio
 }
 
 // UPDATE PROFILE
-export const update_profile = (userid, name, email, mobile, address, firebase_id, profile, latitude, longitude, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, fcm_id, notification, city, state, country) => {
+export const update_profile = (name, mobile, fcm_id, address, firebase_id, notification, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, latitude, longitude, city, state, country, profile) => {
     let data = new FormData();
-    data.append("userid", userid);
     data.append("name", name);
-    data.append("email", email);
     data.append("mobile", mobile);
-    data.append("firebase_id", firebase_id);
+    data.append("fcm_id", fcm_id);
     data.append("address", address);
-    data.append("profile", profile);
-    data.append("latitude", latitude);
-    data.append("longitude", longitude);
+    data.append("firebase_id", firebase_id);
+    data.append("notification", notification);
     data.append("about_me", about_me);
     data.append("facebook_id", facebook_id);
     data.append("twiiter_id", twiiter_id);
     data.append("instagram_id", instagram_id);
     data.append("pintrest_id", pintrest_id);
-    data.append("fcm_id", fcm_id);
-    data.append("notification", notification);
+    data.append("latitude", latitude);
+    data.append("longitude", longitude);
     data.append("city", city);
     data.append("state", state);
     data.append("country", country);
+    data.append("profile", profile);
+
+    console.log('profile', profile);
     return {
         url: `${UPDATE_PROFILE}`,
         method: 'POST',
@@ -226,6 +226,20 @@ export const getCategorieApi = () => {
 
         },
         authorizationHeader: false,
+
+    }
+}
+
+// GET USER PROFILE
+export const getProfileApi = () => {
+
+    return {
+        url: `${GET_PROFILE}`,
+        method: "GET",
+        params: {
+
+        },
+        authorizationHeader: true,
 
     }
 }
@@ -311,8 +325,6 @@ export const addFavourite = (property_id, type) => {
 // GET_LANGUAGES
 
 export const getLanguages = (language_code, web_language_file) => {
-    console.log('language_code', language_code);
-    console.log('web_language_file', web_language_file);
     return {
         url: `${GET_LANGUAGES}`,
         method: "GET",
@@ -417,11 +429,39 @@ export const confirmPayment = (paymentIntentId) => {
     }
 }
 // POST PROPERTY
-export const postProperty = (userid, title, description, city, state, country, latitude, longitude, address, price, category_id, property_type, video_link, parameters, facilities, title_image, threeD_image, gallery_images, meta_title, meta_description, meta_keywords, meta_image, rentduration, is_premium) => {
+export const postProperty = (
+    userid,
+        title,
+        description,
+        city,
+        size,
+    state,
+    country,
+        latitude,
+        longitude,
+        address,
+        price,
+        category_id,
+        property_type,
+    video_link,
+        parameters,
+    facilities,
+        title_image,
+    threeD_image,
+        gallery_images,
+    meta_title,
+    meta_description,
+    meta_keywords,
+    meta_image,
+    rentduration,
+    is_premium,
+        status,
+) => {
     let data = new FormData();
 
     // Append the property data to the FormData object
     data.append('userid', userid);
+    data.append('size', size);
     data.append('title', title);
     data.append('description', description);
     data.append('city', city);
@@ -440,6 +480,7 @@ export const postProperty = (userid, title, description, city, state, country, l
     data.append('meta_image', meta_image);
     data.append('rentduration', rentduration);
     data.append('is_premium', is_premium);
+    data.append('status', status);
 
     // Append the parameters array if it is an array
     if (Array.isArray(parameters)) {

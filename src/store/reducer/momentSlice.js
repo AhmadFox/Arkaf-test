@@ -2,12 +2,13 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 import moment from "moment";
 import { store } from "../store";
 import { apiCallBegan } from "../actions/apiActions";
-import { getSliderApi, getCategorieApi } from "@/utils/api";
+import { getSliderApi, getCategorieApi, getProfileApi } from "@/utils/api";
 
 let initialState = {
     loading: false,
     lastFetch: null,
     slider: [],
+    profile: [],
     categories: [],
     newUserChatData: null,
     filterData: [],
@@ -27,6 +28,17 @@ const momentSlice = createSlice({
             state.lastFetch = Date.now();
         },
         sliderFailed: (state, action) => {
+            state.loading = false;
+        },
+        profileRequested: (state, action) => {
+            state.loading = true;
+        },
+        profileSuccess: (state, action) => {
+            state.loading = false;
+            state.profile = action.payload.data;
+            state.lastFetch = Date.now();
+        },
+        profileFailed: (state, action) => {
             state.loading = false;
         },
         categoriesRequested: (state, action) => {
@@ -60,7 +72,7 @@ const momentSlice = createSlice({
     },
 });
 
-export const { sliderRequested, sliderSuccess, sliderFailed, categoriesRequested, categoriesSuccess, categoriesFailed, newUserChatData, newUserRemoveChat, filterData, articleId } = momentSlice.actions;
+export const { sliderRequested, sliderSuccess, sliderFailed, profileRequested, profileSuccess, profileFailed, categoriesRequested, categoriesSuccess, categoriesFailed, newUserChatData, newUserRemoveChat, filterData, articleId } = momentSlice.actions;
 export default momentSlice.reducer;
 
 // API Calls
@@ -76,6 +88,24 @@ export const loadSlider = (onSuccess, onError, onStart) => {
             onStartDispatch: sliderRequested.type,
             onSuccessDispatch: sliderSuccess.type,
             onErrorDispatch: sliderFailed.type,
+            onStart,
+            onSuccess,
+            onError,
+        })
+    );
+};
+export const loadProfile = (onSuccess, onError, onStart) => {
+    const { lastFetch } = store.getState().cachedata;
+    const diffInMinutes = moment().diff(moment(lastFetch), "minutes");
+    // If API data is fetched within last 10 minutes then don't call the API again
+    // if (diffInMinutes < 10) return false;
+    store.dispatch(
+        apiCallBegan({
+            ...getProfileApi(),
+            displayToast: false,
+            onStartDispatch: profileRequested.type,
+            onSuccessDispatch: profileSuccess.type,
+            onErrorDispatch: profileFailed.type,
             onStart,
             onSuccess,
             onError,
@@ -120,6 +150,10 @@ export const removeChat = (remove) => {
 export const silderCacheData = createSelector(
     (state) => state.cachedata,
     (cachedata) => cachedata.slider
+);
+export const profileCacheData = createSelector(
+    (state) => state.cachedata,
+    (cachedata) => cachedata.profile
 );
 export const categoriesCacheData = createSelector(
     (state) => state.cachedata,

@@ -25,10 +25,6 @@ export const authSlice = createSlice({
             user_signup.loading = true;
         },
         signupSuccess: (user_signup, action) => {
-            console.log(' action', action);
-            console.log(' action.meta', action.meta);
-            console.log(' action.meta.arg', action.meta?.arg);
-            console.log(' action.meta.arg.email', action.meta?.arg?.email);
             user_signup.data = action.payload;
             if (action.meta && action.meta.arg) {
                 user_signup.data.email = action.meta.arg.email; // Store email in state
@@ -57,21 +53,35 @@ export const { signupRequested, signupSuccess, signupFailure, updateDataSuccess,
 export default authSlice.reducer;
 
 // API CALLS
-export const signupLoaded = (name, email, mobile, password, password_confirmation, type, firebase_id, onSuccess, onError, onStart) => {
+export const signupLoaded = (email, phone, password, password_confirmation, type, firebase_id, onSuccess, onError, onStart) => {
     store.dispatch(
         apiCallBegan({
-            ...user_signupApi(name, email, mobile, password, password_confirmation, type, firebase_id),
+            ...user_signupApi(email, phone, password, password_confirmation, type, firebase_id),
             displayToast: false,
             onStartDispatch: signupRequested.type,
             onSuccessDispatch: signupSuccess.type,
             onErrorDispatch: signupFailure.type,
-            meta: { arg: { email } }, // Pass email in meta
+            meta: { arg: { email } },
             onStart,
             onSuccess,
             onError,
+            onSuccess: (response) => {
+                console.log('Success response:', response);
+                if (!response.error) {
+                    onSuccess(response);
+                } else {
+                    onError(response);
+                }
+            },
+            onError: (error) => {
+                console.log('Error response:', error);
+                onError(error);
+            }
         })
     );
 };
+
+
 
 // API CALLS
 export const verifyLoaded = (email, code, onSuccess, onError, onStart) => {
@@ -118,8 +128,18 @@ export const loginLoaded = (email, password, onSuccess, onError, onStart) => {
             onErrorDispatch: signupFailure.type,
             meta: { arg: { email } }, // Pass email in meta
             onStart,
-            onSuccess,
-            onError,
+            onSuccess: (response) => {
+                console.log('Success response:', response);
+                if (!response.error) {
+                    onSuccess(response);
+                } else {
+                    onError(response);
+                }
+            },
+            onError: (error) => {
+                console.log('Error response:', error);
+                onError(error);
+            }
         })
     );
 };

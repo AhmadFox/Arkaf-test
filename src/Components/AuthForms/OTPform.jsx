@@ -17,6 +17,8 @@ const OTPform = () => {
 	const navigate = useRouter();
 	const userData = useSelector(userSignUpData);
 
+	console.log('userData ==>', userData);
+
 	const [code, setCode] = useState('');
 	const [email, setEmail] = useState('');
 	const [formData, setFormData] = useState({});
@@ -31,6 +33,7 @@ const OTPform = () => {
 	useEffect(() => {
 		if (userData && userData.data && userData.data.email) {
 			setEmail(userData.data.email);
+			console.log('userData.data.email:', userData.data);
 		}
 	}, [userData]);
 

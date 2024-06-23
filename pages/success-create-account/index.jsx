@@ -23,7 +23,7 @@ const Index = ({ seoData, currentURL }) => {
                     <span className="bg-white text-[#616161] relative z-[2] px-2">{translate('or')}</span>
                 </div>
                 <p className="text-[#616161]">{translate('compleateMoreSteps')}</p>
-                <Link href="/complete-account" className="border border-[#DFE1E7] py-2.5 px-4 rounded-md flex items-center gap-2 text-[#272835] hover:text-white hover:bg-[#34484F] ease-in-out duration-200">
+                <Link href="/user/profile" className="border border-[#DFE1E7] py-2.5 px-4 rounded-md flex items-center gap-2 text-[#272835] hover:text-white hover:bg-[#34484F] ease-in-out duration-200">
                     {translate('finishUp')}
                 </Link>
             </div>

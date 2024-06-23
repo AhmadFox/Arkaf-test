@@ -3,7 +3,7 @@ import { StandaloneSearchBox } from "@react-google-maps/api";
 import { loadGoogleMaps, translate } from "@/utils";
 import MapCard from "../Cards/MapCard";
 
-const LocationSearchBox = ({ onLocationSelected, initialLatitude, initialLongitude, clearfilterLocation, className }) => {
+const LocationSearchBox = ({ onLocationSelected, initialLatitude, initialLongitude, clearfilterLocation, className, reset }) => {
     const inputRef = useRef();
     const { isLoaded } = loadGoogleMaps();
     const [inputValue, setInputValue] = useState("");
@@ -25,24 +25,24 @@ const LocationSearchBox = ({ onLocationSelected, initialLatitude, initialLongitu
         if (initialLatitude && initialLongitude) {
             fetchLocationFromCoordinates(initialLatitude, initialLongitude);
         }
-    }, [initialLatitude, initialLongitude]);
+    }, [initialLatitude, initialLongitude, reset]);
     useEffect(() => {
         if (clearfilterLocation && clearfilterLocation === true) {
             setInputValue("")
         }
-    }, [clearfilterLocation]);
+    }, [clearfilterLocation, reset]);
 
     useEffect(() => {
         if (latitude && longitude) {
             fetchLocationFromCoordinates(latitude, longitude);
         }
-    }, [latitude, longitude]);
+    }, [latitude, longitude, reset]);
 
     useEffect(() => {
         if (window.google && isLoaded) {
             // Initialize any Google Maps API-dependent logic here
         }
-    }, [isLoaded]);
+    }, [isLoaded, reset]);
     
     const fetchLocationFromCoordinates = async (lat, lng) => {
         if (!lat || !lng) {
@@ -157,7 +157,7 @@ const LocationSearchBox = ({ onLocationSelected, initialLatitude, initialLongitu
                         value={inputValue} // Set the input value
                     />
                 </StandaloneSearchBox>
-                <div className="rounded-xl relative overflow-hidden mt-6 w-full xl:w-2/3 pb-[500px]">
+                <div className="rounded-xl relative overflow-hidden mt-6 w-full pb-[500px]">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3572.097002511012!2d50.12430497559179!3d26.452601979711872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e49fba26b61850f%3A0xee4957527c233d67!2zUnlhZGFoIFJlYWwgRXN0YXRlIC0g2LTYsdmD2Kkg2LHZitin2K_YqSDYp9mE2KjZhtmK2KfZhiDZhNmE2KrYt9mI2YrYsSDZiNin2YTYp9iz2KrYq9mF2KfYsSDYp9mE2LnZgtin2LHZig!5e0!3m2!1sen!2sjo!4v1718796190733!5m2!1sen!2sjo"
                         loading="lazy"

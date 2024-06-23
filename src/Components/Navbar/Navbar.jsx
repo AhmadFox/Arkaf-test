@@ -37,11 +37,12 @@ import dummyimg from '@/assets/Images/user_profile.png'
 
 
 
+
 const Nav = () => {
     const router = useRouter();
     const language = store.getState().Language.languages;
-    const { signOut } = FirebaseData();    
-
+    const { signOut } = FirebaseData();   
+    
     const dispatch = useDispatch();
     const currentLanguage = useSelector(state => state.Language.selectedLanguage);
 
@@ -65,6 +66,8 @@ const Nav = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const userProfileData = signupData?.data?.profile
+
     useEffect(() => {
         if (language && language.rtl === 1) {
             document.documentElement.dir = "rtl";
@@ -74,25 +77,6 @@ const Nav = () => {
 
         }
     }, [language]);
-    useEffect(() => {
-        if (signupData?.data?.data.name === "" || signupData?.data?.data.email === "" || signupData?.data?.data?.mobile === "" && !user_register) {
-            Swal.fire({
-                title: 'Complete Profile First',
-                icon: 'info',
-                customClass: {
-                    confirmButton: 'Swal-confirm-buttons',
-                    cancelButton: "Swal-cancel-buttons"
-                },
-                confirmButtonText: 'OK',
-                backdrop: 'static',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // If the user clicks "OK," navigate to "/user-register"
-                    router.push('/user-register');
-                }
-            });
-        }
-    }, [signupData]);
 
 
 
@@ -132,10 +116,6 @@ const Nav = () => {
         const isChecked = event.target.checked;
         const newLanguage = isChecked ? 'ar' : 'en';
 
-        console.log('newLanguage ==>', newLanguage);
-        console.log('language ==>', language);
-        console.log('systemDefaultLanguageCode ==>', systemDefaultLanguageCode);
-
         store.dispatch(setLanguage(newLanguage));
 
         languageLoaded(
@@ -143,8 +123,6 @@ const Nav = () => {
                 isChecked ? "2" : "1",
                 (response) => {
                     const currentLang = response && response.data.name;
-                    console.log('currentLang ==>', currentLang);
-
                     // Dispatch the setLanguage action to update the selected language in Redux
                     store.dispatch(setLanguage(currentLang));
                     setSelectedLanguage(currentLang);
@@ -298,7 +276,7 @@ const Nav = () => {
                                         <Link href="/buy" className="nav-link">{translate("buy")}</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" href="/add-listing">{translate("addProperty")}</Link>
+                                        <Link href="/user/properties" className="nav-link">{translate("addProperty")}</Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link className="nav-link" href="/add-request">{translate("propertyRequest")}</Link>
@@ -316,7 +294,7 @@ const Nav = () => {
                                 // Check if signupData.data is null
                                 signupData?.data === null ? (
                                     <div className="d-flex gap-3">
-                                        <Link href="/log-in" aria-label="regester account">
+                                        <Link href="/login" aria-label="regester account">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#34484f" style={{width: '32px'}}>
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                             </svg>
@@ -324,41 +302,58 @@ const Nav = () => {
                                         </Link>
                                     </div>
                                 ) : // Check if mobile and firebase_id are present
-                                signupData?.data?.data.mobile && signupData?.data?.data.firebase_id ? (
-                                        <Dropdown>
-                                            <Dropdown.Toggle id="dropdown-basic01">
-                                                {/* <RiUserSmileLine size={20} className="icon01" /> */}
+                                signupData?.data ? (
+                                    <Dropdown>
+                                        <Dropdown.Toggle id="dropdown-basic01">
+                                            {/* <RiUserSmileLine size={20} className="icon01" /> */}
 
-                                                {/* {signupData.data.data.name} */}
-                                                <div className="border rounded-full py-0.5 px-1 flex gap-x-1 items-center justify-between">
-                                                    <Image
-                                                        src={signupData?.data?.data.image ? signupData?.data?.data.image : ArkafAvatar}
-                                                        alt={'User Profile Picture'}
-                                                        width={30}
-                                                        height={30}
-                                                        className="object-fit rounded-full"
-                                                    />
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#333" className="size-4">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                            {/* {signupData.data.data.name} */}
+                                            <div className="border rounded-full py-1.5 px-2.5 flex gap-x-2 items-center justify-between">
+                                                <Image
+                                                    src={userProfileData ||  dummyimg.src}
+                                                    alt={'User Profile Picture'}
+                                                    width={32}
+                                                    height={32}
+                                                    className="object-fit rounded-full"
+                                                />
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#333" className="size-4">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                                </svg>
+                                            </div>
+                                        </Dropdown.Toggle>
+                                            <Dropdown.Menu className="!rounded-lg" id="language">
+                                                <Dropdown.Item onClick={handleShowDashboard} className="flex py-2 items-center gap-x-2 group !text-[#5A727B] hover:!bg-[#F6F6F6] rounded-sm hover:m-0 focus:m-0 ease-in-out duration-200">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+                                                        <g id="Group_6" data-name="Group 6" transform="translate(-728 -443)">
+                                                            <rect id="Rectangle_4" data-name="Rectangle 4" width="21" height="21" transform="translate(728 443)" fill="none"/>
+                                                            <path id="Vector" d="M.5.833A.833.833,0,0,1,1.333,0h5a.833.833,0,0,1,.833.833v5a.833.833,0,0,1-.833.833h-5A.833.833,0,0,1,.5,5.833Zm0,8.333a.833.833,0,0,1,.833-.833h5a.833.833,0,0,1,.833.833v5A.833.833,0,0,1,6.333,15h-5A.833.833,0,0,1,.5,14.167ZM8.833.833A.833.833,0,0,1,9.667,0h5A.833.833,0,0,1,15.5.833v5a.833.833,0,0,1-.833.833h-5a.833.833,0,0,1-.833-.833Zm0,8.333a.833.833,0,0,1,.833-.833h5a.833.833,0,0,1,.833.833v5a.833.833,0,0,1-.833.833h-5a.833.833,0,0,1-.833-.833Zm1.667-7.5V5h3.333V1.667ZM10.5,10v3.333h3.333V10ZM2.167,1.667V5H5.5V1.667Zm0,8.333v3.333H5.5V10Z" transform="translate(730.5 446)" className="fill-[#5A727B]"/>
+                                                        </g>
                                                     </svg>
-                                                </div>
-                                            </Dropdown.Toggle>
-
-                                                <Dropdown.Menu id="language">
-                                                    <Dropdown.Item onClick={handleShowDashboard} className="group hover:bg-slate-400 ease-in-out duration-200">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
-                                                            <g id="Group_6" data-name="Group 6" transform="translate(-728 -443)">
-                                                                <rect id="Rectangle_4" data-name="Rectangle 4" width="21" height="21" transform="translate(728 443)" fill="none"/>
-                                                                <path id="Vector" d="M.5.833A.833.833,0,0,1,1.333,0h5a.833.833,0,0,1,.833.833v5a.833.833,0,0,1-.833.833h-5A.833.833,0,0,1,.5,5.833Zm0,8.333a.833.833,0,0,1,.833-.833h5a.833.833,0,0,1,.833.833v5A.833.833,0,0,1,6.333,15h-5A.833.833,0,0,1,.5,14.167ZM8.833.833A.833.833,0,0,1,9.667,0h5A.833.833,0,0,1,15.5.833v5a.833.833,0,0,1-.833.833h-5a.833.833,0,0,1-.833-.833Zm0,8.333a.833.833,0,0,1,.833-.833h5a.833.833,0,0,1,.833.833v5a.833.833,0,0,1-.833.833h-5a.833.833,0,0,1-.833-.833Zm1.667-7.5V5h3.333V1.667ZM10.5,10v3.333h3.333V10ZM2.167,1.667V5H5.5V1.667Zm0,8.333v3.333H5.5V10Z" transform="translate(730.5 446)" fill="#272835"/>
-                                                            </g>
-                                                        </svg>
-                                                        {translate("dashboard")}
-                                                    </Dropdown.Item>
-                                                    <Dropdown.Item onClick={handleLogout}>{translate("logout")}</Dropdown.Item>
-                                                </Dropdown.Menu>
-                                        </Dropdown>
+                                                    {translate("dashboard")}
+                                                </Dropdown.Item>
+                                                <Dropdown.Item className="flex py-2 items-center gap-x-2 group !text-[#5A727B] hover:!bg-[#F6F6F6] rounded-sm hover:m-0 focus:m-0 ease-in-out duration-200">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+                                                        <g id="Group_5" data-name="Group 5" transform="translate(-749 -443)">
+                                                            <rect id="Rectangle_5" data-name="Rectangle 5" width="21" height="21" transform="translate(749 443)" fill="none"/>
+                                                            <path id="Vector_1_" data-name="Vector (1)" d="M1.634,2.224A5.417,5.417,0,0,1,9,1.951a5.416,5.416,0,0,1,7.648,7.628l-6.47,6.493a1.667,1.667,0,0,1-2.266.085l-.091-.085L1.351,9.579A5.417,5.417,0,0,1,1.634,2.224ZM2.813,3.4a3.75,3.75,0,0,0-.122,5.176l.122.128L9,14.893l4.419-4.42L10.473,7.527l-.884.884A2.5,2.5,0,0,1,6.054,4.876L7.8,3.124a3.751,3.751,0,0,0-4.864.157ZM9.884,5.76a.833.833,0,0,1,1.178,0L14.6,9.295l.59-.589a3.75,3.75,0,0,0-5.175-5.425L9.884,3.4,7.232,6.054A.833.833,0,0,0,7.168,7.16l.065.073A.833.833,0,0,0,8.338,7.3l.073-.065Z" transform="translate(750.5 444.901)" className="fill-[#5A727B]"/>
+                                                        </g>
+                                                    </svg>
+                                                    {translate("applyRequest")}
+                                                </Dropdown.Item>
+                                                <Dropdown.Item onClick={handleLogout} className="flex py-2 items-center gap-x-2 group hover:!bg-[#F6F6F6] rounded-sm hover:m-0 focus:m-0 ease-in-out duration-200">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+                                                        <g id="Group_4" data-name="Group 4" transform="translate(-770 -443)">
+                                                            <rect id="Rectangle_6" data-name="Rectangle 6" width="21" height="21" transform="translate(770 443)" fill="none"/>
+                                                            <path id="Vector_2_" data-name="Vector (2)" d="M3.333,13.5H5v1.667H15V1.834H5V3.5H3.333V1A.833.833,0,0,1,4.166.167H15.833A.833.833,0,0,1,16.666,1V16a.833.833,0,0,1-.833.833H4.166A.833.833,0,0,1,3.333,16ZM5,7.667h5.833V9.334H5v2.5L.833,8.5,5,5.167Z" transform="translate(772.167 444.833)" fill="red"/>
+                                                        </g>
+                                                    </svg>
+                                                    <span className="text-red-500">{translate("logout")}</span>
+                                                </Dropdown.Item>
+                                                
+                                            </Dropdown.Menu>
+                                    </Dropdown>
                                 ) : null
-                            }
+                                }
                             </div>
                             <Link className="navbar-brand" href="/">
                                 <Image loading="lazy" src={settingData?.web_logo ? settingData?.web_logo : arkafLogo} alt="Arkaf Brand Logo" width={350} height={157} className="nav_logo" onError={placeholderImage}/>
@@ -381,20 +376,7 @@ const Nav = () => {
                                         </div>
                                         <span>AR</span>
                                     </li>
-                                    {/* <Dropdown>
-                                        <Dropdown.Toggle id="dropdown-basic">  {selectedLanguage ? selectedLanguage : defaultlang}</Dropdown.Toggle>
-                                        <Dropdown.Menu id="language">
-                                            {LanguageList &&
-                                                LanguageList.map((ele, index) => (
-                                                    <span>
-                                                        {ele.code}
-                                                        <Dropdown.Item key={index} onClick={() => handleLanguageChange(ele.code)}>
-                                                        {ele.name}
-                                                    </Dropdown.Item>
-                                                    </span>
-                                                ))}
-                                        </Dropdown.Menu>
-                                    </Dropdown> */}
+                                    
                                     <li className="nav-item">
                                         {
                                             // Check if signupData.data is null
@@ -404,7 +386,7 @@ const Nav = () => {
                                                     <Link href="/register" className="button button-solid">{translate("SignUp")}</Link>
                                                 </div>
                                             ) : // Check if mobile and firebase_id are present
-                                            signupData &&  signupData?.data?.data.mobile && signupData?.data?.data.firebase_id ? (
+                                            signupData? (
                                                     <div className="flex items-center justify-center gap-x-3">
                                                         <Link href="/chat" className="p-2.5 border rounded-full hover:bg-[#34484F] hover:border-[#34484F] ease-in-out duration-200 group">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
@@ -431,7 +413,7 @@ const Nav = () => {
                                                                 {/* {signupData.data.data.name} */}
                                                                 <div className="border rounded-full py-1.5 px-2.5 flex gap-x-2 items-center justify-between">
                                                                     <Image
-                                                                        src={signupData?.data?.data.image ? signupData?.data?.data.image : dummyimg.src}
+                                                                        src={userProfileData || dummyimg.src}
                                                                         alt={'User Profile Picture'}
                                                                         width={32}
                                                                         height={32}
@@ -443,7 +425,8 @@ const Nav = () => {
                                                                 </div>
                                                             </Dropdown.Toggle>
 
-                                                                <Dropdown.Menu id="language" className="px-2 rounded-lg !flex flex-col !gap-y-2 !w-[200px]">
+                                                                <Dropdown.Menu className="!rounded-lg" id="language">
+                                                                    <div className="px-2 !flex flex-col !gap-y-2">
                                                                     <Dropdown.Item onClick={handleShowDashboard} className="flex py-2 items-center gap-x-2 group !text-[#5A727B] hover:!bg-[#F6F6F6] rounded-sm hover:m-0 focus:m-0 ease-in-out duration-200">
                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
                                                                             <g id="Group_6" data-name="Group 6" transform="translate(-728 -443)">
@@ -470,8 +453,9 @@ const Nav = () => {
                                                                             </g>
                                                                         </svg>
                                                                         <span className="text-red-500">{translate("logout")}</span>
-                                                                        
                                                                     </Dropdown.Item>
+                                                                    </div>
+                                                                    
                                                                 </Dropdown.Menu>
                                                         </Dropdown>
                                                     </div>
@@ -480,14 +464,6 @@ const Nav = () => {
                                                 
                                         }
                                     </li>
-                                    {/* {signupData?.data?.data.name && settingData && (
-                                        <li className="nav-item">
-                                            <button className="btn" id="addbutton" onClick={handleAddProperty}>
-                                                <FiPlusCircle size={20} className="mx-2 add-nav-button" />
-                                                {translate("addProp")}
-                                            </button>
-                                        </li>
-                                    )} */}
                                 </ul>
                             </div>
                         </div>

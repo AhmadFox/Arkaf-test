@@ -137,7 +137,7 @@ const OTPModal = ({ isOpenOTPModal, handlOTPModalClose, phonenum }) => {
                                 signupData.name === "" ||
                                 signupData.email === "" 
                             ) {
-                                navigate.push("/user-register");
+                                navigate.push("/user/profile");
                                 handlOTPModalClose(); // Close the modal
                             } else {
                                 toast.success(res.message); // Show a success toast

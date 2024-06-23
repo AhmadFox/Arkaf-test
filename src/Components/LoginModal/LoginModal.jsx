@@ -219,7 +219,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                         setShowLoader(false);
                         if (!res.error) {
                             if (signupData.name === "" || signupData.email === "") {
-                                navigate.push("/user-register");
+                                navigate.push("/user/profile");
                                 onCloseLogin();
                             } else {
                                 toast.success(res.message);

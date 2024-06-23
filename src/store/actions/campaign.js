@@ -40,7 +40,8 @@ import {
     getUserRecommendation,
     getSettingApi,
     GetUserIntrest,
-    DeleteUserIntrest
+    DeleteUserIntrest,
+    getProfileApi
 } from "@/utils/api";
 import { store } from "../store";
 import { apiCallBegan } from "./apiActions";
@@ -70,7 +71,6 @@ export const SystemSettingsApi = ({
 export const UpdateProfileApi = ({
     userid = "",
     name = "",
-    email = "",
     mobile = "",
     type = "",
     address = "",
@@ -94,7 +94,20 @@ export const UpdateProfileApi = ({
     onStart = () => { } }) => {
     store.dispatch(
         apiCallBegan({
-            ...update_profile(userid, name, email, mobile, address, firebase_id, profile, latitude, longitude, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, fcm_id, notification, city, state, country),
+            ...update_profile(name, mobile, fcm_id, address, firebase_id, notification, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, latitude, longitude, city, state, country, profile),
+            displayToast: false,
+            onStart,
+            onSuccess,
+            onError,
+        })
+    );
+};
+
+// GET PROFILE
+export const GetProfile = (onSuccess, onError, onStart) => {
+    store.dispatch(
+        apiCallBegan({
+            ...getProfileApi(),
             displayToast: false,
             onStart,
             onSuccess,
@@ -289,29 +302,31 @@ export const GetFacilitiesApi = (onSuccess, onError, onStart) => {
 export const PostProperty = ({
 
     userid = "",
-    title = "",
-    description = "",
-    city = "",
+        title = "",
+        size = "",
+        description = "",
+        city = "",
     state = "",
     country = "",
-    latitude = "",
-    longitude = "",
-    address = "",
-    price = "",
-    category_id = "",
-    property_type = "",
+        latitude = "",
+        longitude = "",
+        address = "",
+        price = "",
+        category_id = "",
+        property_type = "",
     video_link = "",
-    parameters = [],
+        parameters = [],
     facilities = [],
-    title_image = "",
+        title_image = "",
     threeD_image = "",
-    gallery_images = [],
+        gallery_images = [],
     meta_title = "",
     meta_description = "",
     meta_keywords = "",
     meta_image = "",
     rentduration = "",
     is_premium = "",
+        status = "",
     onSuccess = () => { },
     onError = () => { },
     onStart = () => { }
@@ -319,7 +334,34 @@ export const PostProperty = ({
 ) => {
     store.dispatch(
         apiCallBegan({
-            ...postProperty(userid, title, description, city, state, country, latitude, longitude, address, price, category_id, property_type, video_link, parameters, facilities, title_image, threeD_image, gallery_images, meta_title, meta_description, meta_keywords, meta_image, rentduration, is_premium),
+            ...postProperty(
+                userid,
+                title,
+                description,
+                city,
+                size,
+            state,
+            country,
+                latitude,
+                longitude,
+                address,
+                price,
+                category_id,
+                property_type,
+            video_link,
+                parameters,
+            facilities,
+                title_image,
+            threeD_image,
+                gallery_images,
+            meta_title,
+            meta_description,
+            meta_keywords,
+            meta_image,
+            rentduration,
+            is_premium,
+                status
+            ),
             displayToast: false,
             onStart,
             onSuccess,

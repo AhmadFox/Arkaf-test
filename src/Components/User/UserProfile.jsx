@@ -1,6 +1,5 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import dynamic from "next/dynamic.js";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { Fcmtoken, settingsData } from "@/store/reducer/settingsSlice";
@@ -12,28 +11,40 @@ import toast from "react-hot-toast";
 import { placeholderImage, translate } from "@/utils";
 import { languageData } from "@/store/reducer/languageSlice";
 import Image from "next/image";
-import Swal from "sweetalert2";
 import UserLayout from "../Layout/UserLayout.jsx";
 
+import { profileCacheData, loadProfile } from "@/store/reducer/momentSlice";
+import InputTel from "../ui/InputTel.jsx";
 
 const UserProfile = () => {
+
+
+
+    const [resetLocationValue, setresetLocationValue] = useState(false)
     const userData = useSelector((state) => state.User_signup);
-    const userProfileData = userData?.data?.data;
+    const profileData = useSelector(profileCacheData);
+    const userProfileData = profileData;
     const navigate = useRouter();
     const FcmToken = useSelector(Fcmtoken)
+
     const [formData, setFormData] = useState({
         fullName: userProfileData?.name,
         email: userProfileData?.email,
         phoneNumber: userProfileData?.mobile,
         address: userProfileData?.address,
-        aboutMe: userProfileData?.about_me,
-        facebook: userProfileData?.facebook_id,
-        instagram: userProfileData?.instagram_id,
-        pintrest: userProfileData?.pintrest_id,
-        twiiter: userProfileData?.twiiter_id,
         profileImage: userProfileData?.profile,
 
     });
+
+    const [disabledButtons, setDisabledButtons] = useState(true)
+
+    useEffect(() => {
+        loadProfile();
+    }, [])
+
+    useEffect(() => {
+    }, [userProfileData])
+
     const fileInputRef = useRef(null);
 
     const [uploadedImage, setUploadedImage] = useState(userProfileData?.profile || null);
@@ -41,6 +52,7 @@ const UserProfile = () => {
     const lang = useSelector(languageData);
 
     useEffect(() => { }, [lang]);
+
     const SettingsData = useSelector(settingsData);
     const PlaceHolderImg = SettingsData?.web_placeholder_logo;
     const handleImageUpload = (e) => {
@@ -62,6 +74,7 @@ const UserProfile = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+       
     };
 
     const handleUploadButtonClick = () => {
@@ -82,71 +95,85 @@ const UserProfile = () => {
         }
     };
 
+    const handlePhone = (valid, value) => {
+		valid ? 
+        setFormData({ ...formData, phoneNumber: value }):
+        setFormData({ ...formData, phoneNumber: userProfileData?.mobile });
+	};
+
     const isLoggedIn = useSelector((state) => state.User_signup);
-    const userCurrentId = isLoggedIn && isLoggedIn.data ? isLoggedIn.data.data.id : null;
+    // const userCurrentId = isLoggedIn && isLoggedIn.data ? isLoggedIn.data.data.id : null;
+
+    const handleDiscardUpdate = (e) => {
+        e.preventDefault();
+        setresetLocationValue(!resetLocationValue)
+        setUploadedImage(userProfileData?.profile);
+        fileInputRef.current.value = ''
+        setFormData({
+            fullName: userProfileData?.name,
+            email: userProfileData?.email,
+            phoneNumber: userProfileData?.mobile,
+            address: userProfileData?.address,
+            profileImage: userProfileData?.profile,
+        });
+    }
+
     const handleUpdateProfile = (e) => {
         e.preventDefault();
-        if (SettingsData.demo_mode) {
-            Swal.fire({
-                title: "Opps !",
-                text: "This Action is Not Allowed in Demo Mode",
-                icon: "warning",
-                showCancelButton: false,
-                customClass: {
-                    confirmButton: 'Swal-confirm-buttons',
-                    cancelButton: "Swal-cancel-buttons"
-                },
-                confirmButtonText: "OK",
-            });
-            return false;
-        }
-        UpdateProfileApi({
 
-            userid: userCurrentId,
+        console.log('formData.profileImage', typeof(formData.profileImage));
+
+        UpdateProfileApi({
             name: formData.fullName,
-            email: formData.email,
             mobile: formData.phoneNumber,
+            fcm_id: FcmToken,
             address: formData.address,
-            profile: formData.profileImage,
-            latitude: formData.selectedLocation?.lat,
-            longitude: formData.selectedLocation?.lng,
+            firebase_id: '2',
+            notification: "1",
             about_me: formData.aboutMe ? formData.aboutMe : "",
             facebook_id: formData.facebook ? formData.facebook : "",
             twiiter_id: formData.twiiter ? formData.twiiter : "",
             instagram_id: formData.instagram ? formData.instagram : "",
             pintrest_id: formData.pintrest ? formData.pintrest : "",
-            fcm_id: FcmToken,
-            notification: "1",
+            latitude: formData.selectedLocation?.lat,
+            longitude: formData.selectedLocation?.lng,
             city: formData.selectedLocation?.city,
             state: formData.selectedLocation?.state,
             country: formData.selectedLocation?.country,
+            profile: formData.profileImage,
             onSuccess: (response) => {
                 toast.success(translate("profileupdate"));
                 loadUpdateUserData(response.data);
-                navigate.push("/");
-                setFormData({
-                    fullName: "",
-                    email: "",
-                    phoneNumber: "",
-                    address: "",
-                    aboutMe: "",
-                    facebook: "",
-                    instagram: "",
-                    pintrest: "",
-                    twiiter: "",
-                });
+                setDisabledButtons(true);
             },
             onError: (error) => {
                 toast.error(error);
+                setDisabledButtons(true);
 
             }
         });
 
     };
 
+    useEffect(() => {
+        const initialData = {
+            fullName: userProfileData?.name,
+            email: userProfileData?.email,
+            phoneNumber: userProfileData?.mobile,
+            address: userProfileData?.address,
+            profileImage: userProfileData?.profile,
+            selectedLocation: formData?.selectedLocation
+        };
+    
+        const hasFormChanged = Object.keys(formData).some(
+          key => formData[key] !== initialData[key]
+        );
+        setDisabledButtons(!hasFormChanged);
+    }, [formData, userProfileData]);
+
     const inputStyle = `
         p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
-    `;
+    `
 
     return (
         <UserLayout>
@@ -167,6 +194,7 @@ const UserProfile = () => {
                                         alt="no_img"
                                         fill
                                         sizes=""
+                                        className="object-cover"
                                         onError={placeholderImage}
                                     />
                                 </div>
@@ -192,30 +220,21 @@ const UserProfile = () => {
                                     className={inputStyle}
                                 />
                             </div>
-                            {/* <div className="">
-                                <label className='d-block mb-1 text-[#272835] text-sm'>{translate('email')}</label>
-                                <input
-                                    readOnly={userProfileData?.logintype === "0" ? true : false}
-                                    type="text"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleInputChange}
-                                    placeholder={translate('enterEmail')}
-                                    pattern="^[a-zA-Z]+$"
-                                    className={inputStyle}
-                                />
-                            </div> */}
-                            <div className="">
-                                <label className='d-block mb-1 text-[#272835] text-sm'>{translate('phoneNumber')}</label>
-                                <input
-                                    readOnly={userProfileData?.logintype === "0" ? true : false}
-                                    type="text"
-                                    name="phoneNumber"
-                                    value={formData.phoneNumber}
-                                    onChange={handlePhoneNumberChange}
-                                    placeholder={translate('enterPhone')}
-                                    className={inputStyle}
-                                />
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="">
+                                    <label className='d-block mb-1 text-[#272835] text-sm'>{translate('email')}</label>
+                                    <div className={`${inputStyle} bg-slate-100 opacity-60 select-none w-full`}>{formData.email}</div>
+                                </div>
+                                <div className="">
+                                    <InputTel
+                                        code={'+966'}
+                                        label={'phoneNumber'}
+                                        value={formData.phoneNumber}
+                                        placeholder={'Ex: +966 000 000 000'}
+                                        onValueChange={handlePhone}
+                                        className="!py-1.5"
+                                    />
+                                </div>
                             </div>
                             <div className="">
                                 <label className='d-block mb-1 text-[#272835] text-sm'>{translate('address')}</label>
@@ -223,32 +242,28 @@ const UserProfile = () => {
                                     initialLatitude={userProfileData?.latitude}
                                     initialLongitude={userProfileData?.longitude}
                                     className={inputStyle}
+                                    reset={resetLocationValue}
                                 />
                             </div>
                             <div className="">
 
                             </div>
-                            {/* <div className="">
-                                <label className='d-block mb-1 text-[#272835] text-sm'>{translate('address')}</label>
-                                <input
-                                    type="text"
-                                    rows={4}
-                                    className={inputStyle}
-                                    name="address"
-                                    placeholder={translate('enterAddress')}
-                                    value={formData.address}
-                                    onChange={handleInputChange}
-                                />
-                            </div> */}
                         </div>
                     </div>
                 </div>
                 <div className="mt-3 flex gap-x-2 justify-end">
                     <button
+                        onClick={handleDiscardUpdate}
+                        className="tw-btn-outline w-36"
+                        disabled={disabledButtons}
+                    >
+                        {translate("discard")}
+                    </button>
+                    <button
                         type="submit"
                         onClick={handleUpdateProfile}
-                        className="tw-btn-solid w-32"
-                        disabled
+                        className="tw-btn-solid w-36"
+                        disabled={disabledButtons}
                     >
                         {translate("save")}
                     </button>

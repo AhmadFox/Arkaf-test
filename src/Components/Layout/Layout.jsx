@@ -71,24 +71,12 @@ const Layout = ({ children }) => {
 
     const authCheck = () => {
         if (requiresAuth && !userCurrentId) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "You have not logged in. Please log in first.",
-                allowOutsideClick: false,
-                customClass: {
-                    confirmButton: 'Swal-confirm-buttons',
-                },
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    router.push("/"); // Redirect to the subscription page
-                }
-            });
+            router.push("/login");
         }
     };
 
     useEffect(() => {
-        if (!userCurrentId && window.location.pathname === "/user-register") {
+        if (!userCurrentId && window.location.pathname === "/user/profile") {
             router.push('/');
         }
     }, [userCurrentId]); // Add userCurrentId to the dependencies

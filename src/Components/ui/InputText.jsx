@@ -5,7 +5,7 @@ const inputStyle = `
 	p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
 `;
 
-const InputText = ({ placeholder, label, onValueChange, value }) => {
+const InputText = ({ placeholder, label, onValueChange, value, className }) => {
 
 	const nameElm = useRef(null);
 
@@ -36,7 +36,7 @@ const InputText = ({ placeholder, label, onValueChange, value }) => {
 				ref={nameElm} 
 				type="text"
 				value={value}
-				className={inputStyle}
+				className={` ${inputStyle} ${className}`}
 				placeholder={translate(placeholder)}
 				pattern="^[a-zA-Z]+$"
 			/>

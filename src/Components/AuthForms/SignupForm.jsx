@@ -40,12 +40,11 @@ const SignupForm = () => {
 			setIsButtonDisabled(true);
 
 		setFormData({
-			type: 0,
-			name: '-',
-            phone,
             email,
+            phone,
             password,
             password_confirmation: password,
+			type: 0,
 			firebase_id: 2
         });
 
@@ -53,12 +52,11 @@ const SignupForm = () => {
 
 
 	const handleSubmit = async (e) => {
-        e.preventDefault();
+		e.preventDefault();
 		setIsLoading(true);
-
+	
 		try {
 			signupLoaded(
-				formData.name,
 				formData.email,
 				formData.phone,
 				formData.password,
@@ -67,14 +65,15 @@ const SignupForm = () => {
 				formData.firebase_id,
 				(res) => {
 					setIsLoading(false);
-					navigate.push("/verify-account")
+					navigate.push("/verify-account");
 					toast.success(res.message);
 				},
-				(errr) => {
-					console.log(errr);
-					if (errr.message === 'Account Deactivated by Administrative please connect to them') {
+				(error) => {
+					console.log('Signup error:', error);
+					setIsLoading(false);
+					if (error.message === 'Account Deactivated by Administrative please connect to them') {
 						Swal.fire({
-							title: "Opps!",
+							title: "Oops!",
 							text: "Account Deactivated by Administrative please connect to them",
 							icon: "warning",
 							showCancelButton: false,
@@ -88,18 +87,19 @@ const SignupForm = () => {
 								navigate.push("/");
 							}
 						});
-					}else if (errr.message === 'validation.unique') {
+					} else if (error.message === 'validation.unique') {
 						toast.error(translate("Email address already taken!"));
-            			return;
 					} else {
-						toast.error(translate("SomthingWenWrong"));
+						toast.error(translate("Something went wrong"));
 					}
 				}
 			);
 		} catch (error) {
-			console.error(error);
+			console.error('Unexpected error:', error);
+			setIsLoading(false);
 		}
-    };
+	};
+	
 
 	return (
 		<form className='mb-4 grid gap-4' onSubmit={handleSubmit}>

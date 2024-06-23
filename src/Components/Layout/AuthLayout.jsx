@@ -26,15 +26,12 @@ const AuthLayout = ({ children }) => {
 	const currentYear = new Date().getFullYear();
 
 
-	console.log('setting data', settingData);
-	
-
 	if(
 		signupData?.data?.data &&
 		signupData?.data?.data.profile === '' &&
 		signupData?.data?.data.name === `user-${signupData?.data?.data.id}`
 	) {
-		navigate.push("/user-register")
+		navigate.push("/user/profile/")
 		return
 	} else {
 		return (

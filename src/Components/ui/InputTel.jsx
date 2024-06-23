@@ -8,14 +8,18 @@ import { PhoneNumberUtil } from "google-libphonenumber";
 import { translate } from "@/utils";
 
 	const inputStyle = `
-		p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
+		px-2.5 py-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
 	`;
-const InputTel = ({placeholder, label, onValueChange}) => {
+const InputTel = ({placeholder, label, onValueChange, className, value}) => {
 
 	const telElm = useRef(null);
 	const [ validation, setValidation ] = useState();
-	const [ phone, setPhone ] = useState();
+	const [ phone, setPhone ] = useState(value ? value : '');
 	const phoneUtil = PhoneNumberUtil.getInstance();
+
+	useEffect(() => {
+		setPhone(value)
+	}, [value])
 
 	useEffect(() => {
 
@@ -61,7 +65,7 @@ const InputTel = ({placeholder, label, onValueChange}) => {
 				placeholder={placeholder}
 				value={phone}
 				onChange={setValidation}
-				className={inputStyle}
+				className={`${inputStyle} ${className}`}
 			/>
 		</Fragment>
 	)

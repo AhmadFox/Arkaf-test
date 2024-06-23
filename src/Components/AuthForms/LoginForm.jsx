@@ -52,14 +52,15 @@ const LoginForm = () => {
 				formData.password,
 				(res) => {
 					setIsLoading(false);
-					navigate.push("/user-register")
+					navigate.push("/user/profile")
 					toast.success(res.message);
+					console.log('Signup successful:', res);
 				},
 				(err) => {
 					console.log('err:', err);
-					if (err === 'Email not verified') {
+					if (err.message === 'Email not verified') {
 						navigate.push("/verify-account")
-					} else if (err === 'Invalid email or password') {
+					} else if (err.message === 'Invalid email or password') {
 						toast.error('invalidLogin');
 						setIsLoading(false);
 					} else {

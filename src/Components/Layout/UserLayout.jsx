@@ -8,22 +8,25 @@ import { protectedRoutes } from "@/routes/routes";
 import { usePathname } from "next/navigation";
 import Swal from "sweetalert2";
 import { loadSystemSettings } from "@/store/reducer/settingsSlice";
+import { profileCacheData, loadProfile } from "@/store/reducer/momentSlice";
 
 import FooterUser from "../Footer/FooterUser";
-import UserInfo from "../UserLayout/UserInfo";
+import UserInfo from "./UserInfo";
 
 const UserLayout = ({ children }) => {
 
 	const [isLoading, setIsLoading] = useState(false);
     const isLoggedIn = useSelector((state) => state.User_signup);
-    const userCurrentId = isLoggedIn && isLoggedIn.data ? isLoggedIn.data.data.id : null;
+   
+    const userCurrentId = isLoggedIn && isLoggedIn.data ? isLoggedIn?.data?.data?.id : null;
     const router = useRouter();
     const [settingsData, setSettingsData] = useState([]);
+    const [profileData, setProfileData] = useState([]);
     // const settingsData = useSelector((state) => state.settingsData);
     const prevUserCurrentIdRef = useRef(null);
 
-    useEffect(() => {
 
+    useEffect(() => {
         const shouldFetchData =
             !prevUserCurrentIdRef.current || prevUserCurrentIdRef.current !== userCurrentId;
 
@@ -46,6 +49,7 @@ const UserLayout = ({ children }) => {
             });
         }
 
+
         prevUserCurrentIdRef.current = userCurrentId;
 
         return () => {
@@ -63,29 +67,21 @@ const UserLayout = ({ children }) => {
     const requiresAuth = protectedRoutes.includes(pathname);
 
     useEffect(() => {
+        loadProfile();
+    }, [])
+
+    useEffect(() => {
         authCheck();
     }, [requiresAuth, userCurrentId]); // Add userCurrentId to the dependencies
 
     const authCheck = () => {
         if (requiresAuth && !userCurrentId) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "You have not logged in. Please log in first.",
-                allowOutsideClick: false,
-                customClass: {
-                    confirmButton: 'Swal-confirm-buttons',
-                },
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    router.push("/"); // Redirect to the subscription page
-                }
-            });
+            router.push("/login");
         }
     };
 
     useEffect(() => {
-        if (!userCurrentId && window.location.pathname === "/user-register") {
+        if (!userCurrentId && window.location.pathname === "/user/profile") {
             router.push('/');
         }
     }, [userCurrentId]); // Add userCurrentId to the dependencies
@@ -95,7 +91,13 @@ const UserLayout = ({ children }) => {
     return (
         <div className="flex flex-col h-full">
 			<Header />
-			<UserInfo />
+            {
+                router.pathname === '/user/profile' ||
+                router.pathname === '/user/favorites-properties' ||
+                router.pathname === '/user/current-listing' ||
+                router.pathname === '/user/transaction-history' ?
+                <UserInfo /> : null
+            }
 			{children}
 			<FooterUser />
 		</div>

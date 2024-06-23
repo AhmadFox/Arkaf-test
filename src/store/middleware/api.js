@@ -5,9 +5,24 @@ import * as actions from "../actions/apiActions";
 const api = ({ dispatch, getState }) => (next) => async (action) => {
     if (action.type !== actions.apiCallBegan.type) return next(action);
 
-    let { url, method, data, params, onStart, onSuccess, onError, onStartDispatch, onErrorDispatch, onSuccessDispatch, headers, displayToast, authorizationHeader, meta } = action.payload;
-    if (typeof displayToast === "undefined") displayToast = true;
+    let {
+        url,
+        method,
+        data,
+        params,
+        onStart,
+        onSuccess,
+        onError,
+        onStartDispatch,
+        onErrorDispatch,
+        onSuccessDispatch,
+        headers,
+        displayToast,
+        authorizationHeader,
+        meta,
+    } = action.payload;
 
+    if (typeof displayToast === "undefined") displayToast = true;
     if (typeof authorizationHeader === "undefined" || authorizationHeader === true) {
         headers = {
             ...headers,
@@ -26,48 +41,46 @@ const api = ({ dispatch, getState }) => (next) => async (action) => {
             method,
             data,
             params,
-            onSuccess,
-            onError,
             headers,
         });
-        if (response.data.error) {
-            dispatch(actions.apiCallFailed(response.data.message));
 
-            if (onError) onError(response.data.message);
-            if (onErrorDispatch) dispatch({ type: onErrorDispatch, payload: response.data.message, meta });
+        const responseData = response.data;
+        const payloadData = params || data;
+        const fullResponseData = { ...responseData, requestData: payloadData };
+
+        if (responseData.error) {
+            dispatch(actions.apiCallFailed(responseData.message));
+
+            if (onError) onError(responseData);
+            if (onErrorDispatch) dispatch({ type: onErrorDispatch, payload: responseData, meta });
 
             if (displayToast) {
-                toast.error(response.data.message);
+                toast.error(responseData.message);
             }
         } else {
-            let payloadData;
-            if (params) {
-                payloadData = params;
-            } else {
-                payloadData = data;
-            }
-            let responseData = { ...response.data, requestData: payloadData };
-            dispatch(actions.apiCallSuccess(responseData));
+            dispatch(actions.apiCallSuccess(fullResponseData));
 
-            if (onSuccess) onSuccess(response.data);
+            if (onSuccess) onSuccess(responseData);
             if (onSuccessDispatch) {
-                dispatch({ type: onSuccessDispatch, payload: responseData, meta });
+                dispatch({ type: onSuccessDispatch, payload: fullResponseData, meta }); // Include meta here
             }
 
             if (displayToast) {
-                toast.success(response.data.message);
+                toast.success(responseData.message);
             }
         }
     } catch (error) {
-        console.log("error", error);
+        console.error("API Error:", error);
 
-        dispatch(actions.apiCallFailed(error.response?.data));
+        const errorMessage = error.response?.data || error.message;
 
-        if (onError) onError(error.response?.data);
-        if (onErrorDispatch) dispatch({ type: onErrorDispatch, payload: error.response?.data, meta });
+        dispatch(actions.apiCallFailed(errorMessage));
+
+        if (onError) onError({ message: errorMessage });
+        if (onErrorDispatch) dispatch({ type: onErrorDispatch, payload: { message: errorMessage }, meta });
 
         if (displayToast) {
-            toast.error(error.response?.data);
+            toast.error(errorMessage);
         }
     }
 };
