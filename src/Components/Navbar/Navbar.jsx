@@ -68,6 +68,11 @@ const Nav = () => {
 
     const userProfileData = signupData?.data?.profile
 
+    const handelAddProperty = () => {
+        signupData.data !== null ?
+        router.push('/user/properties') : router.push("/login")
+    }
+
     useEffect(() => {
         if (language && language.rtl === 1) {
             document.documentElement.dir = "rtl";
@@ -276,7 +281,7 @@ const Nav = () => {
                                         <Link href="/buy" className="nav-link">{translate("buy")}</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="/user/properties" className="nav-link">{translate("addProperty")}</Link>
+                                        <button onClick={handelAddProperty} className="nav-link">{translate("addProperty")}</button>
                                     </li>
                                     <li className="nav-item">
                                         <Link className="nav-link" href="/add-request">{translate("propertyRequest")}</Link>
