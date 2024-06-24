@@ -21,7 +21,7 @@ import { store } from "@/store/store";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { silderCacheData } from "@/store/reducer/momentSlice";
+import { loadProfile, profileCacheData, silderCacheData } from "@/store/reducer/momentSlice";
 import FirebaseData from "@/utils/Firebase";
 import { Checkbox } from "antd";
 
@@ -39,6 +39,7 @@ import dummyimg from '@/assets/Images/user_profile.png'
 
 
 const Nav = () => {
+
     const router = useRouter();
     const language = store.getState().Language.languages;
     const { signOut } = FirebaseData();   
@@ -67,8 +68,10 @@ const Nav = () => {
     const handleShow = () => setShow(true);
 
     const userProfileData = signupData?.data?.data?.profile
+    // const userProfileData = signupData?.data?.data?.profile
 
-    console.log('userProfileData ===>', userProfileData);
+    // console.log('Navbar profileData', profileData);
+    // console.log('userProfileData ===>', signupData?.data?.data);
 
     const handelAddProperty = () => {
         signupData.data !== null ?
@@ -316,7 +319,7 @@ const Nav = () => {
                                                     alt={'User Profile Picture'}
                                                     width={32}
                                                     height={32}
-                                                    className="object-fit rounded-full"
+                                                    className="object-cover rounded-full w-8 h-8"
                                                 />
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#333" className="size-4">
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -419,7 +422,7 @@ const Nav = () => {
                                                                         alt={'User Profile Picture'}
                                                                         width={32}
                                                                         height={32}
-                                                                        className="object-fit rounded-full"
+                                                                        className="object-cover rounded-full w-8 h-8"
                                                                     />
                                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#333" className="size-4">
                                                                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />

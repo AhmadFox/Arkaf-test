@@ -8,7 +8,6 @@ import { protectedRoutes } from "@/routes/routes";
 import { usePathname } from "next/navigation";
 import Swal from "sweetalert2";
 import { loadSystemSettings } from "@/store/reducer/settingsSlice";
-import { profileCacheData, loadProfile } from "@/store/reducer/momentSlice";
 
 import FooterUser from "../Footer/FooterUser";
 import UserInfo from "./UserInfo";
@@ -21,7 +20,6 @@ const UserLayout = ({ children }) => {
     const userCurrentId = isLoggedIn && isLoggedIn.data ? isLoggedIn?.data?.data?.id : null;
     const router = useRouter();
     const [settingsData, setSettingsData] = useState([]);
-    const [profileData, setProfileData] = useState([]);
     // const settingsData = useSelector((state) => state.settingsData);
     const prevUserCurrentIdRef = useRef(null);
 
@@ -65,10 +63,6 @@ const UserLayout = ({ children }) => {
 
     // Check if the current route requires a subscription
     const requiresAuth = protectedRoutes.includes(pathname);
-
-    useEffect(() => {
-        loadProfile();
-    }, [])
 
     useEffect(() => {
         authCheck();

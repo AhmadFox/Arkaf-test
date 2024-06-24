@@ -1,48 +1,48 @@
 "use client"
-import React, { useEffect, useState } from "react";
-import { useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import Image from "next/image";
+import { useRouter } from "next/router";
+
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+
+import { placeholderImage, translate } from "@/utils";
+
+import { userSignUpData } from "@/store/reducer/authSlice";
 import { Fcmtoken, settingsData } from "@/store/reducer/settingsSlice";
-import LocationSearchBox from "@/Components/Location/LocationSearchBox";
 import { UpdateProfileApi } from "@/store/actions/campaign";
 import { loadUpdateUserData } from "@/store/reducer/authSlice";
-import { useRouter } from "next/router";
-import toast from "react-hot-toast";
-import { placeholderImage, translate } from "@/utils";
 import { languageData } from "@/store/reducer/languageSlice";
-import Image from "next/image";
-import UserLayout from "../Layout/UserLayout.jsx";
 
-import { profileCacheData, loadProfile } from "@/store/reducer/momentSlice";
 import InputTel from "../ui/InputTel.jsx";
+import UserLayout from "../Layout/UserLayout.jsx";
+import LocationSearchBox from "@/Components/Location/LocationSearchBox";
 
 const UserProfile = () => {
 
-    useEffect(() => {
-        loadProfile();
-    }, [])
-
-    const [resetLocationValue, setresetLocationValue] = useState(false)
+    
     // const userData = useSelector((state) => state.User_signup);
-    const profileData = useSelector(profileCacheData);
-    const FcmToken = useSelector(Fcmtoken)
+    const signupData = useSelector(userSignUpData);
+    const FcmToken = useSelector(Fcmtoken);
+    const lang = useSelector(languageData);
+    
+    const fileInputRef = useRef(null);
+    const [resetLocationValue, setresetLocationValue] = useState(false)
+    const [disabledButtons, setDisabledButtons] = useState(true);
+    const [uploadedImage, setUploadedImage] = useState(null);
+    const user = signupData?.data?.data
+
+
+    console.log('signupData ===>', signupData);
 
     const [formData, setFormData] = useState({
-        fullName: profileData.name,
-        email: profileData.email,
-        phoneNumber: profileData.mobile,
-        address: profileData.address,
+        fullName: user?.name,
+        email: user?.email,
+        phoneNumber: user?.mobile,
+        address: user?.address,
+        profile: user?.profile
 
     });
-
-    const [disabledButtons, setDisabledButtons] = useState(true)
-
-
-    const fileInputRef = useRef(null);
-
-    const [uploadedImage, setUploadedImage] = useState(profileData?.profile || null);
-
-    const lang = useSelector(languageData);
 
     useEffect(() => { }, [lang]);
 
@@ -103,16 +103,18 @@ const UserProfile = () => {
         setUploadedImage(profileData?.profile);
         fileInputRef.current.value = ''
         setFormData({
-            fullName: profileData?.name,
-            email: profileData?.email,
-            phoneNumber: profileData?.mobile,
-            address: profileData?.address,
-            profileImage: profileData?.profile,
+            fullName: signupData?.name,
+            email: signupData?.email,
+            phoneNumber: signupData?.mobile,
+            address: signupData?.address,
+            profileImage: signupData?.profile,
         });
     }
 
     const handleUpdateProfile = (e) => {
         e.preventDefault();
+
+        console.log('formData.profileImage', formData.profileImage);
 
         UpdateProfileApi({
             name: formData.fullName,
@@ -131,10 +133,10 @@ const UserProfile = () => {
             city: formData.selectedLocation?.city,
             state: formData.selectedLocation?.state,
             country: formData.selectedLocation?.country,
-            profile: formData.profileImage,
+            profile: formData.profileImage && formData.profileImage,
             onSuccess: (response) => {
                 toast.success(translate("profileupdate"));
-                loadUpdateUserData(response.data);
+                loadUpdateUserData(response);
                 setDisabledButtons(true);
             },
             onError: (error) => {
@@ -148,11 +150,11 @@ const UserProfile = () => {
 
     useEffect(() => {
         const initialData = {
-            fullName: profileData?.name,
-            email: profileData?.email,
-            phoneNumber: profileData?.mobile,
-            address: profileData?.address,
-            profileImage: profileData?.profile,
+            fullName: signupData?.name,
+            email: signupData?.email,
+            phoneNumber: signupData?.mobile,
+            address: signupData?.address,
+            profileImage: signupData?.profile,
             selectedLocation: formData?.selectedLocation
         };
     
@@ -160,7 +162,7 @@ const UserProfile = () => {
           key => formData[key] !== initialData[key]
         );
         setDisabledButtons(!hasFormChanged);
-    }, [formData, profileData]);
+    }, [formData, signupData]);
 
     const inputStyle = `
         p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
@@ -181,7 +183,7 @@ const UserProfile = () => {
                                 <div className="relative w-32 pb-32 overflow-hidden rounded-lg mb-2 md:mb-0">
                                     <Image 
                                         loading="lazy"
-                                        src={uploadedImage || PlaceHolderImg}
+                                        src={uploadedImage || formData.profile || PlaceHolderImg}
                                         alt="no_img"
                                         fill
                                         sizes=""
@@ -230,8 +232,8 @@ const UserProfile = () => {
                             <div className="">
                                 <label className='d-block mb-1 text-[#272835] text-sm'>{translate('address')}</label>
                                 <LocationSearchBox onLocationSelected={handleLocationSelected}
-                                    initialLatitude={profileData?.latitude}
-                                    initialLongitude={profileData?.longitude}
+                                    initialLatitude={signupData?.latitude}
+                                    initialLongitude={signupData?.longitude}
                                     className={inputStyle}
                                     reset={resetLocationValue}
                                 />
