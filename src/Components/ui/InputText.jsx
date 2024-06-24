@@ -5,7 +5,7 @@ const inputStyle = `
 	p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
 `;
 
-const InputText = ({ placeholder, label, onValueChange, value, className }) => {
+const InputText = ({ placeholder, label, onValueChange, value, className , type}) => {
 
 	const nameElm = useRef(null);
 
@@ -13,7 +13,7 @@ const InputText = ({ placeholder, label, onValueChange, value, className }) => {
 
 		const handleInput = () => {
 			let value = nameElm.current.value;
-			const namePattern = /^[a-zA-Z]+$/;
+			const namePattern = type === 'url' ? new RegExp('https?://.+') : /^[a-zA-Z]+$/;
 			namePattern.test(value) ? onValueChange(true, value) : onValueChange(false, '')
 		};
 
@@ -31,14 +31,16 @@ const InputText = ({ placeholder, label, onValueChange, value, className }) => {
 
 	return (
 		<Fragment>
-			<label className='d-block mb-1 text-[#272835] text-sm'>{translate(label)}</label>
+			{
+				label && <label className='d-block mb-1 text-[#272835] text-sm'>{translate(label)}</label>
+			}
 			<input
 				ref={nameElm} 
-				type="text"
+				type={type}
 				value={value}
 				className={` ${inputStyle} ${className}`}
 				placeholder={translate(placeholder)}
-				pattern="^[a-zA-Z]+$"
+				pattern= { type === 'url' ? 'https?://.+' : '^[a-zA-Z]+$'}
 			/>
 		</Fragment>
 	)

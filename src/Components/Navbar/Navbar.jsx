@@ -66,7 +66,9 @@ const Nav = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const userProfileData = signupData?.data?.profile
+    const userProfileData = signupData?.data?.data?.profile
+
+    console.log('userProfileData ===>', userProfileData);
 
     const handelAddProperty = () => {
         signupData.data !== null ?
@@ -182,12 +184,7 @@ const Nav = () => {
     };
 
     const handleShowDashboard = () => {
-        if (isSubscription === true) {
-            // Corrected the condition
-            router.push("/user/dashboard"); // Use an absolute path here
-        } else {
-            router.push("/user/profile"); // Redirect to the subscription page
-        }
+        router.push("/user/profile");
     };
     const handleAddProperty = () => {
         if (isSubscription === true) {
@@ -275,10 +272,10 @@ const Nav = () => {
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                     <li className="nav-item">
-                                        <Link className="nav-link" aria-current="page" href="/rent">{translate("rent")}</Link>
+                                        <Link className="nav-link" aria-current="page" href="/properties/all-properties">{translate("rent")}</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="/buy" className="nav-link">{translate("buy")}</Link>
+                                        <Link href="/properties/all-properties" className="nav-link">{translate("buy")}</Link>
                                     </li>
                                     <li className="nav-item">
                                         <button onClick={handelAddProperty} className="nav-link">{translate("addProperty")}</button>
@@ -504,13 +501,13 @@ const Nav = () => {
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" href="/rent" onClick={handleClose}>
+                                    <Link className="nav-link" href="/properties/all-properties" onClick={handleClose}>
                                         {translate("rent")}
                                     </Link>
                                 </li>
 
                                 <li className="nav-item">
-                                    <Link className="nav-link" href="/buy" onClick={handleClose}>
+                                    <Link className="nav-link" href="/properties/all-properties" onClick={handleClose}>
                                         {translate("buy")}
                                     </Link>
                                 </li>

@@ -122,3 +122,10 @@ html, body, #__next {
     background-repeat: no-repeat;
 }
 
+.fr-wrapper.show-placeholder {
+    @apply rounded-br-[8px] rounded-bl-[8px] 
+}
+.fr-second-toolbar {
+    @apply hidden
+}
+

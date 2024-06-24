@@ -18,11 +18,11 @@ import GoogleMapBox from "../Location/GoogleMapBox";
 import SelectCategory from "../ui/SelectCategory";
 import SelectOptions from "../ui/SelectOptions";
 import InputNumber from "../ui/InputNumber";
-import Datepicker from "../ui/Datepicker";
 import LocationSearchBox from "../Location/LocationSearchBox";
-import ImageDropZone from "../ui/ImageDropZone";
 import ProperetyGellary from "./ProperetyGellary";
 import SubmitButton from "../AuthForms/SubmitButton";
+import ButtonGroup from "../ui/ButtonGroup";
+import InputText from "../ui/InputText";
 
 const inputStyle = `
     p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
@@ -31,9 +31,20 @@ const inputStyle = `
 const AddProperty = () => {
 
     const router = useRouter();
+
+    useEffect(() => {
+        loadCategories();
+    }, []);
+
+    const categorydata = useSelector(categoriesCacheData);
+    const [ selectedOption, setSelectedOption ] = useState('sell');
+    const [ availableparameter, setAvailableparameter ] = useState([]);
 	const [ showLoader, setShowLoader] = useState(false)
     const [formData, setFormData] = useState({});
-    const categorydata = useSelector(categoriesCacheData);
+    const [parameter, setParametersData] = useState({
+        parameters: []
+    });
+
 
     const handleInputChange = (field, value) => {
         setFormData(prevFormData => ({
@@ -55,26 +66,47 @@ const AddProperty = () => {
             'galleryImages': value,
         }));
 	}
+
+    const handleInputCategory = (value) => {
+        const selectedCategory = categorydata.find(category => category.id == value);
+        const parameterTypes = selectedCategory ? selectedCategory.parameter_types : [];
+        handleInputChange('categoryId', value);
+        setAvailableparameter(parameterTypes);
+        
+    }
+
     const handleLocationSelected = value => handleInputChange('selectedLocation', value);
     const handleInputSize = value => handleInputChange('size', value);
-    const handleInputCategory = value => handleInputChange('categoryId', value);
-    const handleInputBeds = value => handleInputChange('beds', value);
-    const handleInputBaths = value => handleInputChange('baths', value);
-    const handleDateInput = value => handleInputChange('date', value);
+    const handleInputDuration = value => handleInputChange('duration', value);
     const handle360Viewer = value => handleInputChange('Viewer3D', value);
-    const handleInputDescription = e => handleInputChange('description', e.target.value);
-    const handleInputVideo = e => handleInputChange('video', e.target.value);
+    const handleInputDescription = value => handleInputChange('description', value);
     const handleInputPrice = value => handleInputChange('price', value);
 
-    useEffect(() => {
-        loadCategories();
-    }, []);
-	
+    const handleParametersChange = (e, parameterId) => {
+        const select = e.target.value;
+        // Find the index of the parameter with the same parameter_id
+        const existingIndex = parameter.parameters.findIndex(param => param.parameter_id === parameterId);
+    
+        // Create a new parameters array with the updated or added parameter
+        const newParameters = [...parameter.parameters];
+        if (existingIndex !== -1) {
+            // Update an existing parameter
+            newParameters[existingIndex] = { parameter_id: parameterId, value: select };
+        } else {
+            // Add a new parameter
+            newParameters.push({ parameter_id: parameterId, value: select });
+        }
+    
+        // Update the parameter state with the new parameters array
+        setParametersData(prevParameter => ({
+            ...prevParameter,
+            parameters: newParameters
+        }));
+    };
 
     const handlePostPropertyPublish = async (e) => {
         e.preventDefault();
 		setShowLoader(true);
-        console.log('Form selectedLocation ==>', formData.date);
 		try {
 			PostProperty({
 				title: 'properety title',
@@ -86,8 +118,9 @@ const AddProperty = () => {
 				address: formData.selectedLocation.formatted_address,
 				price: formData.price,
 				category_id: formData.categoryId,
-				property_type: '1',
-				parameters: [],
+				property_type: selectedOption === 'sell' ? '0' : '1',
+                rentduration: formData.duration,
+				parameters: parameter.parameters,
 				title_image: formData.titleImage,
 				gallery_images: formData.galleryImages,
 				size: formData.size,
@@ -116,7 +149,6 @@ const AddProperty = () => {
 	const handlePostPropertyDraft = async (e) => {
         e.preventDefault();
 		setShowLoader(true);
-        console.log('Form selectedLocation ==>', formData.date);
 		try {
 			PostProperty({
 				title: 'properety title',
@@ -168,6 +200,29 @@ const AddProperty = () => {
                 <form className="w-full">
                     <div className="grid grid-cols-3 gap-9">
                         <div className="col-span-3 xl:col-span-2 grid gap-3">
+
+                            <div className="flex flex-col gap-3">
+                                <div className="mb-4">
+                                    <ButtonGroup
+                                        label="propertyType"
+                                        options={['sell', 'rent']}
+                                        name="example"
+                                        selectedOption={selectedOption}
+                                        onChange={setSelectedOption}
+                                    />
+                                </div>
+                                 {
+                                    selectedOption === 'rent' &&
+                                    <div>
+                                        <SelectOptions
+                                            label={'duration'}
+                                            options={['daily', 'monthly', 'yearly', 'qruarterly']}
+                                            onValueChange={handleInputDuration}
+                                        />
+                                    </div>
+                                }
+                            </div>
+
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
                                     <InputNumber
@@ -176,35 +231,45 @@ const AddProperty = () => {
                                         onValueChange={handleInputSize}
                                     />
                                 </div>
-                                <div>
-                                    <SelectCategory
-                                        label={'type'}
-                                        options={categorydata}
-                                        onValueChange={handleInputCategory}
-                                    />
-                                </div>
+                                {
+                                    categorydata &&
+                                    <div>
+                                        <SelectCategory
+                                            label={'type'}
+                                            options={categorydata}
+                                            onValueChange={handleInputCategory}
+                                        />
+                                    </div>
+                                }
                             </div>
-                            <div className="grid grid-cols-3 gap-3">
-                                <div>
-                                    <SelectOptions
-                                        label={'beds'}
-                                        options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
-                                        onValueChange={handleInputBeds}
-                                    />
-                                </div>
-                                <div>
-                                    <SelectOptions
-                                        label={'baths'}
-                                        options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
-                                        onValueChange={handleInputBaths}
-                                    />
-                                </div>
-                                <div>
-                                    <Datepicker
-										label="dateListing"
-										onValueChange={handleDateInput}
-									/>
-                                </div>
+
+                            {
+                                
+                            }
+                            <div className={`grid gap-3 grid-cols-${availableparameter.length - 1}`}>
+                                {availableparameter
+                                    .filter(item => item.name !== 'Size')
+                                    .map((item, idx) => (
+                                        <div key={idx}>
+                                            <label className='d-block mb-1 text-[#272835] text-sm'>{translate(item.name)}</label>
+                                            <select
+                                                className={inputStyle}
+                                                onChange={(e) => handleParametersChange(e, item.id)}
+                                            >
+                                                <option disabled>{translate('Select')} {translate(item.name)}</option>
+                                                <option value={1}>1</option>
+                                                <option value={2}>2</option>
+                                                <option value={3}>3</option>
+                                                <option value={4}>4</option>
+                                                <option value={5}>5</option>
+                                                <option value={6}>6</option>
+                                                <option value={7}>7</option>
+                                                <option value={8}>8</option>
+                                                <option value={9}>9</option>
+                                                <option value={10}>10</option>
+                                            </select>
+                                        </div>
+                                    ))}
                             </div>
 
                             <h2 className="text-2xl font-medium mb-2 mt-6">{translate('descriptionProperty')}</h2>
@@ -215,11 +280,6 @@ const AddProperty = () => {
                                     placeholder={translate('inputDescription')}
                                     className="w-full border outline-none shadow-none p-3 rounded-lg"
                                 ></textarea>
-                            </div>
-
-                            <div className="flex justify-between items-center mt-6">
-                                <h2 className="text-2xl font-medium mb-2">{translate('addContactInfo')}</h2>
-                                <button className="tw-btn-outline !px-7 !text-sm">{translate('addContact')}</button>
                             </div>
 
                             <div>
@@ -238,28 +298,19 @@ const AddProperty = () => {
                             </div>
 
                             <div className="my-6">
-                                <h2 className="text-2xl font-medium mb-4">{translate('addVideo')}</h2>
-                                <input
-                                    type="url"
-                                    onChange={handleInputVideo}
-                                    className={inputStyle}
-                                    placeholder={translate('youTubeLink')}
-                                />
-                            </div>
-
-                            <div className="my-6">
                                 <h2 className="text-2xl font-medium mb-4">{translate('add360TourView')}</h2>
-                                <ImageDropZone
+                                <InputText
+                                    label=""
+                                    placeholder="add360TourViewUrl"
+                                    type="url"
                                     onValueChange={handle360Viewer}
-                                    btnDisclamer={true}
-                                    height="min-h-[380px]"
                                 />
                             </div>
 
-                            <div className="flex justify-between items-center my-16">
+                            {/* <div className="flex justify-between items-center my-16">
                                 <h2 className="text-2xl font-medium mb-2">{translate('propertyStagingService')}</h2>
                                 <button className="tw-btn-outline !px-7 !text-sm">{translate('requestService')}</button>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="col-span-3 xl:col-span-1">
@@ -276,7 +327,7 @@ const AddProperty = () => {
                 </form>
             </div>
 
-            <div className="sticky bottom-0 bg-white border-t">
+            <div className="sticky z-1 bottom-0 bg-white border-t">
                 <div className="container">
                     <div className="flex justify-between py-3">
                         <p className="flex items-center gap-2 text-[#272835]">

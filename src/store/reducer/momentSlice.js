@@ -116,7 +116,7 @@ export const loadCategories = (onSuccess, onError, onStart) => {
     const { lastFetch } = store.getState().cachedata;
     const diffInMinutes = moment().diff(moment(lastFetch), "minutes");
     // If API data is fetched within last 10 minutes then don't call the API again
-    if (diffInMinutes < 10) return false;
+    // if (diffInMinutes < 10) return false;
     store.dispatch(
         apiCallBegan({
             ...getCategorieApi(),

@@ -18,36 +18,29 @@ import InputTel from "../ui/InputTel.jsx";
 
 const UserProfile = () => {
 
-
+    useEffect(() => {
+        loadProfile();
+    }, [])
 
     const [resetLocationValue, setresetLocationValue] = useState(false)
-    const userData = useSelector((state) => state.User_signup);
+    // const userData = useSelector((state) => state.User_signup);
     const profileData = useSelector(profileCacheData);
-    const userProfileData = profileData;
-    const navigate = useRouter();
     const FcmToken = useSelector(Fcmtoken)
 
     const [formData, setFormData] = useState({
-        fullName: userProfileData?.name,
-        email: userProfileData?.email,
-        phoneNumber: userProfileData?.mobile,
-        address: userProfileData?.address,
-        profileImage: userProfileData?.profile,
+        fullName: profileData.name,
+        email: profileData.email,
+        phoneNumber: profileData.mobile,
+        address: profileData.address,
 
     });
 
     const [disabledButtons, setDisabledButtons] = useState(true)
 
-    useEffect(() => {
-        loadProfile();
-    }, [])
-
-    useEffect(() => {
-    }, [userProfileData])
 
     const fileInputRef = useRef(null);
 
-    const [uploadedImage, setUploadedImage] = useState(userProfileData?.profile || null);
+    const [uploadedImage, setUploadedImage] = useState(profileData?.profile || null);
 
     const lang = useSelector(languageData);
 
@@ -107,21 +100,19 @@ const UserProfile = () => {
     const handleDiscardUpdate = (e) => {
         e.preventDefault();
         setresetLocationValue(!resetLocationValue)
-        setUploadedImage(userProfileData?.profile);
+        setUploadedImage(profileData?.profile);
         fileInputRef.current.value = ''
         setFormData({
-            fullName: userProfileData?.name,
-            email: userProfileData?.email,
-            phoneNumber: userProfileData?.mobile,
-            address: userProfileData?.address,
-            profileImage: userProfileData?.profile,
+            fullName: profileData?.name,
+            email: profileData?.email,
+            phoneNumber: profileData?.mobile,
+            address: profileData?.address,
+            profileImage: profileData?.profile,
         });
     }
 
     const handleUpdateProfile = (e) => {
         e.preventDefault();
-
-        console.log('formData.profileImage', typeof(formData.profileImage));
 
         UpdateProfileApi({
             name: formData.fullName,
@@ -157,11 +148,11 @@ const UserProfile = () => {
 
     useEffect(() => {
         const initialData = {
-            fullName: userProfileData?.name,
-            email: userProfileData?.email,
-            phoneNumber: userProfileData?.mobile,
-            address: userProfileData?.address,
-            profileImage: userProfileData?.profile,
+            fullName: profileData?.name,
+            email: profileData?.email,
+            phoneNumber: profileData?.mobile,
+            address: profileData?.address,
+            profileImage: profileData?.profile,
             selectedLocation: formData?.selectedLocation
         };
     
@@ -169,7 +160,7 @@ const UserProfile = () => {
           key => formData[key] !== initialData[key]
         );
         setDisabledButtons(!hasFormChanged);
-    }, [formData, userProfileData]);
+    }, [formData, profileData]);
 
     const inputStyle = `
         p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
@@ -239,8 +230,8 @@ const UserProfile = () => {
                             <div className="">
                                 <label className='d-block mb-1 text-[#272835] text-sm'>{translate('address')}</label>
                                 <LocationSearchBox onLocationSelected={handleLocationSelected}
-                                    initialLatitude={userProfileData?.latitude}
-                                    initialLongitude={userProfileData?.longitude}
+                                    initialLatitude={profileData?.latitude}
+                                    initialLongitude={profileData?.longitude}
                                     className={inputStyle}
                                     reset={resetLocationValue}
                                 />

@@ -40,7 +40,7 @@ const SelectOptions = ({ label, onValueChange, value, className, options }) => {
 					<option
 						value={item}
 						key={idx}
-					>{item}</option>
+					>{translate(item)}</option>
 				))}
 			</select>
 		</Fragment>

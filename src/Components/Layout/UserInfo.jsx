@@ -9,16 +9,23 @@ import { placeholderImage, translate } from "@/utils";
 import { settingsData } from "@/store/reducer/settingsSlice";
 import { userSignUpData } from "@/store/reducer/authSlice";
 
+import { profileCacheData, loadProfile } from "@/store/reducer/momentSlice";
+
 const tabItemStyle = `text-[#1B1B1B] opacity-25 px-2`;
 const activeItemStyle = `relative font-medium text-[#34484F] opacity-100 after:absolute after:w-full after:h-[2px] after:bg-[#34484F] after:-bottom-[12px] after:left-0`
 
 const UserInfo = () => {
 
+	useEffect(() => {
+        loadProfile();
+    }, [])
+
 	const router = useRouter()
 	const signupData = useSelector(userSignUpData);
+    const profileData = useSelector(profileCacheData);
 	const SettingsData = useSelector(settingsData);
 	const PlaceHolderImg = SettingsData?.web_placeholder_logo;
-	const user = signupData?.data;
+	const user = profileData
 
 	const userFB = signupData?.data?.firebase_id;
 	let userType = '';
