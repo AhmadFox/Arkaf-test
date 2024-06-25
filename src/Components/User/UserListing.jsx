@@ -224,7 +224,7 @@ const UserDashboard = () => {
     return (
         <UserLayout>
             <div className="container">
-                <div className="row border rounded-xl overflow-hidden" id="dashboard_top_card">
+                <div className="border rounded-xl overflow-hidden" id="dashboard_top_card">
 				<div className="border-b py-3 px-4">
                         <h3 className="text-xl md:text-2xl">{translate("currentListing")}</h3>
                     </div>
@@ -356,7 +356,10 @@ const UserDashboard = () => {
                                         ) : (
                                             <TableRow>
                                                 <TableCell colSpan={6} align="center">
-                                                    <p>{translate("noDataAvailabe")}</p>
+                                                    <div className="text-center pb-4">
+                                                        <p className="text-xl font-medium text-slate-700 mb-4" >{translate("noDataAvailabe")}</p>
+                                                        <Link href="/user/properties" className="tw-btn-solid !px-12">{translate('addProp')}</Link>
+                                                    </div>
                                                 </TableCell>
                                             </TableRow>
                                         )}

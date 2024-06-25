@@ -243,9 +243,6 @@ const AddProperty = () => {
                                 }
                             </div>
 
-                            {
-                                
-                            }
                             <div className={`grid gap-3 grid-cols-${availableparameter.length - 1}`}>
                                 {availableparameter
                                     .filter(item => item.name !== 'Size')

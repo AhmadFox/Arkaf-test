@@ -36,20 +36,20 @@ function VerticalCard({ ele, removeCard, onImageLoad }) {
 
     const swiperRefNavg = useRef(null);
 
-    useEffect(() => {
-      const handleClick = (event) => {
-        event.preventDefault()
-      };
+    // useEffect(() => {
+    //   const handleClick = (event) => {
+    //     event.preventDefault()
+    //   };
   
-      // Access the DOM element through the ref
-      const element = swiperRefNavg.current;
-      element.addEventListener('click', handleClick);
+    //   // Access the DOM element through the ref
+    //   const element = swiperRefNavg.current;
+    //   element.addEventListener('click', handleClick);
   
-      // Clean up the event listener
-      return () => {
-        element.removeEventListener('click', handleClick);
-      };
-    }, []);
+    //   // Clean up the event listener
+    //   return () => {
+    //     element.removeEventListener('click', handleClick);
+    //   };
+    // }, []);
 
     const isLoggedIn = useSelector((state) => state.User_signup);
 

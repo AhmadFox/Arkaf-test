@@ -307,15 +307,15 @@ const HomePage = () => {
         const nextButton = document.querySelector('.sw_next_2');
 
         if (swiper.isBeginning) {
-        prevButton.classList.add('swiper-button-disabled');
+            prevButton.classList.add('swiper-button-disabled');
         } else {
-        prevButton.classList.remove('swiper-button-disabled');
+            prevButton.classList.remove('swiper-button-disabled');
         }
 
         if (swiper.isEnd) {
-        nextButton.classList.add('swiper-button-disabled');
+            nextButton.classList.add('swiper-button-disabled');
         } else {
-        nextButton.classList.remove('swiper-button-disabled');
+            nextButton.classList.remove('swiper-button-disabled');
         }
     };
 
@@ -345,13 +345,13 @@ const HomePage = () => {
             <div style={{ marginTop: sliderdata.length > 0 ? '0' : '0px' }}>
 
                 {/* Nearby City Section  */}
-                {userCurrentLocation && nearbyCityData?.length > 0 && (
+                {/* {userCurrentLocation && nearbyCityData?.length > 0 && (
                     <section id="nearbyCityProperties">
                         <div className="container">
                             <NearbyCityswiper data={nearbyCityData} isLoading={isLoading} userCurrentLocation={userCurrentLocation} />
                         </div>
                     </section>
-                )}
+                )} */}
 
 
                 {getFeaturedListing && getFeaturedListing.length > 0 ? (
