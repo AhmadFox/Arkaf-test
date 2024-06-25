@@ -1,4 +1,4 @@
-import { useRef, useEffect, Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 
 import { toast } from "react-hot-toast";
 import "react-phone-number-input/style.css";
@@ -13,45 +13,22 @@ import { translate } from "@/utils";
 const InputTel = ({placeholder, label, onValueChange, className, value}) => {
 
 	const telElm = useRef(null);
-	const [ validation, setValidation ] = useState();
-	const [ phone, setPhone ] = useState(value ? value : '');
 	const phoneUtil = PhoneNumberUtil.getInstance();
 
-	useEffect(() => {
-		setPhone(value)
-	}, [value])
-
-	useEffect(() => {
-
-		const checkPhoneValid = () => {
-			let value = telElm.current.value;
-			try {
-				const phoneNumber = phoneUtil.parseAndKeepRawInput(value, 'ZZ');
-				if (phoneUtil.isValidNumber(phoneNumber)) {
-					toast.success(translate("validPhonenum"));
-					onValueChange(true, value)
-				}else {
-					toast.error(translate("notValidPhonenum"));
-					onValueChange(false, '')
-				}
-				setPhone(phoneNumber.values_[5]);
-			} catch (error) {
-				console.error("Error parsing phone number:", error);
+	const checkPhoneValid = () => {
+		let value = telElm.current.value;
+		try {
+			const phoneNumber = phoneUtil.parseAndKeepRawInput(value, 'ZZ');
+			if (phoneUtil.isValidNumber(phoneNumber) && value.length >= 16) {
+				toast.success(translate("validPhonenum"));
+				
 			}
+			onValueChange(phoneUtil.isValidNumber(phoneNumber), value)
+			
+		} catch (error) {
+			console.error("Error parsing phone number:", error);
 		}
-
-		const currentTelElm = telElm.current;
-		if (currentTelElm) {
-			currentTelElm.addEventListener('input', checkPhoneValid);
-		}
-
-		return () => {
-			if (currentTelElm) {
-				currentTelElm.removeEventListener('input', checkPhoneValid);
-			}
-		};
-
-	}, []);
+	}
 
 	return (
 		<Fragment>
@@ -60,11 +37,11 @@ const InputTel = ({placeholder, label, onValueChange, className, value}) => {
 				ref={telElm}
 				defaultCountry={process.env.NEXT_PUBLIC_DEFAULT_COUNTRY}
 				disabledCountryCode={true}
-				countryCallingCodeEditable={true}
+				countryCallingCodeEditable={false}
 				international={true}
 				placeholder={placeholder}
-				value={phone}
-				onChange={setValidation}
+				value={value}
+				onChange={checkPhoneValid}
 				className={`${inputStyle} ${className}`}
 			/>
 		</Fragment>

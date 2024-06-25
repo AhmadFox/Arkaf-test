@@ -17,6 +17,7 @@ const SignupForm = () => {
 	const navigate = useRouter();
 
 	const [phone, setPhone] = useState('');
+	const [valedPhone, setValedPhone] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 	const [formData, setFormData] = useState({});
@@ -24,7 +25,8 @@ const SignupForm = () => {
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
     const handlePhone = (valid, value) => {
-		valid ? setPhone(value) : setPhone('');
+		setPhone(value);
+		setValedPhone(valid)
 	};
 	const handleEmail = (valid, value) => {
 		valid ? setEmail(value) : setEmail('');
@@ -35,7 +37,7 @@ const SignupForm = () => {
 
 	useEffect(() => {
 
-		phone && email && password ? 
+		valedPhone && email && password ? 
 			setIsButtonDisabled(false) :
 			setIsButtonDisabled(true);
 
@@ -48,7 +50,7 @@ const SignupForm = () => {
 			firebase_id: 2
         });
 
-	}, [phone, email, password])
+	}, [phone, email, password, valedPhone])
 
 
 	const handleSubmit = async (e) => {

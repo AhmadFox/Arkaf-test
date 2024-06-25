@@ -32,22 +32,19 @@ const UserProfile = () => {
     const [uploadedImage, setUploadedImage] = useState(null);
     const user = signupData?.data?.data
 
-
-    console.log('signupData ===>', signupData);
-
     const [formData, setFormData] = useState({
         fullName: user?.name,
         email: user?.email,
         phoneNumber: user?.mobile,
         address: user?.address,
         profile: user?.profile
-
     });
 
-    useEffect(() => { }, [lang]);
+    // useEffect(() => { }, [lang]);
 
     const SettingsData = useSelector(settingsData);
     const PlaceHolderImg = SettingsData?.web_placeholder_logo;
+
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
 
@@ -64,9 +61,12 @@ const UserProfile = () => {
         }
     };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+    const handleFullName = (e) => {
+        const value = e.target.value;
+        setFormData({
+            ...formData,
+            fullName: value,
+        });
        
     };
 
@@ -75,47 +75,41 @@ const UserProfile = () => {
     };
 
     const handleLocationSelected = (locationData) => {
+        console.log('=====', locationData);
         setFormData({
             ...formData,
-            selectedLocation: locationData,
+            selectedLocation: locationData
         });
     };
 
-    const handlePhoneNumberChange = (e) => {
-        const value = e.target.value;
-        if (/^\d*$/.test(value)) {
-            setFormData({ ...formData, phoneNumber: value });
-        }
-    };
-
     const handlePhone = (valid, value) => {
-		valid ? 
-        setFormData({ ...formData, phoneNumber: value }):
-        setFormData({ ...formData, phoneNumber: userProfileData?.mobile });
+        valid &&
+		setFormData({
+            ...formData,
+            phoneNumber: value
+        })
 	};
 
-    const isLoggedIn = useSelector((state) => state.User_signup);
+    // const isLoggedIn = useSelector((state) => state.User_signup);
     // const userCurrentId = isLoggedIn && isLoggedIn.data ? isLoggedIn.data.data.id : null;
 
     const handleDiscardUpdate = (e) => {
         e.preventDefault();
         setresetLocationValue(!resetLocationValue)
-        setUploadedImage(profileData?.profile);
+        setUploadedImage(user?.profile);
         fileInputRef.current.value = ''
         setFormData({
-            fullName: signupData?.name,
-            email: signupData?.email,
-            phoneNumber: signupData?.mobile,
-            address: signupData?.address,
-            profileImage: signupData?.profile,
+            fullName: user?.name,
+            email: user?.email,
+            phoneNumber: user?.mobile,
+            address: user?.address,
+            profileImage: user?.profile
         });
     }
 
     const handleUpdateProfile = (e) => {
         e.preventDefault();
-
-        console.log('formData.profileImage', formData.profileImage);
-
+        setDisabledButtons(true);
         UpdateProfileApi({
             name: formData.fullName,
             mobile: formData.phoneNumber,
@@ -133,7 +127,7 @@ const UserProfile = () => {
             city: formData.selectedLocation?.city,
             state: formData.selectedLocation?.state,
             country: formData.selectedLocation?.country,
-            profile: formData.profileImage && formData.profileImage,
+            profile: formData.profileImage,
             onSuccess: (response) => {
                 toast.success(translate("profileupdate"));
                 loadUpdateUserData(response);
@@ -150,19 +144,18 @@ const UserProfile = () => {
 
     useEffect(() => {
         const initialData = {
-            fullName: signupData?.name,
-            email: signupData?.email,
-            phoneNumber: signupData?.mobile,
-            address: signupData?.address,
-            profileImage: signupData?.profile,
-            selectedLocation: formData?.selectedLocation
+            fullName: user?.name,
+            email: user?.email,
+            phoneNumber: user?.mobile,
+            address: user?.address,
+            profileImage: user?.profile
         };
-    
+
         const hasFormChanged = Object.keys(formData).some(
           key => formData[key] !== initialData[key]
         );
         setDisabledButtons(!hasFormChanged);
-    }, [formData, signupData]);
+    }, [formData]);
 
     const inputStyle = `
         p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
@@ -207,7 +200,7 @@ const UserProfile = () => {
                                     type="text"
                                     name="fullName"
                                     value={formData.fullName}
-                                    onChange={handleInputChange}
+                                    onChange={handleFullName}
                                     placeholder={translate('enterFullName')}
                                     pattern="^[a-zA-Z]+$"
                                     className={inputStyle}
@@ -232,8 +225,8 @@ const UserProfile = () => {
                             <div className="">
                                 <label className='d-block mb-1 text-[#272835] text-sm'>{translate('address')}</label>
                                 <LocationSearchBox onLocationSelected={handleLocationSelected}
-                                    initialLatitude={signupData?.latitude}
-                                    initialLongitude={signupData?.longitude}
+                                    initialLatitude={user?.latitude}
+                                    initialLongitude={user?.longitude}
                                     className={inputStyle}
                                     reset={resetLocationValue}
                                 />
