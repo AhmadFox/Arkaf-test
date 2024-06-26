@@ -174,11 +174,30 @@ const HomePage = () => {
     }, [isLoggedIn, userCurrentLocation]);
 
     // GET FEATURED LISTINGS and
+    // useEffect(() => {
+    //     setIsLoading(true);
+
+    //     GetFeturedListingsApi({
+    //         promoted: "1",
+    //         current_user: isLoggedIn ? userCurrentId : "",
+    //         onSuccess: (response) => {
+    //             const FeaturedListingData = response.data;
+    //             setIsLoading(false);
+    //             setGetFeaturedListing(FeaturedListingData);
+    //         },
+    //         onError: (error) => {
+    //             console.log(error);
+    //             setIsLoading(true);
+    //         }
+    //     }
+    //     );
+    // }, [isLoggedIn]);
+
     useEffect(() => {
         setIsLoading(true);
 
         GetFeturedListingsApi({
-            promoted: "1",
+            is_featured: 1,
             current_user: isLoggedIn ? userCurrentId : "",
             onSuccess: (response) => {
                 const FeaturedListingData = response.data;
@@ -258,6 +277,7 @@ const HomePage = () => {
 
     const swiperRef1 = useRef(null);
     const swiperRef2 = useRef(null);
+    const swiperRef3 = useRef(null);
 
     useEffect(() => {
         if (!swiperRef1.current) return; // Ensure swiper instance is available
@@ -334,6 +354,44 @@ const HomePage = () => {
         }
     };
     }, []);
+
+    useEffect(() => {
+        if (!swiperRef3.current) return; // Ensure swiper instance is available
+    
+        const swiper = swiperRef3.current;
+    
+        const updateNavigation = () => {
+            const prevButton = document.querySelector('.sw_prev_3');
+            const nextButton = document.querySelector('.sw_next_3');
+    
+            if (swiper.isBeginning) {
+                prevButton.classList.add('swiper-button-disabled');
+            } else {
+                prevButton.classList.remove('swiper-button-disabled');
+            }
+    
+            if (swiper.isEnd) {
+                nextButton.classList.add('swiper-button-disabled');
+            } else {
+                nextButton.classList.remove('swiper-button-disabled');
+            }
+        };
+    
+        // Add event listeners
+        swiper.on('init', updateNavigation);
+        swiper.on('slideChange', updateNavigation);
+    
+        // Perform initial navigation state update
+        updateNavigation();
+    
+        // Cleanup event listeners when the component unmounts
+        return () => {
+            if (swiper) {
+            swiper.off('init', updateNavigation);
+            swiper.off('slideChange', updateNavigation);
+            }
+        };
+        }, []);
     
 
     return (
@@ -344,20 +402,87 @@ const HomePage = () => {
 
             <div style={{ marginTop: sliderdata.length > 0 ? '0' : '0px' }}>
 
-                {/* Nearby City Section  */}
-                {/* {userCurrentLocation && nearbyCityData?.length > 0 && (
-                    <section id="nearbyCityProperties">
-                        <div className="container">
-                            <NearbyCityswiper data={nearbyCityData} isLoading={isLoading} userCurrentLocation={userCurrentLocation} />
-                        </div>
-                    </section>
-                )} */}
-
-
                 {getFeaturedListing && getFeaturedListing.length > 0 ? (
-                    <section id="feature">
+                    <section id="main_properties">
                         <div className="container">
-                            <div id="">
+                            
+                            <div className="most_fav_header">
+                                <div className="mb-0 h3">{translate("discoverOur")} {translate("featured")} {translate("listings")}</div>
+                                <div className="position-relative d-flex justify-content-center swiper-navigation-out d-none d-md-flex">
+                                    <div className="swiper-button-prev sw_prev_3" onClick={() => swiperRef3.current.slidePrev()}></div>
+                                    <div className="swiper-button-next sw_next_3" onClick={() => swiperRef3.current.slideNext()}></div>
+                                </div>
+                            </div>
+                            <div className="mobile-headline-view">
+                                <div className="text-center h3">{translate("discoverOur")} {translate("featured")} {translate("listings")}</div>
+                                <div className="position-relative d-flex justify-content-center swiper-navigation-out d-none d-md-flex">
+                                    <div className="swiper-button-prev sw_prev_3" onClick={() => swiperRef3.current.slidePrev()}></div>
+                                    <div className="swiper-button-next sw_next_3" onClick={() => swiperRef3.current.slideNext()}></div>
+                                </div>
+                            </div>
+                            <div id="most-view-properties" dir={language.rtl === "1" ? "rtl" : "ltr"}>
+                                
+
+                                <Swiper
+                                    onSwiper={setSwiper => swiperRef3.current = setSwiper}
+                                    slidesPerView={3.5}
+                                    spaceBetween={30}
+                                    freeMode={false}
+                                    navigation={{
+                                        prevEl: '.swiper-button-prev.sw_prev_3',
+                                        nextEl: '.swiper-button-next.sw_next_3'
+                                    }}
+                                    onInit={(swiper) => {
+                                        swiperRef3.current = swiper;
+                                    }}
+                                    pagination={true}
+                                    modules={[FreeMode, Pagination, Navigation]}
+                                    className="most-view-swiper"
+                                    breakpoints={breakpoints}
+                                >
+                                    {isLoading ? (
+                                        // Show skeleton loading when data is being fetched
+                                        <Swiper
+                                            dir={language.rtl === "1" ? "rtl" : "ltr"}
+                                            slidesPerView={3.5}
+                                            spaceBetween={30}
+                                            freeMode={false}
+                                            pagination={{
+                                                clickable: true,
+                                            }}
+                                            modules={[FreeMode, Pagination, Navigation]}
+                                            className="most-view-swiper"
+                                            breakpoints={breakpoints}
+                                        >
+                                            {Array.from({ length: 6 }).map((_, index) => (
+                                                <SwiperSlide>
+                                                    <div className="loading_data">
+                                                        <VerticalCardSkeleton />
+                                                    </div>
+                                                </SwiperSlide>
+                                            ))}
+                                        </Swiper>
+                                    ) : (
+                                        getFeaturedListing?.map((ele, index) => (
+                                            <SwiperSlide id="most-view-swiper-slider" key={index}>
+                                                <Link target="_blank" href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
+                                                    <VerticalCard ele={ele} onImageLoad={handleImageLoaded} />
+                                                </Link>
+                                            </SwiperSlide>
+                                        ))
+                                    )}
+                                </Swiper>
+                            </div>
+                            {/* {
+                                getFeaturedListing?.slice(0, 8).map((ele, index) => (
+                                    <div className="col-sm-12 col-md-6 col-lg-3" key={index}>
+                                        <Link target="_blank" href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
+                                            <VerticalCard ele={ele} onImageLoad={handleImageLoaded} />
+                                        </Link>
+                                    </div>
+                                ))
+                            } */}
+                            {/* <div id="">
                                 <div>
                                     {isLoading ? (
                                         <Skeleton width="100%" height={20} />
@@ -382,16 +507,10 @@ const HomePage = () => {
                                                     <VerticalCardSkeleton />
                                                 </div>
                                             ))
-                                            : getFeaturedListing?.slice(0, 8).map((ele, index) => (
-                                                <div className="col-sm-12 col-md-6 col-lg-3" key={index}>
-                                                    <Link href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
-                                                        <VerticalCard ele={ele} onImageLoad={handleImageLoaded} />
-                                                    </Link>
-                                                </div>
-                                            ))}
+                                            : )}
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </section>
                 ) : (
@@ -407,7 +526,6 @@ const HomePage = () => {
                                     <div className="swiper-button-prev sw_prev_1" onClick={() => swiperRef1.current.slidePrev()}></div>
                                     <div className="swiper-button-next sw_next_1" onClick={() => swiperRef1.current.slideNext()}></div>
                                 </div>
-
                             </div>
                             <div className="mobile-headline-view">
                                 <div className="text-center h3">{translate("recommendedProperties")}</div>
@@ -461,7 +579,7 @@ const HomePage = () => {
                                     ) : (
                                         getMostFavProperties?.map((ele, index) => (
                                             <SwiperSlide id="most-view-swiper-slider" key={index}>
-                                                <Link href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
+                                                <Link target="_blank" href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
                                                     <VerticalCard ele={ele} />
                                                 </Link>
                                             </SwiperSlide>
@@ -599,6 +717,60 @@ const HomePage = () => {
                                 </div>
                             </div>
                             <div id="most-view-properties" dir={language.rtl === "1" ? "rtl" : "ltr"}>
+                                
+                                {/* Nearby City Section  */}
+                                {userCurrentLocation && nearbyCityData?.length > 0 ? (
+                                    <Swiper
+                                    onSwiper={setSwiper => swiperRef2.current = setSwiper}
+                                    slidesPerView={3.5}
+                                    spaceBetween={30}
+                                    freeMode={false}
+                                    navigation={{
+                                        prevEl: '.swiper-button-prev.sw_prev_2',
+                                        nextEl: '.swiper-button-next.sw_next_2'
+                                    }}
+                                    onInit={(swiper) => {
+                                        swiperRef2.current = swiper;
+                                    }}
+                                    pagination={false}
+                                    modules={[FreeMode, Pagination, Navigation]}
+                                    className="most-view-swiper"
+                                    breakpoints={breakpoints}
+                                    
+                                >
+                                    {isLoading ? (
+                                        // Show skeleton loading when data is being fetched
+                                        <Swiper
+                                            dir={language.rtl === "1" ? "rtl" : "ltr"}
+                                            slidesPerView={3.5}
+                                            spaceBetween={30}
+                                            freeMode={false}
+                                            pagination={{
+                                                clickable: true,
+                                            }}
+                                            modules={[FreeMode, Pagination, Navigation]}
+                                            className="most-view-swiper"
+                                            breakpoints={breakpoints}
+                                        >
+                                            {Array.from({ length: 6 }).map((_, index) => (
+                                                <SwiperSlide>
+                                                    <div className="loading_data">
+                                                        <VerticalCardSkeleton />
+                                                    </div>
+                                                </SwiperSlide>
+                                            ))}
+                                        </Swiper>
+                                    ) : (
+                                        nearbyCityData?.map((ele, index) => (
+                                            <SwiperSlide id="most-view-swiper-slider" key={index}>
+                                                <Link  target="_blank" href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
+                                                    <VerticalCard ele={ele} />
+                                                </Link>
+                                            </SwiperSlide>
+                                        ))
+                                    )}
+                                </Swiper>
+                                ):
                                 <Swiper
                                     onSwiper={setSwiper => swiperRef2.current = setSwiper}
                                     slidesPerView={3.5}
@@ -642,13 +814,14 @@ const HomePage = () => {
                                     ) : (
                                         getMostFavProperties?.map((ele, index) => (
                                             <SwiperSlide id="most-view-swiper-slider" key={index}>
-                                                <Link href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
+                                                <Link  target="_blank" href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
                                                     <VerticalCard ele={ele} />
                                                 </Link>
                                             </SwiperSlide>
                                         ))
                                     )}
                                 </Swiper>
+                                }
                             </div>
 
                         </div>

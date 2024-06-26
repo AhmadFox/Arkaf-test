@@ -245,12 +245,13 @@ export const getProfileApi = () => {
 }
 
 // get Propertyes 
-export const getAllProperties = (promoted, top_rated, id, category_id, most_liked, city, get_simiilar, offset, limit, current_user, property_type, max_price, min_price, posted_since, state, country, search, userid, users_promoted, slug_id, category_slug_id) => {
+export const getAllProperties = (is_featured, promoted, top_rated, id, category_id, most_liked, city, get_simiilar, offset, limit, current_user, property_type, max_price, min_price, posted_since, state, country, search, userid, users_promoted, slug_id, category_slug_id) => {
 
     return {
         url: `${GET_PROPETRES}`,
         method: "GET",
         params: {
+            is_featured, is_featured,
             promoted: promoted,
             top_rated: top_rated,
             id: id,

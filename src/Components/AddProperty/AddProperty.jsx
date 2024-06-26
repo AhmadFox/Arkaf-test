@@ -127,10 +127,10 @@ const AddProperty = () => {
 				threeD_image: formData.Viewer3D,
 				rentduration: formData.date,
 				video_link: formData.video,
-				status: '1',
+				status: '2',
 				onSuccess: async (response) => {
 					toast.success(response.message);
-					// router.push("/user/dashboard");
+					router.push("/user/current-listing");
 					setShowLoader(false);
 				},
 				onError: (error) => {
@@ -160,8 +160,9 @@ const AddProperty = () => {
 				address: formData.selectedLocation.formatted_address,
 				price: formData.price,
 				category_id: formData.categoryId,
-				property_type: '1',
-				parameters: [],
+				property_type: selectedOption === 'sell' ? '0' : '1',
+                rentduration: formData.duration,
+				parameters: parameter.parameters,
 				title_image: formData.titleImage,
 				gallery_images: formData.galleryImages,
 				size: formData.size,
@@ -171,7 +172,7 @@ const AddProperty = () => {
 				status: '0',
 				onSuccess: async (response) => {
 					toast.success(response.message);
-					// router.push("/user/dashboard");
+					router.push("/user/current-listing");
 					setShowLoader(false);
 				},
 				onError: (error) => {

@@ -32,8 +32,8 @@ const InputNumber = ({ placeholder, label, onValueChange, value, className }) =>
 		<Fragment>
 			<label className='d-block mb-1 text-[#272835] text-sm'>{translate(label)}</label>
 			<input
-				ref={numberElm} 
-				type="number"
+				ref={numberElm}
+				type="text"
 				value={value}
 				className={`${inputStyle} ${className}`}
 				placeholder={translate(placeholder)}

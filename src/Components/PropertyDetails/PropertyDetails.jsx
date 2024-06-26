@@ -911,7 +911,7 @@ const PropertyDetails = () => {
 
                                     
 
-                                    {getPropData && getPropData.video_link ? (
+                                    {/* {getPropData && getPropData.video_link ? (
                                         <Fragment>
                                             <hr className="my-3" />
                                             <div className="" id="prop-video">
@@ -957,7 +957,7 @@ const PropertyDetails = () => {
                                                 </div>
                                             </div>
                                         </Fragment>
-                                    ) : null}
+                                    ) : null} */}
 
                                     {getPropData && getPropData.layout ? (
                                         <Fragment>
@@ -1032,25 +1032,28 @@ const PropertyDetails = () => {
 
                                     ): null}
 
-                                    
-                                    <hr className="my-3" />                                      
-                                    <div className="">
-                                        <div className="h4 mb-4">{translate("360tourView")}</div>
-                                        <div className="rounded-4 overflow-hidden position-relative canvas-container">
-                                            <iframe
-                                                title="360 tour View"
-                                                src="https://momento360.com/e/uc/fb0d71acfc7a4aa8a8cf9493793b0769?utm_campaign=marketingsite&utm_source=www&size=large&display-plan=true&upload-key=9f0752e203f443a09130aaf6ada85104"
-                                                // frameBorder="0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                allowFullScreen
-                                                style={{ width: '100%', height: '100%,', position: 'absolute' }}
-                                            />
-                                        </div>
 
-                                    </div>
 
+                                    {getPropData && getPropData.video_link ? (
+                                        <Fragment>
+                                            <hr className="my-3" />                                      
+                                            <div className="">
+                                                <div className="h4 mb-4">{translate("360tourView")}</div>
+                                                <div className="rounded-4 overflow-hidden position-relative canvas-container">
+                                                    <iframe
+                                                        title="360 tour View"
+                                                        src={getPropData.video_link}
+                                                        // frameBorder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowFullScreen
+                                                        style={{ width: '100%', height: '100%,', position: 'absolute' }}
+                                                    />
+                                                </div>
+
+                                            </div>
+                                        </Fragment>
+                                    ): null}
                                 </div>
-
 
 
                                 <div className="col-12 col-md-12 col-lg-5 ps-0 ps-lg-4">

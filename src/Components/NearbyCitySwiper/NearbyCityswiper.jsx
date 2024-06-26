@@ -49,48 +49,7 @@ const NearbyCityswiper = ({ data, isLoading, userCurrentLocation }) => {
     const language = store.getState().Language.languages;
     return (
         <div div id="similer-properties">
-            {data?.length > 0 ? (
-                <>
-                    <div className="most_fav_header">
-                        <div>
-                            <h3>
-                                {translate("properties")}{" "} {translate("nearby")}{" "}
-                                <span>
-                                    <span className="highlight"> {userCurrentLocation}</span>
-                                </span>{" "}
-
-                            </h3>
-                        </div>
-                        {data.length > 4 ? (
-                            <div className="rightside_most_fav_header">
-                                <Link href={`/properties/city/${userCurrentLocation}`}>
-                                    <button className="learn-more" id="viewall">
-                                        <span aria-hidden="true" className="circle">
-                                            <div className="icon_div">
-                                                <span className="icon arrow">
-                                                    <BsArrowRight />
-                                                </span>
-                                            </div>
-                                        </span>
-                                        <span className="button-text">{translate("seeAllProp")}</span>
-                                    </button>
-                                </Link>
-                            </div>
-                        ) : null}
-                    </div>
-                    {/* {data.length > 4 ? ( */}
-                        <div className="mobile-headline-view">
-                            <MobileHeadline
-                                data={{
-                                    start: translate("properties"),
-                                    center: translate("nearby"),
-                                    end: userCurrentLocation,
-                                    link: `/properties/city/${userCurrentLocation}`,
-                                }}
-                            />
-                        </div>
-                    {/* ) : null} */}
-                    <div className="similer-prop-slider">
+            <div className="similer-prop-slider">
                         <Swiper
                             dir={language.rtl === "1" ? "rtl" : "ltr"}
                             slidesPerView={4}
@@ -128,7 +87,7 @@ const NearbyCityswiper = ({ data, isLoading, userCurrentLocation }) => {
                                 data &&
                                 data.map((ele, index) => (
                                     <SwiperSlide id="similer-swiper-slider" key={index}>
-                                        <Link href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
+                                        <Link target="_blank" href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
                                             <VerticalCard ele={ele} />
                                         </Link>
                                     </SwiperSlide>
@@ -136,8 +95,6 @@ const NearbyCityswiper = ({ data, isLoading, userCurrentLocation }) => {
                             )}
                         </Swiper>
                     </div>
-                </>
-            ) : null}
         </div>
     );
 };
