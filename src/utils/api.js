@@ -450,6 +450,7 @@ export const postProperty = (
         title_image,
     threeD_image,
         gallery_images,
+        property_layout, // new attribute by @ahmad_gharaibeh
     meta_title,
     meta_description,
     meta_keywords,
@@ -507,7 +508,13 @@ export const postProperty = (
         });
     }
 
-
+    // Check if layouts_images is defined and an array before using forEach
+    if (Array.isArray(property_layout)) {
+        property_layout.forEach((image, index) => {
+            data.append(`property_layout[${index}]`, image);
+        });
+    }
+    
     return {
         url: `${POST_PROPERTY}`,
         method: 'POST',

@@ -2,283 +2,283 @@
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
     <loc>https://arkaf-test.vercel.app//404</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.291Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.291Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//about-us</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://arkaf-test.vercel.app//all-categories</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.291Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//all-projects</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.291Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://arkaf-test.vercel.app//all-categories</loc>
+    <lastmod>2024-06-30T08:16:09.291Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//articles</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.291Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//all-personalized-feeds</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.291Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//article-details/[slug]</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//contact-us</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//featured-properties</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//forgot-password</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//login</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://arkaf-test.vercel.app//most-viewed-properties</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//most-favorite-properties</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://arkaf-test.vercel.app//most-viewed-properties</loc>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//privacy-policy</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//project-details/[slug]</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//properties-details/[slug]</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//properties-nearby-city</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//properties-on-map</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//register</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//reset-password</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//search</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//subscription-plan</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//success-create-account</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//terms-and-condition</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user-register</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://arkaf-test.vercel.app//properties/categories/[slug]</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//verify-account</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//properties/all-properties</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://arkaf-test.vercel.app//properties/categories/[slug]</loc>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//properties/city/[slug]</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/add-project</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/advertisement</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/chat</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/current-listing</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/dashboard</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/edit-project/[slug]</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/edit-property/[slug]</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/favorites-properties</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/intrested/[slug]</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/notifications</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/personalize-feed</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/profile</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/projects</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/properties</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/subscription</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://arkaf-test.vercel.app//user/transaction-history</loc>
-    <lastmod>2024-06-26T06:51:26.912Z</lastmod>
+    <lastmod>2024-06-30T08:16:09.292Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>

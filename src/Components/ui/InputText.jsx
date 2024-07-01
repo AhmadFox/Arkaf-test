@@ -13,8 +13,10 @@ const InputText = ({ placeholder, label, onValueChange, value, className , type}
 
 		const handleInput = () => {
 			let value = nameElm.current.value;
-			const namePattern = type === 'url' ? new RegExp('https?://.+') : /^[a-zA-Z]+$/;
-			namePattern.test(value) ? onValueChange(true, value) : onValueChange(false, '')
+			// const namePattern = type === 'url' ? new RegExp('https?://.+') : /^[a-zA-Z]+$/;
+			// namePattern.test(value) ? onValueChange(true, value) : onValueChange(false, '')
+			onValueChange(true, value)
+			console.log('valuue', value);
 		};
 
 		const currentNameElm = nameElm.current;

@@ -23,6 +23,7 @@ import ProperetyGellary from "./ProperetyGellary";
 import SubmitButton from "../AuthForms/SubmitButton";
 import ButtonGroup from "../ui/ButtonGroup";
 import InputText from "../ui/InputText";
+import InputMultibleImage from "../ui/InputMultibleImage";
 
 const inputStyle = `
     p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
@@ -37,13 +38,15 @@ const AddProperty = () => {
     }, []);
 
     const categorydata = useSelector(categoriesCacheData);
+
+    const [formData, setFormData] = useState({});
+	const [ showLoader, setShowLoader] = useState(false)
     const [ selectedOption, setSelectedOption ] = useState('sell');
     const [ availableparameter, setAvailableparameter ] = useState([]);
-	const [ showLoader, setShowLoader] = useState(false)
-    const [formData, setFormData] = useState({});
     const [parameter, setParametersData] = useState({
         parameters: []
     });
+    const [layoutArray, setLayoutArray] = useState([]);
 
 
     const handleInputChange = (field, value) => {
@@ -65,6 +68,14 @@ const AddProperty = () => {
             ...prevFormData,
             'galleryImages': value,
         }));
+	}
+
+    const handelLayoutImage = (value) => {
+		// setFormData(prevFormData => ({
+        //     ...prevFormData,
+        //     'layoutImages': value,
+        // }));
+        setLayoutArray(value)
 	}
 
     const handleInputCategory = (value) => {
@@ -104,46 +115,54 @@ const AddProperty = () => {
         }));
     };
 
+    useEffect(() => {
+
+
+
+    }, [formData.categoryId])
+
     const handlePostPropertyPublish = async (e) => {
         e.preventDefault();
-		setShowLoader(true);
-		try {
-			PostProperty({
-				title: 'properety title',
-				description: formData.description,
-				city: formData.selectedLocation.city,
-				latitude: formData.selectedLocation.lat,
-				longitude: formData.selectedLocation.lng,
-				country: formData.selectedLocation.country,
-				address: formData.selectedLocation.formatted_address,
-				price: formData.price,
-				category_id: formData.categoryId,
-				property_type: selectedOption === 'sell' ? '0' : '1',
-                rentduration: formData.duration,
-				parameters: parameter.parameters,
-				title_image: formData.titleImage,
-				gallery_images: formData.galleryImages,
-				size: formData.size,
-				threeD_image: formData.Viewer3D,
-				rentduration: formData.date,
-				video_link: formData.video,
-				status: '2',
-				onSuccess: async (response) => {
-					toast.success(response.message);
-					router.push("/user/current-listing");
-					setShowLoader(false);
-				},
-				onError: (error) => {
-					toast.error(error);
-					setShowLoader(false);
-				}
-			});
+        console.log('Viewer3D', formData.Viewer3D);
+		// setShowLoader(true);
+		// try {
+		// 	PostProperty({
+		// 		title: 'properety title',
+		// 		description: formData.description,
+		// 		city: formData.selectedLocation.city,
+		// 		latitude: formData.selectedLocation.lat,
+		// 		longitude: formData.selectedLocation.lng,
+		// 		country: formData.selectedLocation.country,
+		// 		address: formData.selectedLocation.formatted_address,
+		// 		price: formData.price,
+		// 		category_id: formData.categoryId,
+		// 		property_type: selectedOption === 'sell' ? '0' : '1',
+        //         rentduration: formData.duration,
+		// 		parameters: parameter.parameters,
+		// 		title_image: formData.titleImage,
+		// 		gallery_images: formData.galleryImages,
+        //         property_layout: layoutArray,
+		// 		size: formData.size,
+		// 		threeD_image: formData.Viewer3D,
+		// 		rentduration: formData.date,
+		// 		video_link: formData.Viewer3D,
+		// 		status: '0',
+		// 		onSuccess: async (response) => {
+		// 			toast.success(response.message);
+		// 			router.push("/user/current-listing");
+		// 			setShowLoader(false);
+		// 		},
+		// 		onError: (error) => {
+		// 			toast.error(error);
+		// 			setShowLoader(false);
+		// 		}
+		// 	});
 			
-		} catch (error) {
-			setShowLoader(false);
-		    console.error("An error occurred:", error);
-		    toast.error("An error occurred. Please try again later.");
-		}
+		// } catch (error) {
+		// 	setShowLoader(false);
+		//     console.error("An error occurred:", error);
+		//     toast.error("An error occurred. Please try again later.");
+		// }
     };
 
 	const handlePostPropertyDraft = async (e) => {
@@ -165,10 +184,11 @@ const AddProperty = () => {
 				parameters: parameter.parameters,
 				title_image: formData.titleImage,
 				gallery_images: formData.galleryImages,
+                property_layout: layoutArray,
 				size: formData.size,
 				threeD_image: formData.Viewer3D,
 				rentduration: formData.date,
-				video_link: formData.video,
+				video_link: formData.Viewer3D,
 				status: '0',
 				onSuccess: async (response) => {
 					toast.success(response.message);
@@ -254,7 +274,7 @@ const AddProperty = () => {
                                                 className={inputStyle}
                                                 onChange={(e) => handleParametersChange(e, item.id)}
                                             >
-                                                <option disabled>{translate('Select')} {translate(item.name)}</option>
+                                                <option disabled selected>{translate('Select')} {translate(item.name)}</option>
                                                 <option value={1}>1</option>
                                                 <option value={2}>2</option>
                                                 <option value={3}>3</option>
@@ -290,11 +310,10 @@ const AddProperty = () => {
                                 />
                             </div>
 
-                            <div className="flex justify-between items-center mt-6">
-                                <h2 className="text-2xl font-medium mb-2">{translate('addLayoutProperty')}</h2>
-                                <button className="tw-btn-outline !px-7 !text-sm">{translate('addLayout')}</button>
-                            </div>
-
+                            
+                            <InputMultibleImage onValueChange={handelLayoutImage} />
+                            
+                                    
                             <div className="my-6">
                                 <h2 className="text-2xl font-medium mb-4">{translate('add360TourView')}</h2>
                                 <InputText
@@ -309,6 +328,7 @@ const AddProperty = () => {
                                 <h2 className="text-2xl font-medium mb-2">{translate('propertyStagingService')}</h2>
                                 <button className="tw-btn-outline !px-7 !text-sm">{translate('requestService')}</button>
                             </div> */}
+                            
                         </div>
 
                         <div className="col-span-3 xl:col-span-1">

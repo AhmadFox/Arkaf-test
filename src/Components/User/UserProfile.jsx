@@ -109,6 +109,7 @@ const UserProfile = () => {
 
     const handleUpdateProfile = (e) => {
         e.preventDefault();
+        console.log('formData.phoneNumber', formData.phoneNumber);
         setDisabledButtons(true);
         UpdateProfileApi({
             name: formData.fullName,

@@ -321,6 +321,7 @@ export const PostProperty = ({
         title_image = "",
     threeD_image = "",
         gallery_images = [],
+        property_layout = [], // new attribute by @ahmad_gharaibeh
     meta_title = "",
     meta_description = "",
     meta_keywords = "",
@@ -355,6 +356,7 @@ export const PostProperty = ({
                 title_image,
             threeD_image,
                 gallery_images,
+                property_layout, // new attribute by @ahmad_gharaibeh
             meta_title,
             meta_description,
             meta_keywords,

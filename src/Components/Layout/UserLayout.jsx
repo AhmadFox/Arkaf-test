@@ -1,5 +1,5 @@
 // Layout.jsx
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, Suspense, useEffect, useRef, useState } from "react";
 import Header from "../Header/Header";
 import { useSelector } from "react-redux";
 import { languageData } from "@/store/reducer/languageSlice";
@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { protectedRoutes } from "@/routes/routes";
 import { usePathname } from "next/navigation";
 import Swal from "sweetalert2";
+import Loader from "../Loader/Loader";
 import { loadSystemSettings } from "@/store/reducer/settingsSlice";
 
 import FooterUser from "../Footer/FooterUser";
@@ -83,18 +84,27 @@ const UserLayout = ({ children }) => {
     const lang = useSelector(languageData);
 
     return (
-        <div className="flex flex-col h-full">
-			<Header />
-            {
-                router.pathname === '/user/profile' ||
-                router.pathname === '/user/favorites-properties' ||
-                router.pathname === '/user/current-listing' ||
-                router.pathname === '/user/transaction-history' ?
-                <UserInfo /> : null
-            }
-			{children}
-			<FooterUser />
-		</div>
+        <Fragment>
+            {isLoading ? (
+                <Loader />
+            ) : (
+                <div className="flex flex-col h-full">
+                    <Suspense fallback={<Loader />}>
+                        <Header />
+                        {
+                            router.pathname === '/user/profile' ||
+                            router.pathname === '/user/favorites-properties' ||
+                            router.pathname === '/user/current-listing' ||
+                            router.pathname === '/user/transaction-history' ?
+                            <UserInfo /> : null
+                        }
+                        {children}
+                        <FooterUser />
+                    </Suspense>
+                </div>
+            )}
+        </Fragment>
+        
     );
 };
 export default UserLayout;
