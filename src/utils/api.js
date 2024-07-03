@@ -458,6 +458,8 @@ export const postProperty = (
     rentduration,
     is_premium,
         status,
+        built_in,
+        second_contact_number
 ) => {
     let data = new FormData();
 
@@ -483,6 +485,8 @@ export const postProperty = (
     data.append('rentduration', rentduration);
     data.append('is_premium', is_premium);
     data.append('status', status);
+    data.append('built_in', built_in);
+    data.append('second_contact_number', second_contact_number);
 
     // Append the parameters array if it is an array
     if (Array.isArray(parameters)) {

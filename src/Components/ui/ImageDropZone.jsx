@@ -4,7 +4,7 @@ import React, { Fragment, useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 // import { FaTrash, FaEdit } from 'react-icons/fa';
 
-const ImageDropZone = ({ onValueChange, btnDisclamer, height }) => {
+const ImageDropZone = ({ onValueChange, btnDisclamer, height, editIcon, size, fileInputId, object }) => {
   const [image, setImage] = useState(null);
   const [invalidFile, setInvalidFile] = useState(false);
 
@@ -43,7 +43,7 @@ const ImageDropZone = ({ onValueChange, btnDisclamer, height }) => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    document.getElementById('fileInput')?.click();
+    document.getElementById(fileInputId)?.click();
   };
 
   return (
@@ -58,12 +58,12 @@ const ImageDropZone = ({ onValueChange, btnDisclamer, height }) => {
         >
           <input {...getInputProps()} />
           {isDragActive ? (
-            <p className='text-green-800'>{translate('dropTheFilesHere')}</p>
+            <p className={`text-green-800 text-${size}`}>{translate('dropTheFilesHere')}</p>
           ) : (
             invalidFile ?
             <div className="text-red-600 text-center ">
-              <h3 className='font-mediun'>{translate('invalidFileFormat')}</h3>
-              <p className='text-sm'>{translate('acceeptImageFormat')}</p>
+              <h3 className={`font-mediun text-${size}`}>{translate('invalidFileFormat')}</h3>
+              <p className={`text-sm ${size === 'sm' && '!text-xs'}`}>{translate('acceeptImageFormat')}</p>
             </div>:
             btnDisclamer ?
             <Fragment>
@@ -88,24 +88,39 @@ const ImageDropZone = ({ onValueChange, btnDisclamer, height }) => {
             src={image}
             alt="Dropped"
             fill
-            className="object-cover"
+            className={`${object === 'contain' ? 'object-contain' : 'object-cover'}`}
           />
-          <div className="absolute bottom-5 right-5 flex flex-row-reverse gap-2">
-            <button
-              onClick={handleDelete}
-              className="tw-btn-outline tw-btn-sm tw-btn-outline-dangor w-24"
-            >
-              {translate('delete')}
-            </button>
+          {
+            editIcon ?
             <button
               onClick={handleChange}
-              className="tw-btn-outline tw-btn-sm w-24"
+              className="p-1.5 absolute top-1 right-1 z-[2] bg-dark rounded-md"
             >
-             {translate('change')}
-            </button>
-          </div>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.75} stroke="currentColor" className="size-5 stroke-white">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+              </svg>
+              <div className="sr-only">delete item</div>
+            </button>:
+            <div className="absolute bottom-5 right-5 ">
+                <div className="flex flex-row-reverse gap-2">
+                  <button
+                    onClick={handleDelete}
+                    className="tw-btn-outline tw-btn-sm tw-btn-outline-dangor w-24"
+                  >
+                    {translate('delete')}
+                  </button>
+                  <button
+                    onClick={handleChange}
+                    className="tw-btn-outline tw-btn-sm w-24"
+                  >
+                  {translate('change')}
+                  </button>
+                </div>            
+            </div>
+          }
+          
           <input
-            id="fileInput"
+            id={fileInputId}
             type="file"
             accept="image/png, image/jpeg, image/jpg, image/webp"
             onChange={(e) => {

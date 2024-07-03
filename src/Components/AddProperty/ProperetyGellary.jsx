@@ -25,27 +25,32 @@ const ProperetyGellary = ({titleImageHandle, galleryImageHandler}) => {
 		<div className='grid grid-cols-4 grid-rows-2 gap-3 mt-3 h-[480px]'>
 			<div className="col-span-2 row-span-2">
 				<ImageDropZone
+					fileInputId="titleImage"
 					btnDisclamer={true}
 					onValueChange={handelTitleImage}
 				/>
 			</div>
 			<div className="">
 				<ImageDropZone
+					fileInputId="gelleryImage1"
 					onValueChange={handelImage}
 				/>
 			</div>
 			<div className="">
 				<ImageDropZone
+					fileInputId="gelleryImage2"
 					onValueChange={handelImage}
 				/>
 			</div>
 			<div className="">
 				<ImageDropZone
+					fileInputId="gelleryImage3"
 					onValueChange={handelImage}
 				/>
 			</div>
 			<div className="">
 				<ImageDropZone
+					fileInputId="gelleryImage4"
 					onValueChange={handelImage}
 				/>
 			</div>

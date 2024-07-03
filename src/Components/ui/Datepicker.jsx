@@ -7,17 +7,14 @@ const inputStyle = `
 	rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F] date-piker
 `;
 
-const DatePicker = ({ label, onValueChange }) => {
+const DatePicker = ({ label, onValueChange, single, showShortcuts }) => {
 
 	const [value, setValue] = useState({ 
-
-		startDate: null,
-		endDate: null 
-		
+			startDate: null,
+			endDate: null 
 		}); 
 
 	const handleValueChange = (newValue) => {
-	console.log("newValue:", newValue); 
 	onValueChange(newValue)
 	setValue(newValue); 
 	}
@@ -28,10 +25,11 @@ const DatePicker = ({ label, onValueChange }) => {
 			<label className='d-block mb-1 text-[#272835] text-sm'>{translate(label)}</label>
 			<div className={inputStyle}>
 				<Datepicker 
+					asSingle={single} 
 					primaryColor={"cyan"} 
 					value={value} 
 					onChange={handleValueChange} 
-					showShortcuts={true}
+					showShortcuts={showShortcuts}
 					placeholder={translate('enterDate')} 
 					inputStyle={inputStyle}
 				/> 

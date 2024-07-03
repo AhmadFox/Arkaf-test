@@ -24,6 +24,9 @@ import SubmitButton from "../AuthForms/SubmitButton";
 import ButtonGroup from "../ui/ButtonGroup";
 import InputText from "../ui/InputText";
 import InputMultibleImage from "../ui/InputMultibleImage";
+import DatePicker from "../ui/Datepicker";
+import InputTel from "../ui/InputTel";
+import LayoutForm from "../ui/forms/LayoutForm";
 
 const inputStyle = `
     p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
@@ -39,14 +42,27 @@ const AddProperty = () => {
 
     const categorydata = useSelector(categoriesCacheData);
 
+    const [layoutField, setLayoutField] = useState([]);
     const [formData, setFormData] = useState({});
 	const [ showLoader, setShowLoader] = useState(false)
     const [ selectedOption, setSelectedOption ] = useState('sell');
+    const [phone, setPhone] = useState('');
     const [ availableparameter, setAvailableparameter ] = useState([]);
     const [parameter, setParametersData] = useState({
         parameters: []
     });
     const [layoutArray, setLayoutArray] = useState([]);
+
+    const addlayoutField = () => {
+        setLayoutField([...layoutField, { 
+            id: layoutField.length,
+            text: `Item ${layoutField.length + 1}`
+        }]);
+    };
+
+    const removeLayoutItem = (id) => {
+        setLayoutField(layoutField.filter(item => item.id !== id));
+    }
 
 
     const handleInputChange = (field, value) => {
@@ -78,6 +94,10 @@ const AddProperty = () => {
         setLayoutArray(value)
 	}
 
+    const handlePhone = (valid, value) => {
+		setPhone(value);
+	};
+
     const handleInputCategory = (value) => {
         const selectedCategory = categorydata.find(category => category.id == value);
         const parameterTypes = selectedCategory ? selectedCategory.parameter_types : [];
@@ -86,12 +106,21 @@ const AddProperty = () => {
         
     }
 
+    
+
+    // const handleInputBuiltAt = (value) => {
+    //     handleInputChange('builtIn', value);
+        
+    // }
+
     const handleLocationSelected = value => handleInputChange('selectedLocation', value);
     const handleInputSize = value => handleInputChange('size', value);
     const handleInputDuration = value => handleInputChange('duration', value);
-    const handle360Viewer = value => handleInputChange('Viewer3D', value);
+    const handle360Viewer = (isValid, value) => handleInputChange('Viewer3D', value);
     const handleInputDescription = value => handleInputChange('description', value);
     const handleInputPrice = value => handleInputChange('price', value);
+    const handleInputBuiltAt = value => handleInputChange('builtIn', value);
+    const handleInputContact = (isValid, value) => handleInputChange('secondContact', value);
 
     const handleParametersChange = (e, parameterId) => {
         const select = e.target.value;
@@ -124,45 +153,49 @@ const AddProperty = () => {
     const handlePostPropertyPublish = async (e) => {
         e.preventDefault();
         console.log('Viewer3D', formData.Viewer3D);
-		// setShowLoader(true);
-		// try {
-		// 	PostProperty({
-		// 		title: 'properety title',
-		// 		description: formData.description,
-		// 		city: formData.selectedLocation.city,
-		// 		latitude: formData.selectedLocation.lat,
-		// 		longitude: formData.selectedLocation.lng,
-		// 		country: formData.selectedLocation.country,
-		// 		address: formData.selectedLocation.formatted_address,
-		// 		price: formData.price,
-		// 		category_id: formData.categoryId,
-		// 		property_type: selectedOption === 'sell' ? '0' : '1',
-        //         rentduration: formData.duration,
-		// 		parameters: parameter.parameters,
-		// 		title_image: formData.titleImage,
-		// 		gallery_images: formData.galleryImages,
-        //         property_layout: layoutArray,
-		// 		size: formData.size,
-		// 		threeD_image: formData.Viewer3D,
-		// 		rentduration: formData.date,
-		// 		video_link: formData.Viewer3D,
-		// 		status: '0',
-		// 		onSuccess: async (response) => {
-		// 			toast.success(response.message);
-		// 			router.push("/user/current-listing");
-		// 			setShowLoader(false);
-		// 		},
-		// 		onError: (error) => {
-		// 			toast.error(error);
-		// 			setShowLoader(false);
-		// 		}
-		// 	});
+        console.log('builtIn', formData.builtIn.startDate);
+        console.log('secondContact', formData.secondContact);
+		setShowLoader(true);
+		try {
+			PostProperty({
+				title: 'properety title',
+				description: formData.description,
+				city: formData.selectedLocation.city,
+				latitude: formData.selectedLocation.lat,
+				longitude: formData.selectedLocation.lng,
+				country: formData.selectedLocation.country,
+				address: formData.selectedLocation.formatted_address,
+				price: formData.price,
+				category_id: formData.categoryId,
+				property_type: selectedOption === 'sell' ? '0' : '1',
+                rentduration: formData.duration,
+				parameters: parameter.parameters,
+				title_image: formData.titleImage,
+				gallery_images: formData.galleryImages,
+                property_layout: layoutArray,
+				size: formData.size,
+				threeD_image: formData.Viewer3D,
+				rentduration: formData.date,
+				video_link: formData.Viewer3D,
+				status: '0',
+                built_in: formData.builtIn.startDate,
+                second_contact_number: formData.secondContact,
+				onSuccess: async (response) => {
+					toast.success(response.message);
+					router.push("/user/current-listing");
+					setShowLoader(false);
+				},
+				onError: (error) => {
+					toast.error(error);
+					setShowLoader(false);
+				}
+			});
 			
-		// } catch (error) {
-		// 	setShowLoader(false);
-		//     console.error("An error occurred:", error);
-		//     toast.error("An error occurred. Please try again later.");
-		// }
+		} catch (error) {
+			setShowLoader(false);
+		    console.error("An error occurred:", error);
+		    toast.error("An error occurred. Please try again later.");
+		}
     };
 
 	const handlePostPropertyDraft = async (e) => {
@@ -190,6 +223,8 @@ const AddProperty = () => {
 				rentduration: formData.date,
 				video_link: formData.Viewer3D,
 				status: '0',
+                built_in: formData.builtIn.startDate,
+                second_contact_number: '',
 				onSuccess: async (response) => {
 					toast.success(response.message);
 					router.push("/user/current-listing");
@@ -244,12 +279,19 @@ const AddProperty = () => {
                                 }
                             </div>
 
-                            <div className="grid grid-cols-2 gap-3">
+                            <div className="grid sm:grid-cols-3 gap-3">
                                 <div>
                                     <InputNumber
                                         label={'sizeInputLabel'}
                                         placeholder={'Ex: 200'}
                                         onValueChange={handleInputSize}
+                                    />
+                                </div>
+                                <div className="">
+                                    <DatePicker
+                                        single={true}
+                                        label='builtIn'
+                                        onValueChange={handleInputBuiltAt}
                                     />
                                 </div>
                                 {
@@ -262,6 +304,9 @@ const AddProperty = () => {
                                         />
                                     </div>
                                 }
+
+                                
+                               
                             </div>
 
                             <div className={`grid gap-3 grid-cols-${availableparameter.length - 1}`}>
@@ -290,6 +335,7 @@ const AddProperty = () => {
                                     ))}
                             </div>
 
+
                             <h2 className="text-2xl font-medium mb-2 mt-6">{translate('descriptionProperty')}</h2>
                             <div>
                                 <textarea
@@ -300,6 +346,16 @@ const AddProperty = () => {
                                 ></textarea>
                             </div>
 
+                            <h2 className="text-2xl font-medium mb-2 mt-6">{translate('addContactInfo')}</h2>
+                            <div>
+                            <InputTel
+                                code={'+966'}
+                                label={'phone'}
+                                value={phone}
+                                placeholder={'Ex: +966 000 000 000'}
+                                onValueChange={handleInputContact}
+                            />
+                            </div>
                             <div>
                                 <h2 className="text-2xl font-medium mb-2 mt-6">{translate('Address')}</h2>
                                 <LocationSearchBox
@@ -311,7 +367,33 @@ const AddProperty = () => {
                             </div>
 
                             
-                            <InputMultibleImage onValueChange={handelLayoutImage} />
+                            {/* <InputMultibleImage onValueChange={handelLayoutImage} /> */}
+
+                            <div className="my-9 md:my-12">
+                                <div className="flex justify-between items-center">
+                                    <h2 className="text-2xl font-medium">{translate('addLayoutProperty')}</h2>
+                                    <button
+                                        type='button'
+                                        className="tw-btn-outline !px-7 !mt-0 !text-sm cursor-pointer relative"
+                                        onClick={addlayoutField}
+                                    >
+                                        {translate('addLayout')}
+                                    </button>
+                                </div>
+                                {
+                                    layoutField.map(item => (
+                                        <LayoutForm
+                                            key={item.id}
+                                            itemId= {item.id}
+                                            removeLayoutItem={removeLayoutItem}
+                                            availableparameter={availableparameter}
+                                        />
+                                    ))
+                                }
+                            </div>
+
+
+                            
                             
                                     
                             <div className="my-6">

@@ -329,6 +329,8 @@ export const PostProperty = ({
     rentduration = "",
     is_premium = "",
         status = "",
+        built_in= '',
+        second_contact_number = "",
     onSuccess = () => { },
     onError = () => { },
     onStart = () => { }
@@ -363,7 +365,9 @@ export const PostProperty = ({
             meta_image,
             rentduration,
             is_premium,
-                status
+                status,
+                built_in,
+                second_contact_number
             ),
             displayToast: false,
             onStart,

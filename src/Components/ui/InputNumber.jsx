@@ -13,7 +13,7 @@ const InputNumber = ({ placeholder, label, onValueChange, value, className }) =>
 
 		const handleInput = () => {
 			let value = numberElm.current.value;
-			onValueChange(value)
+			onValueChange(true, value)
 		};
 
 		const currentNumberElm = numberElm.current;
