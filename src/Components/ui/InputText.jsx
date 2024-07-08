@@ -5,7 +5,7 @@ const inputStyle = `
 	p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
 `;
 
-const InputText = ({ placeholder, label, onValueChange, value, className , type}) => {
+const InputText = ({ placeholder, label, onValueChange, value, className , type, readOnly}) => {
 
 	const nameElm = useRef(null);
 
@@ -39,6 +39,7 @@ const InputText = ({ placeholder, label, onValueChange, value, className , type}
 				ref={nameElm} 
 				type={type}
 				value={value}
+				disabled={readOnly}
 				className={` ${inputStyle} ${className}`}
 				placeholder={translate(placeholder)}
 				pattern= { type === 'url' ? 'https?://.+' : '^[a-zA-Z]+$'}

@@ -4,8 +4,7 @@ import { formatPriceAbbreviated, isThemeEnabled, placeholderImage } from '@/util
 import { ImageToSvg } from './ImageToSvg'
 import { IoArrowForwardCircleOutline } from "react-icons/io5";
 import { useRouter } from 'next/router';
-const MapCard = ({ data, CurrencySymbol, PlaceHolderImg }) => {
-
+const MapCard = ({ data, CurrencySymbol, PlaceHolderImg, latitude, longitude }) => {
 
     const router = useRouter()
 

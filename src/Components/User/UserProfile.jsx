@@ -32,6 +32,11 @@ const UserProfile = () => {
     const [uploadedImage, setUploadedImage] = useState(null);
     const user = signupData?.data?.data
 
+    const [ mapLngLat, SetMapLngLat ] = useState({
+        lat: user?.latitude,
+        lng: user?.longitude,
+    })
+    
     const [formData, setFormData] = useState({
         fullName: user?.name,
         email: user?.email,
@@ -75,11 +80,14 @@ const UserProfile = () => {
     };
 
     const handleLocationSelected = (locationData) => {
-        console.log('=====', locationData);
         setFormData({
             ...formData,
             selectedLocation: locationData
         });
+        SetMapLngLat({
+            lat: locationData.lat,
+            lng: locationData.lng,
+        })
     };
 
     const handlePhone = (valid, value) => {
@@ -226,8 +234,8 @@ const UserProfile = () => {
                             <div className="">
                                 <label className='d-block mb-1 text-[#272835] text-sm'>{translate('address')}</label>
                                 <LocationSearchBox onLocationSelected={handleLocationSelected}
-                                    initialLatitude={user?.latitude}
-                                    initialLongitude={user?.longitude}
+                                    initialLatitude={mapLngLat.lat}
+                                    initialLongitude={mapLngLat.lng}
                                     className={inputStyle}
                                     reset={resetLocationValue}
                                 />

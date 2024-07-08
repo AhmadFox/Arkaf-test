@@ -331,6 +331,7 @@ export const PostProperty = ({
         status = "",
         built_in= '',
         second_contact_number = "",
+        contact_name = "",
     onSuccess = () => { },
     onError = () => { },
     onStart = () => { }
@@ -367,7 +368,8 @@ export const PostProperty = ({
             is_premium,
                 status,
                 built_in,
-                second_contact_number
+                second_contact_number,
+                contact_name
             ),
             displayToast: false,
             onStart,

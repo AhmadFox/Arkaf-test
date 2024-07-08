@@ -5,7 +5,7 @@ const inputStyle = `
   p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
 `;
 
-const InputNumber = ({ placeholder, label, onValueChange, value, className }) => {
+const InputNumber = ({ placeholder, label, onValueChange, value, className, minLength, maxLength }) => {
   
 	const numberElm = useRef(null);
 
@@ -13,8 +13,15 @@ const InputNumber = ({ placeholder, label, onValueChange, value, className }) =>
 
 		const handleInput = () => {
 			let value = numberElm.current.value;
-			onValueChange(true, value)
-		};
+			value = value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+			
+			if (maxLength && value.length > maxLength) {
+			  value = value.slice(0, maxLength); // Truncate to maxLength
+			}
+			
+			numberElm.current.value = value;
+			onValueChange(true, value);
+		  };
 
 		const currentNumberElm = numberElm.current;
 		if (currentNumberElm) {
@@ -33,10 +40,12 @@ const InputNumber = ({ placeholder, label, onValueChange, value, className }) =>
 			<label className='d-block mb-1 text-[#272835] text-sm'>{translate(label)}</label>
 			<input
 				ref={numberElm}
-				type="text"
+				type="number"
 				value={value}
 				className={`${inputStyle} ${className}`}
 				placeholder={translate(placeholder)}
+				minLength={minLength}
+        		maxLength={maxLength}
 			/>
 		</Fragment>
 	)

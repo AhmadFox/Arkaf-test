@@ -40,18 +40,21 @@ const AddProperty = () => {
         loadCategories();
     }, []);
 
+    const signupData = useSelector(userSignUpData);
     const categorydata = useSelector(categoriesCacheData);
-
+    const [ addContactToggle, setAddContactToggle ] = useState(false);
     const [layoutField, setLayoutField] = useState([]);
     const [formData, setFormData] = useState({});
 	const [ showLoader, setShowLoader] = useState(false)
     const [ selectedOption, setSelectedOption ] = useState('sell');
-    const [phone, setPhone] = useState('');
+    const [ userName, setUserName] = useState(signupData?.data?.data?.name);
+    const [ userPhone, setUserPhone] = useState(signupData?.data?.data?.mobile);
     const [ availableparameter, setAvailableparameter ] = useState([]);
     const [parameter, setParametersData] = useState({
         parameters: []
     });
     const [layoutArray, setLayoutArray] = useState([]);
+    const [layoutsData, setLayoutsData] = useState([]);
 
     const addlayoutField = () => {
         setLayoutField([...layoutField, { 
@@ -60,9 +63,14 @@ const AddProperty = () => {
         }]);
     };
 
+    // const removeLayoutItem = (id) => {
+    //     setLayoutField(layoutField.filter(item => item.id !== id));
+    // }
+
     const removeLayoutItem = (id) => {
         setLayoutField(layoutField.filter(item => item.id !== id));
-    }
+        setLayoutsData(layoutsData.filter((_, index) => index !== id));
+    };
 
 
     const handleInputChange = (field, value) => {
@@ -94,10 +102,6 @@ const AddProperty = () => {
         setLayoutArray(value)
 	}
 
-    const handlePhone = (valid, value) => {
-		setPhone(value);
-	};
-
     const handleInputCategory = (value) => {
         const selectedCategory = categorydata.find(category => category.id == value);
         const parameterTypes = selectedCategory ? selectedCategory.parameter_types : [];
@@ -106,21 +110,37 @@ const AddProperty = () => {
         
     }
 
-    
-
-    // const handleInputBuiltAt = (value) => {
-    //     handleInputChange('builtIn', value);
-        
-    // }
+    const handelAddContactToggel = (e) => {
+        e.preventDefault();
+        setAddContactToggle(!addContactToggle);
+        handleInputChange('secondContact', '')
+        handleInputChange('contactName', '')
+    }
 
     const handleLocationSelected = value => handleInputChange('selectedLocation', value);
     const handleInputSize = value => handleInputChange('size', value);
     const handleInputDuration = value => handleInputChange('duration', value);
     const handle360Viewer = (isValid, value) => handleInputChange('Viewer3D', value);
     const handleInputDescription = value => handleInputChange('description', value);
-    const handleInputPrice = value => handleInputChange('price', value);
+    const handleInputPrice = (isValid, value) => handleInputChange('price', value);
     const handleInputBuiltAt = value => handleInputChange('builtIn', value);
     const handleInputContact = (isValid, value) => handleInputChange('secondContact', value);
+    const handleInputContactName = (isValid, value) => handleInputChange('contactName', value);
+
+    
+    // const handelLayout = (id, value) => {
+
+    //     console.log('layout id:', id);
+    //     console.log('layout value:', value);
+    // }
+
+    const handelLayout = (id, value) => {
+        setLayoutsData(prevLayouts => {
+            const newLayouts = [...prevLayouts];
+            newLayouts[id] = value[0];
+            return newLayouts;
+        });
+    };
 
     const handleParametersChange = (e, parameterId) => {
         const select = e.target.value;
@@ -152,9 +172,6 @@ const AddProperty = () => {
 
     const handlePostPropertyPublish = async (e) => {
         e.preventDefault();
-        console.log('Viewer3D', formData.Viewer3D);
-        console.log('builtIn', formData.builtIn.startDate);
-        console.log('secondContact', formData.secondContact);
 		setShowLoader(true);
 		try {
 			PostProperty({
@@ -172,7 +189,6 @@ const AddProperty = () => {
 				parameters: parameter.parameters,
 				title_image: formData.titleImage,
 				gallery_images: formData.galleryImages,
-                property_layout: layoutArray,
 				size: formData.size,
 				threeD_image: formData.Viewer3D,
 				rentduration: formData.date,
@@ -180,6 +196,8 @@ const AddProperty = () => {
 				status: '0',
                 built_in: formData.builtIn.startDate,
                 second_contact_number: formData.secondContact,
+                contact_name: formData.contactName,
+                property_layout: layoutsData,
 				onSuccess: async (response) => {
 					toast.success(response.message);
 					router.push("/user/current-listing");
@@ -217,7 +235,7 @@ const AddProperty = () => {
 				parameters: parameter.parameters,
 				title_image: formData.titleImage,
 				gallery_images: formData.galleryImages,
-                property_layout: layoutArray,
+                property_layout: layoutsData,
 				size: formData.size,
 				threeD_image: formData.Viewer3D,
 				rentduration: formData.date,
@@ -225,6 +243,7 @@ const AddProperty = () => {
 				status: '0',
                 built_in: formData.builtIn.startDate,
                 second_contact_number: '',
+                contact_name: formData.contactName,
 				onSuccess: async (response) => {
 					toast.success(response.message);
 					router.push("/user/current-listing");
@@ -288,6 +307,13 @@ const AddProperty = () => {
                                     />
                                 </div>
                                 <div className="">
+                                    {/* <InputNumber
+                                        label={'builtIn'}
+                                        placeholder={'Ex: 1999'}
+                                        minLength={4}
+                                        maxLength={4}
+                                        onValueChange={handleInputBuiltAt}
+                                    /> */}
                                     <DatePicker
                                         single={true}
                                         label='builtIn'
@@ -299,6 +325,7 @@ const AddProperty = () => {
                                     <div>
                                         <SelectCategory
                                             label={'type'}
+                                            value='0'
                                             options={categorydata}
                                             onValueChange={handleInputCategory}
                                         />
@@ -346,16 +373,50 @@ const AddProperty = () => {
                                 ></textarea>
                             </div>
 
-                            <h2 className="text-2xl font-medium mb-2 mt-6">{translate('addContactInfo')}</h2>
-                            <div>
-                            <InputTel
-                                code={'+966'}
-                                label={'phone'}
-                                value={phone}
-                                placeholder={'Ex: +966 000 000 000'}
-                                onValueChange={handleInputContact}
-                            />
+                            <div className="flex justify-between items-center mt-6">
+                                <h2 className="text-2xl font-medium">{translate('addContactInfo')}</h2>
+                                <button onClick={handelAddContactToggel} className="tw-btn-outline !px-7 !text-sm">{translate('addContact')}</button>
                             </div>
+                            {
+                                addContactToggle &&
+                                <div className="grid gap-3 grid-cols-2">
+                                    <div>
+                                        <InputText
+                                            label={'contactName'}
+                                            value={userName}
+                                            placeholder={'fullName'}
+                                            readOnly={true}
+                                        />
+                                    </div>
+                                    <div>
+                                        <InputTel
+                                            code={'+966'}
+                                            label={'firstPhone'}
+                                            value={userPhone}
+                                            readOnly={true}
+                                            className='!py-1.5'
+                                            placeholder={'Ex: +966 000 000 000'}
+                                    />
+                                    </div>
+                                    <div>
+                                        <InputText
+                                            label={'contactName'}
+                                            placeholder={'fullName'}
+                                            onValueChange={handleInputContactName}
+                                        />
+                                    </div>
+                                    <div>
+                                        <InputTel
+                                            code={'+966'}
+                                            label={'secondPhone'}
+                                            placeholder={'Ex: +966 000 000 000'}
+                                            className='!py-1.5'
+                                            onValueChange={handleInputContact}
+                                        />
+                                    </div>
+                                </div>
+                            }
+
                             <div>
                                 <h2 className="text-2xl font-medium mb-2 mt-6">{translate('Address')}</h2>
                                 <LocationSearchBox
@@ -385,6 +446,7 @@ const AddProperty = () => {
                                         <LayoutForm
                                             key={item.id}
                                             itemId= {item.id}
+                                            onValueChange={handelLayout}
                                             removeLayoutItem={removeLayoutItem}
                                             availableparameter={availableparameter}
                                         />
@@ -392,10 +454,6 @@ const AddProperty = () => {
                                 }
                             </div>
 
-
-                            
-                            
-                                    
                             <div className="my-6">
                                 <h2 className="text-2xl font-medium mb-4">{translate('add360TourView')}</h2>
                                 <InputText

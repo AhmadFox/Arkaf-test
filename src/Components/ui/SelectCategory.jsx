@@ -1,4 +1,4 @@
-import { Fragment, useRef, useEffect } from "react";
+import { Fragment, useState } from "react";
 import { translate } from "@/utils";
 
 const inputStyle = `
@@ -6,37 +6,23 @@ const inputStyle = `
 `;
 
 const SelectCategory = ({ label, onValueChange, value, className, options }) => {
+	
+	const [ selectedValue, setSelectedValue ] = useState(value)
 
-	const selectElm = useRef(null);
-
-	useEffect(() => {
-
-		const handleSelect = () => {
-			let value = selectElm.current.value;
-			onValueChange(value);
-		};
-
-		const currentSelectElm = selectElm.current;
-		if (currentSelectElm) {
-			currentSelectElm.addEventListener('input', handleSelect);
-		}
-
-		return () => {
-			if (currentSelectElm) {
-				currentSelectElm.removeEventListener('input', handleSelect);
-			}
-		};
-	}, []);
+	const handleSelect = (e) => {
+		setSelectedValue(e.target.value)
+		onValueChange(e.target.value);
+	};
 
 	return (
 		<Fragment>
 			<label className='d-block mb-1 text-[#272835] text-sm'>{translate(label)}</label>
 			<select
-				ref={selectElm} 
-				value={value}
+				value={selectedValue}
+				onChange={handleSelect}
 				className={` ${inputStyle} ${className}`}
 			>
-				<option disabled selected>{translate('selectCategory')}</option>
+				<option disabled value='0'>{translate('selectCategory')}</option>
 				{options && options.map((item, idx) => (
 					<option
 						value={item.id}
@@ -45,7 +31,7 @@ const SelectCategory = ({ label, onValueChange, value, className, options }) => 
 				))}
 			</select>
 		</Fragment>
-	)
-}
+	);
+};
 
-export default SelectCategory
+export default SelectCategory;

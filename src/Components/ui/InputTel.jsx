@@ -10,7 +10,7 @@ import { translate } from "@/utils";
 	const inputStyle = `
 		px-2.5 py-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
 	`;
-const InputTel = ({placeholder, label, onValueChange, className, value}) => {
+const InputTel = ({ placeholder, label, onValueChange, className, value, readOnly }) => {
 
 	const telElm = useRef(null);
 	const phoneUtil = PhoneNumberUtil.getInstance();
@@ -42,7 +42,8 @@ const InputTel = ({placeholder, label, onValueChange, className, value}) => {
 				placeholder={placeholder}
 				value={value}
 				onChange={checkPhoneValid}
-				className={`${inputStyle} ${className}`}
+				disabled={readOnly}
+				className={`${inputStyle} ${className} ${readOnly && 'opacity-60 bg-gray-100 read-only'}`}
 			/>
 		</Fragment>
 	)

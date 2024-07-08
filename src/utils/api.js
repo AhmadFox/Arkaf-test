@@ -459,7 +459,8 @@ export const postProperty = (
     is_premium,
         status,
         built_in,
-        second_contact_number
+        second_contact_number,
+        contact_name
 ) => {
     let data = new FormData();
 
@@ -487,6 +488,7 @@ export const postProperty = (
     data.append('status', status);
     data.append('built_in', built_in);
     data.append('second_contact_number', second_contact_number);
+    data.append('contact_name', contact_name);
 
     // Append the parameters array if it is an array
     if (Array.isArray(parameters)) {
@@ -513,9 +515,25 @@ export const postProperty = (
     }
 
     // Check if layouts_images is defined and an array before using forEach
+    // if (Array.isArray(property_layout)) {
+    //     property_layout.forEach((image, index) => {
+    //         data.append(`property_layout[${index}]`, image);
+    //     });
+    // }
+
+    // Append the layouts array if it is an array
     if (Array.isArray(property_layout)) {
-        property_layout.forEach((image, index) => {
-            data.append(`property_layout[${index}]`, image);
+        property_layout.forEach((layout, index) => {
+            data.append(`property_layout[${index}][image]`, layout.image);
+            data.append(`property_layout[${index}][name]`, layout.name);
+            data.append(`property_layout[${index}][price]`, layout.price);
+            data.append(`property_layout[${index}][size]`, layout.size);
+            
+            layout.parameters.forEach((parameter, idx) => {
+                console.log(`parameters[${idx}]`, parameter);
+                data.append(`property_layout[${index}][parameters][${idx}][parameter_id]`, parameter.parameter_id);
+                data.append(`property_layout[${index}][parameters][${idx}][value]`, parameter.value);
+            })
         });
     }
     

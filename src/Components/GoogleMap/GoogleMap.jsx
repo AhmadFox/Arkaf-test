@@ -2,9 +2,11 @@ import React from "react";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 
 const Map = (props) => {
+
     const containerStyle = {
         width: "100%",
-        height: "400px",
+        height: "100%",
+        position: "absolute"
     };
 
     const center = {
@@ -12,8 +14,9 @@ const Map = (props) => {
         lng: parseFloat(props.longitude),
     };
 
+
     return (
-        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14}>
+        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={17}>
             <Marker position={center} />
         </GoogleMap>
     );

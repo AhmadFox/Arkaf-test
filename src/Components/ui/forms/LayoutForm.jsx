@@ -1,5 +1,5 @@
 import { translate } from '@/utils';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageDropZone from '../ImageDropZone';
 import InputText from '../InputText';
 import InputNumber from '../InputNumber';
@@ -8,33 +8,35 @@ const inputStyle = `
     p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
 `;
 
-const LayoutForm = ({ availableparameter, itemId, removeLayoutItem }) => {
+const LayoutForm = ({ availableparameter, itemId, removeLayoutItem, onValueChange }) => {
 
 	const removeItem = (e, id) => {
 		e.preventDefault();
 		removeLayoutItem(id)
 	}
 
+	const [ layoutData, SetLayoutData ] = useState({
+		image: '',
+		name: '',
+		price: '',
+		size: '',
+		parameters: []
+	})
 	const [parameter, setParametersData] = useState({
         parameters: []
     });
 
-	const handelImage = (file) => {
-		// layoutImageHandle(file)
-		console.log('Layout Image', file);
-	}
+	const handleLayoutChange = (field, value) => {
+        SetLayoutData(prevLayoutData => ({
+            ...prevLayoutData,
+            [field]: value,
+        }));
+    };
 
-	const handelName = (valid, value) => {
-		console.log('Layout Name', value);
-	}
-
-	const handleSize = (valid, value) => {
-		console.log('Layout Size', value);
-	}
-
-	const handlePrice = (valid, value) => {
-		console.log('Layout Price', value);
-	}
+	const handelImage = value => handleLayoutChange('image', value);
+	const handelName = (valid, value) => handleLayoutChange('name', value);
+	const handleSize = (valid, value)  => handleLayoutChange('size', value);
+	const handlePrice = (valid, value)  => handleLayoutChange('price', value);
 
 	const handleParametersChange = (e, parameterId) => {
         const select = e.target.value;
@@ -56,15 +58,20 @@ const LayoutForm = ({ availableparameter, itemId, removeLayoutItem }) => {
             ...prevParameter,
             parameters: newParameters
         }));
+
+		handleLayoutChange('parameters', newParameters);
 		
-		console.log('parameter:', parameter);
     };
 
+	useEffect(() => {
+		onValueChange(itemId, [layoutData]);
+	}, [layoutData])
+
 	return (
-		<div className='lg:flex items-center gap-2 justify-between border-t pt-4 mt-3 relative'>
+		<div className='lg:flex items-start gap-2 justify-between border-t pt-4 mt-3 relative'>
 			<div className="w-full min-w-36 max-w-36 lg:max-w-full h-40 border rounded-md me-2 mb-3 lg:my-auto">
 				<ImageDropZone
-					fileInputId="layout"
+					fileInputId={itemId}
 					height='h-full'
 					size='xs'
 					object="contain"
