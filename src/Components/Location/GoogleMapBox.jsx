@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import { useSelector } from "react-redux";
 import { settingsData } from "@/store/reducer/settingsSlice";
 import { translate } from "@/utils";
 
-const GoogleMapBox = ({ onSelectLocation, apiKey, latitude, longitude }) => {
+const GoogleMapBox = ({ onSelectLocation, apiKey, latitude, longitude, title }) => {
+
     const systemSettings = useSelector(settingsData);
     const [location, setLocation] = useState({
         lat: latitude ? parseFloat(latitude) : parseFloat(systemSettings?.latitude),
@@ -24,7 +25,6 @@ const GoogleMapBox = ({ onSelectLocation, apiKey, latitude, longitude }) => {
     useEffect(() => {
         // Update the location state when latitude or longitude changes
         if (latitude && longitude) {
-
             setLocation({
                 lat: latitude ? parseFloat(latitude) : parseFloat(systemSettings?.latitude),
                 lng: longitude ? parseFloat(longitude) : parseFloat(systemSettings?.longitude),
@@ -91,6 +91,8 @@ const GoogleMapBox = ({ onSelectLocation, apiKey, latitude, longitude }) => {
         }
     };
 
+
+
     const extractCityFromGeocodeResult = (geocodeResult) => {
         let city = null;
         let country = null;
@@ -137,12 +139,15 @@ const GoogleMapBox = ({ onSelectLocation, apiKey, latitude, longitude }) => {
             {mapError ? (
                 <div>{mapError}</div>
             ) : (
-                <>
-                    <span style={{ color: "#282f39", fontWeight: "600", fontSize: "small"}}>{translate('googleMap')}</span>
-                    <GoogleMap zoom={11} center={location} mapContainerStyle={{ height: "400px", borderRadius: "12px" }}>
+                <Fragment>
+                    {
+                        title &&
+                        <span style={{ color: "#282f39", fontWeight: "600", fontSize: "small"}}>{translate('googleMap')}</span>
+                    }
+                    <GoogleMap zoom={16} center={location} mapContainerStyle={{ height: "400px", borderRadius: "12px" }}>
                         <Marker position={location} draggable={true} onDragEnd={handleMarkerDragEnd} />
                     </GoogleMap>
-                </>
+                </Fragment>
             )
             }
         </div >

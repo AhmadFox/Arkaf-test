@@ -432,35 +432,35 @@ export const confirmPayment = (paymentIntentId) => {
 // POST PROPERTY
 export const postProperty = (
     userid,
-        title,
-        description,
-        city,
-        size,
+    title,
+    description,
+    city,
+    size,
     state,
     country,
-        latitude,
-        longitude,
-        address,
-        price,
-        category_id,
-        property_type,
+    latitude,
+    longitude,
+    address,
+    price,
+    category_id,
+    property_type,
     video_link,
-        parameters,
+    parameters,
     facilities,
-        title_image,
+    title_image,
     threeD_image,
-        gallery_images,
-        property_layout, // new attribute by @ahmad_gharaibeh
+    gallery_images,
+    property_layout, // new attribute by @ahmad_gharaibeh
     meta_title,
     meta_description,
     meta_keywords,
     meta_image,
     rentduration,
     is_premium,
-        status,
-        built_in,
-        second_contact_number,
-        contact_name
+    status,
+    built_in,
+    second_contact_number,
+    contact_name
 ) => {
     let data = new FormData();
 
@@ -587,13 +587,46 @@ export const getPaymentDetials = (offset, limit) => {
 
 
 // UPDATE POST PROPERTY
-export const updatePostProperty = (action_type, id, title, description, city, state, country, latitude, longitude, address, price, category_id, property_type, video_link, parameters, facilities, title_image, threeD_image, gallery_images, slug_id, meta_title, meta_description, meta_keywords, meta_image, rentduration, is_premium) => {
+export const updatePostProperty = (
+    id,
+    action_type,
+    title,
+    size,
+    description,
+    city,
+    state,
+    country,
+    latitude,
+    longitude,
+    address,
+    price,
+    category_id,
+    property_type,
+    video_link,
+    parameters,
+    facilities,
+    title_image,
+    threeD_image,
+    gallery_images,
+    // property_layout, // new attribute by @ahmad_gharaibeh
+    meta_title,
+    meta_description,
+    meta_keywords,
+    meta_image,
+    rentduration,
+    is_premium,
+    status,
+    built_in,
+    second_contact_number,
+    contact_name
+) => {
     let data = new FormData();
 
     // Append the property data to the FormData object
-    data.append('action_type', action_type);
     data.append('id', id);
+    data.append('action_type', action_type);
     data.append('title', title);
+    data.append('size', size);
     data.append('description', description);
     data.append('city', city);
     data.append('state', state);
@@ -605,6 +638,16 @@ export const updatePostProperty = (action_type, id, title, description, city, st
     data.append('category_id', category_id);
     data.append('property_type', property_type);
     data.append('video_link', video_link);
+    data.append('meta_title', meta_title);
+    data.append('meta_description', meta_description);
+    data.append('meta_keywords', meta_keywords);
+    data.append('meta_image', meta_image);
+    data.append('rentduration', rentduration);
+    data.append('is_premium', is_premium);
+    data.append('status', status);
+    data.append('built_in', built_in);
+    data.append('second_contact_number', second_contact_number);
+    data.append('contact_name', contact_name);
 
     // Append the parameters array if it is an array
     if (Array.isArray(parameters)) {
@@ -629,13 +672,6 @@ export const updatePostProperty = (action_type, id, title, description, city, st
             data.append(`gallery_images[${index}]`, image);
         });
     }
-    data.append('slug_id', slug_id);
-    data.append('meta_title', meta_title);
-    data.append('meta_description', meta_description);
-    data.append('meta_keywords', meta_keywords);
-    data.append('meta_image', meta_image);
-    data.append('rentduration', rentduration);
-    data.append('is_premium', is_premium);
 
 
     return {

@@ -14,7 +14,6 @@ const Map = (props) => {
         lng: parseFloat(props.longitude),
     };
 
-
     return (
         <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={17}>
             <Marker position={center} />

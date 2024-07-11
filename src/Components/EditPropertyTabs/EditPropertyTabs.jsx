@@ -324,6 +324,7 @@ export default function EditPropertyTabs() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setTab1({

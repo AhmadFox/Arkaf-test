@@ -120,37 +120,37 @@ const SearchTab = ({ getCategories }) => {
     return (
         <div className="search-box top-auto bottom-20">
             <div id="" className="container">
-                {/* <ButtonGroup>
+                <ButtonGroup>
                     <ul className="nav nav-tabs" id="tabs">
                         <li className="">
-                            <a className={`nav-link ${activeTab === 0 ? "tab-0" : ""}`} aria-current="page" id="sellbutton" onClick={() => handleTabClick("sell")}>
+                            <a className={`search-tap nav-link ${activeTab === 0 ? "tab-0" : ""}`} aria-current="page" id="sellbutton" onClick={() => handleTabClick("sell")}>
                                 {translate("sell")}
                             </a>
                         </li>
                         <li className="">
-                            <a className={`nav-link ${activeTab === 1 ? "tab-1" : ""}`} onClick={() => handleTabClick("rent")} aria-current="page" id="rentbutton">
+                            <a className={`search-tap nav-link ${activeTab === 1 ? "tab-1" : ""}`} onClick={() => handleTabClick("rent")} aria-current="page" id="rentbutton">
                                 {translate("rent")}
                             </a>
                         </li>
                     </ul>
-                </ButtonGroup> */}
+                </ButtonGroup>
 
                 <div id="searchcard">
                     <div id="searchbuttoon" className="add-search-input">
                         <FiSearch size={20} />
                         <input className="searchinput" placeholder={translate("searchYourProperty")} name="propertySearch" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
                     </div>
-                    <div id="leftside-buttons" className="w-auto">
-                        {/* <button className="map_add" onClick={() => router.push('/properties-on-map')}>
+                    <div id="leftside-buttons" className="w-auto grid grid-cols-3 gap-3">
+                        <button className="button button-outline w-32 flex justify-center items-center gap-1.5 py-2.5" onClick={() => router.push('/properties-on-map')}>
                             <BsPinMap size={20} /> {""}{""}{""}
                             <span>{translate("map")}
                             </span>
                         </button>
-                        <button className="filter" onClick={() => setShowFilterModal(true)}>
+                        <button className="button button-outline w-32 flex justify-center items-center gap-1.5 py-2.5" onClick={() => setShowFilterModal(true)}>
                             <BiFilter size={25} />
                             {translate("filter")}
-                        </button> */}
-                        <button className="find px-5" onClick={handleSearch}>
+                        </button>
+                        <button className="button button-solid w-32 flex justify-center items-center gap-1.5 py-2.5" onClick={handleSearch}>
                             {translate("search")}
                         </button>
                     </div>

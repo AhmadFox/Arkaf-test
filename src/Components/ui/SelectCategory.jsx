@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { translate } from "@/utils";
 
 const inputStyle = `
@@ -19,6 +19,7 @@ const SelectCategory = ({ label, onValueChange, value, className, options }) => 
 			<label className='d-block mb-1 text-[#272835] text-sm'>{translate(label)}</label>
 			<select
 				value={selectedValue}
+				defaultValue={selectedValue}
 				onChange={handleSelect}
 				className={` ${inputStyle} ${className}`}
 			>

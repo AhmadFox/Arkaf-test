@@ -7,7 +7,7 @@ import React from "react";
 import AddPropertyTabs from "@/Components/AddPropertyTabs/AddPropertyTabs";
 import AddProperty from "../AddProperty/AddProperty.jsx";
 
-const VerticleLayout = dynamic(() => import('../AdminLayout/VerticleLayout.jsx'), { ssr: false })
+// const VerticleLayout = dynamic(() => import('../AdminLayout/VerticleLayout.jsx'), { ssr: false })
 
 import UserLayout from "../Layout/UserLayout.jsx";
 

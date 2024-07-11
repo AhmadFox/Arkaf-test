@@ -5,6 +5,7 @@ import MapCard from "../Cards/MapCard";
 import Map from "../GoogleMap/GoogleMap";
 
 const LocationSearchBox = ({ onLocationSelected, initialLatitude, initialLongitude, clearfilterLocation, className, reset }) => {
+
     const inputRef = useRef();
     const { isLoaded } = loadGoogleMaps();
     const [inputValue, setInputValue] = useState("");
@@ -158,19 +159,6 @@ const LocationSearchBox = ({ onLocationSelected, initialLatitude, initialLongitu
                         value={inputValue} // Set the input value
                     />
                 </StandaloneSearchBox>
-                <div className="rounded-xl relative overflow-hidden mt-6 w-full pb-[500px]">
-                    {
-                        !locationData.lat && !locationData.lng && !latitude && !longitude ?
-                            <div className="">
-                                <div className="blur-background"></div>
-                                <div className="blur-container"></div>
-                            </div>
-                        :
-                            <Map latitude={locationData.lat || latitude} longitude={locationData.lng || longitude} />
-                    }
-                    
-                </div>
-
             </div>
         )
     );

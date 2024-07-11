@@ -16,12 +16,12 @@ import { languageData } from "@/store/reducer/languageSlice";
 
 import InputTel from "../ui/InputTel.jsx";
 import UserLayout from "../Layout/UserLayout.jsx";
-import LocationSearchBox from "@/Components/Location/LocationSearchBox";
+import GoogleMapBox from "../Location/GoogleMapBox.jsx";
+import LocationSearchBox from "../Location/LocationSearchBox";
 
 const UserProfile = () => {
 
-    
-    // const userData = useSelector((state) => state.User_signup);
+    const GoogleMapApi = process.env.NEXT_PUBLIC_GOOGLE_API;
     const signupData = useSelector(userSignUpData);
     const FcmToken = useSelector(Fcmtoken);
     const lang = useSelector(languageData);
@@ -32,17 +32,23 @@ const UserProfile = () => {
     const [uploadedImage, setUploadedImage] = useState(null);
     const user = signupData?.data?.data
 
-    const [ mapLngLat, SetMapLngLat ] = useState({
-        lat: user?.latitude,
-        lng: user?.longitude,
-    })
-    
+    console.log('user', user);
+
     const [formData, setFormData] = useState({
         fullName: user?.name,
         email: user?.email,
         phoneNumber: user?.mobile,
         address: user?.address,
         profile: user?.profile
+    });
+
+    const [selectedLocationAddress, setSelectedLocationAddress] = useState({
+        lat: user?.latitude,
+        lng: user?.longitude,
+        city: user?.city,
+        state: user?.state,
+        country: user?.country,
+        formatted_address: user?.address,
     });
 
     // useEffect(() => { }, [lang]);
@@ -79,16 +85,36 @@ const UserProfile = () => {
         fileInputRef.current.click(); // Trigger the file input click event
     };
 
-    const handleLocationSelected = (locationData) => {
+	const handleLocationSelect = (address) => {
+        // Update the form field with the selected address
+		setSelectedLocationAddress({
+			lat: address?.lat,
+			lng: address?.lng,
+			city: address?.city,
+			state: address?.state,
+			country: address?.country,
+			formatted_address: address?.address
+		});
         setFormData({
             ...formData,
-            selectedLocation: locationData
+            selectedLocation: address
         });
-        SetMapLngLat({
-            lat: locationData.lat,
-            lng: locationData.lng,
-        })
     };
+
+    const handleLocationSelected = (value) => {
+		setSelectedLocationAddress({
+			lat: value?.lat,
+			lng: value?.lng,
+			city: value?.city,
+			state: value?.state,
+			country: value?.country,
+			formatted_address: value?.address
+		});
+        setFormData({
+            ...formData,
+            selectedLocation: value
+        });
+	}
 
     const handlePhone = (valid, value) => {
         valid &&
@@ -113,11 +139,18 @@ const UserProfile = () => {
             address: user?.address,
             profileImage: user?.profile
         });
+        setSelectedLocationAddress({
+			lat: user?.lat,
+			lng: user?.lng,
+			city: user?.city,
+			state: user?.state,
+			country: user?.country,
+			formatted_address: user?.address
+		});
     }
 
     const handleUpdateProfile = (e) => {
         e.preventDefault();
-        console.log('formData.phoneNumber', formData.phoneNumber);
         setDisabledButtons(true);
         UpdateProfileApi({
             name: formData.fullName,
@@ -164,7 +197,17 @@ const UserProfile = () => {
           key => formData[key] !== initialData[key]
         );
         setDisabledButtons(!hasFormChanged);
-    }, [formData]);
+
+        setSelectedLocationAddress({
+            lat: user?.latitude,
+            lng: user?.longitude,
+            city: user?.city,
+            state: user?.state,
+            country: user?.country,
+            formatted_address: user?.address,
+        });
+
+    }, [formData, user]);
 
     const inputStyle = `
         p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
@@ -233,16 +276,20 @@ const UserProfile = () => {
                             </div>
                             <div className="">
                                 <label className='d-block mb-1 text-[#272835] text-sm'>{translate('address')}</label>
-                                <LocationSearchBox onLocationSelected={handleLocationSelected}
-                                    initialLatitude={mapLngLat.lat}
-                                    initialLongitude={mapLngLat.lng}
-                                    className={inputStyle}
-                                    reset={resetLocationValue}
+                                <LocationSearchBox
+                                    onLocationSelected={handleLocationSelected}
+                                    initialLatitude={selectedLocationAddress.lat}
+                                    initialLongitude={selectedLocationAddress.lng}
+                                    className={`${inputStyle} my-4`}
+                                />
+								<GoogleMapBox
+                                    apiKey={GoogleMapApi}
+                                    onSelectLocation={handleLocationSelect}
+                                    latitude={selectedLocationAddress.lat}
+                                    longitude={selectedLocationAddress.lng}
                                 />
                             </div>
-                            <div className="">
 
-                            </div>
                         </div>
                     </div>
                 </div>

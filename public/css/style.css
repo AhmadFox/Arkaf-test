@@ -1413,7 +1413,7 @@ body {
   background: var(--card-color-ffffff) 0% 0% no-repeat padding-box;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 8px 16px #282f390f;
-  border-radius: 8px 8px 8px 8px;
+  border-radius: 0px 8px 8px 8px;
   opacity: 1;
   align-items: center;
 }
@@ -1497,18 +1497,28 @@ body {
 
 #searchbox .nav-tabs .nav-link {
   color: var(--primary-text-color02);
-  background-color: var(--primary-text-color01);
+  background-color: var(--primary-color);
 }
+
+.search-tap.nav-link {
+  cursor: pointer;
+  padding: 0.7rem 3rem;
+  background-color: var(--primary-color);
+  color: var(--primary-text-color01);
+}
+
+.search-tap.nav-link:hover {
+  border-color: var(--primary-color);
+}
+
 .tab-active {
-  background-color: var(--primary-color) !important;
-  color: var(--primary-text-color01) !important;
-  border-color: var(--primary-color) !important;
+  background-color: var(--primary-background) !important;
+  color: var(--primary-color) !important;
 }
 .tab-0,
 .tab-1 {
-  background-color: var(--primary-color) !important;
-  color: var(--primary-text-color01) !important;
-  border-color: var(--primary-color) !important;
+  background-color: var(--primary-background) !important;
+  color: var(--primary-color) !important;
 }
 
 .mobileViewArrow {
@@ -9778,7 +9788,12 @@ figcaption {
 
 .button.button-outline:hover svg path {
   transition: all 0.25s ease-in-out;
+  stroke: #fff;
+}
+
+.button-whatsapp:hover svg path {
   fill: #fff;
+  stroke: unset !important;
 }
 
 /* News-Letter Form Styles */

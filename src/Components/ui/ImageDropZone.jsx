@@ -1,11 +1,11 @@
 import { translate } from '@/utils';
 import Image from 'next/image';
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 // import { FaTrash, FaEdit } from 'react-icons/fa';
 
-const ImageDropZone = ({ onValueChange, btnDisclamer, height, editIcon, size, fileInputId, object }) => {
-  const [image, setImage] = useState(null);
+const ImageDropZone = ({ onValueChange, btnDisclamer, height, editIcon, size, fileInputId, object, srcValue }) => {
+  const [image, setImage] = useState(srcValue || null);
   const [invalidFile, setInvalidFile] = useState(false);
 
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
@@ -45,6 +45,10 @@ const ImageDropZone = ({ onValueChange, btnDisclamer, height, editIcon, size, fi
     e.preventDefault();
     document.getElementById(fileInputId)?.click();
   };
+
+  useEffect(() => {
+
+  }, [srcValue])
 
   return (
     <div 

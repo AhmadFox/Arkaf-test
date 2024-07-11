@@ -8,7 +8,7 @@ import { translate } from "@/utils";
 import { userSignUpData } from "@/store/reducer/authSlice";
 import { languageData } from "@/store/reducer/languageSlice";
 import { settingsData } from "@/store/reducer/settingsSlice";
-import { GetFacilitiesApi, PostProperty } from "@/store/actions/campaign";
+import { GetFeturedListingsApi, UpdatePostProperty } from "@/store/actions/campaign";
 import { categoriesCacheData, loadCategories } from "@/store/reducer/momentSlice";
 
 import { useDropzone } from "react-dropzone";
@@ -19,7 +19,7 @@ import SelectCategory from "../ui/SelectCategory";
 import SelectOptions from "../ui/SelectOptions";
 import InputNumber from "../ui/InputNumber";
 import LocationSearchBox from "../Location/LocationSearchBox";
-import ProperetyGellary from "./ProperetyGellary";
+import ProperetyGellary from "../EditProperty/ProperetyGellary";
 import SubmitButton from "../AuthForms/SubmitButton";
 import ButtonGroup from "../ui/ButtonGroup";
 import InputText from "../ui/InputText";
@@ -31,7 +31,7 @@ const inputStyle = `
     p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
 `;
 
-const AddProperty = () => {
+const EditProperty = () => {
 
     const router = useRouter();
 
@@ -39,22 +39,30 @@ const AddProperty = () => {
         loadCategories();
     }, []);
 
-    const GoogleMapApi = process.env.NEXT_PUBLIC_GOOGLE_API;
+	const [isLoading, setIsLoading] = useState(true);
+
+	const [ properety, setProperety ] = useState([]);
+
+	const GoogleMapApi = process.env.NEXT_PUBLIC_GOOGLE_API;
+
+
+	const isLoggedIn = useSelector((state) => state.User_signup);
+	const userCurrentId = isLoggedIn && isLoggedIn.data ? isLoggedIn.data.data.id : null;
+	const propertyId = router.query.slug;
+
 
     const signupData = useSelector(userSignUpData);
     const categorydata = useSelector(categoriesCacheData);
-    const [ addContactToggle, setAddContactToggle ] = useState(false);
     const [layoutField, setLayoutField] = useState([]);
     const [formData, setFormData] = useState({});
 	const [ showLoader, setShowLoader] = useState(false)
-    const [ selectedOption, setSelectedOption ] = useState('sell');
+    const [ selectedOption, setSelectedOption ] = useState(properety.property_type || 'sell');
     const [ userName, setUserName] = useState(signupData?.data?.data?.name);
     const [ userPhone, setUserPhone] = useState(signupData?.data?.data?.mobile);
     const [ availableparameter, setAvailableparameter ] = useState([]);
     const [parameter, setParametersData] = useState({
         parameters: []
     });
-    const [layoutsData, setLayoutsData] = useState([]);
 
     const [selectedLocationAddress, setSelectedLocationAddress] = useState({
         lat: "",
@@ -64,6 +72,9 @@ const AddProperty = () => {
         country: "",
         address: ""
     });
+
+    const [layoutArray, setLayoutArray] = useState([]);
+    const [layoutsData, setLayoutsData] = useState([]);
 
     const addlayoutField = () => {
         setLayoutField([...layoutField, { 
@@ -103,7 +114,7 @@ const AddProperty = () => {
         }));
 	}
 
-    const handelLayoutImage = (value) => {
+	const handelLayoutImage = (value) => {
 		// setFormData(prevFormData => ({
         //     ...prevFormData,
         //     'layoutImages': value,
@@ -111,22 +122,7 @@ const AddProperty = () => {
         setLayoutArray(value)
 	}
 
-    const handleInputCategory = (value) => {
-        const selectedCategory = categorydata.find(category => category.id == value);
-        const parameterTypes = selectedCategory ? selectedCategory.parameter_types : [];
-        handleInputChange('categoryId', value);
-        setAvailableparameter(parameterTypes);
-        
-    }
-
-    const handelAddContactToggel = (e) => {
-        e.preventDefault();
-        setAddContactToggle(!addContactToggle);
-        handleInputChange('secondContact', '')
-        handleInputChange('contactName', '')
-    }
-
-    const handleLocationSelect = (address) => {
+	const handleLocationSelect = (address) => {
         // Update the form field with the selected address
         setSelectedLocationAddress(address);
 		setSelectedLocationAddress(prevAddress => ({
@@ -154,11 +150,17 @@ const AddProperty = () => {
 		handleInputChange('selectedLocation', value);
 	}
 
-    // const handleLocationSelected = value => handleInputChange('selectedLocation', value);
+    const handleInputCategory = (value) => {
+        const selectedCategory = categorydata.find(category => category.id == value);
+        const parameterTypes = selectedCategory ? selectedCategory.parameter_types : [];
+        handleInputChange('categoryId', value);
+        setAvailableparameter(parameterTypes);
+        
+    }
+
     const handleInputSize = (isValid, value) => handleInputChange('size', value);
     const handleInputDuration = value => handleInputChange('duration', value);
     const handle360Viewer = (isValid, value) => handleInputChange('Viewer3D', value);
-    
     const handleInputPrice = (isValid, value) => handleInputChange('price', value);
     const handleInputBuiltAt = value => handleInputChange('builtIn', value);
     const handleInputContact = (isValid, value) => handleInputChange('secondContact', value);
@@ -168,13 +170,6 @@ const AddProperty = () => {
         const value = e.target.value
         handleInputChange('description', value);
     }
-
-    
-    // const handelLayout = (id, value) => {
-
-    //     console.log('layout id:', id);
-    //     console.log('layout value:', value);
-    // }
 
     const handelLayout = (id, value) => {
         setLayoutsData(prevLayouts => {
@@ -206,113 +201,139 @@ const AddProperty = () => {
         }));
     };
 
-    useEffect(() => {
-
-
-
-    }, [formData.categoryId])
-
-    const handlePostPropertyPublish = async (e) => {
+	const handleUpdatePostproperty = async (e) => {
         e.preventDefault();
-		setShowLoader(true);
+
+		console.log('properety id', properety.id);
+		console.log('properety slug', propertyId);
+		console.log('description', formData.description);
+		console.log('price', formData.price);
+		console.log('categoryId', formData.categoryId);
+		console.log('selectedOption', selectedOption);
+		console.log('size', formData.size);
+		console.log('titleImage', formData.titleImage);
+		console.log('Viewer3D', formData.Viewer3D);
+		console.log('galleryImages', formData.galleryImages);
+		console.log('builtIn', formData.builtIn.Z);
+		console.log('secondContact', formData.secondContact);
+		console.log('contactName', formData.contactName);
+		
+		console.log('city', selectedLocationAddress.city);
+		console.log('state', selectedLocationAddress.state);
+		console.log('country', selectedLocationAddress.country);
+		console.log('latitude', selectedLocationAddress.lat);
+		console.log('longitude', selectedLocationAddress.lng);
+		console.log('address', selectedLocationAddress.address);
 		try {
-			PostProperty({
-				title: 'properety title',
+			UpdatePostProperty({
+				id: properety.id,
+				action_type: "0",
+				title: "",
+				size: formData.size,
 				description: formData.description,
-				city: formData.selectedLocation.city,
-				latitude: formData.selectedLocation.lat,
-				longitude: formData.selectedLocation.lng,
-				country: formData.selectedLocation.country,
-				address: formData.selectedLocation.formatted_address,
 				price: formData.price,
 				category_id: formData.categoryId,
-				property_type: selectedOption === 'sell' ? '0' : '1',
-                rentduration: formData.duration,
-				parameters: parameter.parameters,
+				property_type: selectedOption, // 0 => sell 1 => rent 2 => sold 3 => rented
+				rentduration: "",
 				title_image: formData.titleImage,
-				gallery_images: formData.galleryImages,
-				size: formData.size,
 				threeD_image: formData.Viewer3D,
-				rentduration: formData.date,
-				video_link: formData.Viewer3D,
-				status: '0',
-                built_in: formData.builtIn.startDate,
+				gallery_images: formData.galleryImages,
+				built_in: formData.builtIn,
                 second_contact_number: formData.secondContact,
                 contact_name: formData.contactName,
-                property_layout: layoutsData,
-				onSuccess: async (response) => {
-					toast.success(response.message);
-					router.push("/user/current-listing");
-					setShowLoader(false);
-				},
-				onError: (error) => {
-					toast.error(error);
-					setShowLoader(false);
-				}
-			});
-			
-		} catch (error) {
-			setShowLoader(false);
-		    console.error("An error occurred:", error);
-		    toast.error("An error occurred. Please try again later.");
-		}
-    };
-
-	const handlePostPropertyDraft = async (e) => {
-        e.preventDefault();
-		setShowLoader(true);
-		try {
-			PostProperty({
-				title: 'properety title',
-				description: formData.description,
-				city: formData.selectedLocation.city,
-				latitude: formData.selectedLocation.lat,
-				longitude: formData.selectedLocation.lng,
-				country: formData.selectedLocation.country,
-				address: formData.selectedLocation.formatted_address,
-				price: formData.price,
-				category_id: formData.categoryId,
-				property_type: selectedOption === 'sell' ? '0' : '1',
-                rentduration: formData.duration,
-				parameters: parameter.parameters,
-				title_image: formData.titleImage,
-				gallery_images: formData.galleryImages,
-                property_layout: layoutsData,
-				size: formData.size,
-				threeD_image: formData.Viewer3D,
-				rentduration: formData.date,
+				city: selectedLocationAddress.city,
+				state: selectedLocationAddress.state,
+				country: selectedLocationAddress.country,
+				latitude: selectedLocationAddress.lat,
+				longitude: selectedLocationAddress.lng,
+				address: selectedLocationAddress.address,
+				// parameters: '', // Pass the combined parameters as "allParameters"
 				video_link: formData.Viewer3D,
-				status: '0',
-                built_in: formData.builtIn.startDate,
-                second_contact_number: '',
-                contact_name: formData.contactName,
-				onSuccess: async (response) => {
+				onSuccess: (response) => {
 					toast.success(response.message);
-					router.push("/user/current-listing");
-					setShowLoader(false);
+					router.push(`/properties-details/${propertyId}`);
+					setShowLoader(false)
+		
+		
 				},
 				onError: (error) => {
+					console.log(error);
 					toast.error(error);
-					setShowLoader(false);
+					setShowLoader(false)
+		
 				}
-			});
+			})
 			
 		} catch (error) {
 			setShowLoader(false);
 		    console.error("An error occurred:", error);
 		    toast.error("An error occurred. Please try again later.");
 		}
-    };
+	}
+
+	useEffect(() => {
+
+
+    }, [formData.categoryId, formData])
+
+	useEffect(() => {
+        setIsLoading(true);
+        GetFeturedListingsApi({
+            userid: isLoggedIn ? userCurrentId : "",
+            slug_id: propertyId,
+            onSuccess: (response) => {
+                const propertyData = response?.data[0];
+
+				console.log('propertyData', propertyData);
+				setProperety(propertyData);
+				setSelectedOption(propertyData.property_type);
+				setAvailableparameter(propertyData.parameters);
+				setFormData(prevFormData => ({
+					...prevFormData,
+					'price': propertyData.price,
+					'size': propertyData.size,
+					'duration': propertyData.rentduration,
+					'Viewer3D': propertyData.video_link,
+					'contactName': propertyData.contact_name,
+					'secondContact': propertyData.second_contact_number,
+					'description': propertyData.description,
+					'selectedLocation': propertyData.selectedLocation,
+					'builtIn': propertyData.built_in,
+					'categoryId': propertyData.category.id,
+					'latitude': propertyData.latitude,
+					'longitude': propertyData.longitude,
+					'approvedAt': propertyData.approved_at
+				}));
+				setSelectedLocationAddress(prevAddress => ({
+                    ...prevAddress,
+                    lat: propertyData?.latitude,
+                    lng: propertyData?.longitude,
+                    city: propertyData?.city,
+                    state: propertyData?.state,
+                    country: propertyData?.country,
+                    address: propertyData?.address
+                }));
+                
+            },
+            onerror: (error) => {
+                setIsLoading(false);
+                console.log(error);
+            }
+        }
+        );
+    }, [isLoggedIn, propertyId]);
 
     return (
         <Fragment>
 			<div className={`fixed w-full h-full z-[2] bg-white opacity-0 invisible ease-in-out duration-300 ${showLoader && '!visible !opacity-60'}`}></div>
             <div className='container mb-12 md:mb-20 xl:mb-32'>
                 <div className="mb-12">
-                    <ProperetyGellary
+                   { properety.gallery && <ProperetyGellary
                         titleImageHandle={handelTitleImage}
                         galleryImageHandler={handelGellaryImage}
-                    />
+						titleImage={properety.title_image}
+						galleryImage={properety.gallery}
+                    />}
                 </div>
                 <form className="w-full">
                     <div className="grid grid-cols-3 gap-9">
@@ -323,7 +344,7 @@ const AddProperty = () => {
                                     <ButtonGroup
                                         label="propertyType"
                                         options={['sell', 'rent']}
-                                        name="example"
+                                        name="type"
                                         selectedOption={selectedOption}
                                         onChange={setSelectedOption}
                                     />
@@ -345,29 +366,29 @@ const AddProperty = () => {
                                     <InputNumber
                                         label={'sizeInputLabel'}
                                         placeholder={'Ex: 200'}
+										value={formData.size}
                                         onValueChange={handleInputSize}
                                     />
                                 </div>
                                 <div className="">
-                                    {/* <InputNumber
+                                    <InputText
                                         label={'builtIn'}
                                         placeholder={'Ex: 1999'}
-                                        minLength={4}
-                                        maxLength={4}
+										value={formData.builtIn}
                                         onValueChange={handleInputBuiltAt}
-                                    /> */}
-                                    <DatePicker
+                                    />
+                                    {/* <DatePicker
                                         single={true}
                                         label='builtIn'
                                         onValueChange={handleInputBuiltAt}
-                                    />
+                                    /> */}
                                 </div>
                                 {
                                     categorydata &&
                                     <div>
                                         <SelectCategory
                                             label={'type'}
-                                            value='0'
+                                            value={formData.category}
                                             options={categorydata}
                                             onValueChange={handleInputCategory}
                                         />
@@ -378,7 +399,7 @@ const AddProperty = () => {
                                
                             </div>
 
-                            <div className={`grid gap-3 grid-cols-${availableparameter.length - 1}`}>
+                            <div className={`grid gap-3 grid-cols-${availableparameter.length}`}>
                                 {availableparameter
                                     .filter(item => item.name !== 'Size')
                                     .map((item, idx) => (
@@ -386,6 +407,7 @@ const AddProperty = () => {
                                             <label className='d-block mb-1 text-[#272835] text-sm'>{translate(item.name)}</label>
                                             <select
                                                 className={inputStyle}
+												value={item.value}
                                                 onChange={(e) => handleParametersChange(e, item.id)}
                                             >
                                                 <option disabled selected>{translate('Select')} {translate(item.name)}</option>
@@ -409,6 +431,7 @@ const AddProperty = () => {
                             <div>
                                 <textarea
                                     cols="30" rows="6"
+									value={formData.description}
                                     onChange={handleInputDescription}
                                     placeholder={translate('inputDescription')}
                                     className="w-full border outline-none shadow-none p-3 rounded-lg"
@@ -417,11 +440,8 @@ const AddProperty = () => {
 
                             <div className="flex justify-between items-center mt-6">
                                 <h2 className="text-2xl font-medium">{translate('addContactInfo')}</h2>
-                                <button onClick={handelAddContactToggel} className="tw-btn-outline !px-7 !text-sm">{translate('addContact')}</button>
                             </div>
-                            {
-                                addContactToggle &&
-                                <div className="grid gap-3 grid-cols-2">
+                            <div className="grid gap-3 grid-cols-2">
                                     <div>
                                         <InputText
                                             label={'contactName'}
@@ -443,6 +463,7 @@ const AddProperty = () => {
                                     <div>
                                         <InputText
                                             label={'contactName'}
+											value={formData.contactName}
                                             placeholder={'fullName'}
                                             onValueChange={handleInputContactName}
                                         />
@@ -451,13 +472,13 @@ const AddProperty = () => {
                                         <InputTel
                                             code={'+966'}
                                             label={'secondPhone'}
+											value={formData.secondContact}
                                             placeholder={'Ex: +966 000 000 000'}
                                             className='!py-1.5'
                                             onValueChange={handleInputContact}
                                         />
                                     </div>
                                 </div>
-                            }
 
                             <div>
                                 <h2 className="text-2xl font-medium mb-2 mt-6">{translate('Address')}</h2>
@@ -468,14 +489,14 @@ const AddProperty = () => {
                                     className={`${inputStyle} my-4`}
                                 />
 								{
-                                    GoogleMapApi && selectedLocationAddress.lat ?
-                                    <GoogleMapBox
-                                        apiKey={GoogleMapApi}
-                                        onSelectLocation={handleLocationSelect}
-                                        latitude={selectedLocationAddress.lat}
-                                        longitude={selectedLocationAddress.lng}
-                                    />: null
-                                }
+									selectedLocationAddress?.lat && selectedLocationAddress?.lng ?
+									<GoogleMapBox
+										apiKey={GoogleMapApi}
+										onSelectLocation={handleLocationSelect}
+										latitude={selectedLocationAddress.lat}
+										longitude={selectedLocationAddress.lng}
+									/> : null
+								}
                             </div>
 
                             
@@ -511,6 +532,7 @@ const AddProperty = () => {
                                     label=""
                                     placeholder="add360TourViewUrl"
                                     type="url"
+									value={formData.Viewer3D}
                                     onValueChange={handle360Viewer}
                                 />
                             </div>
@@ -526,6 +548,7 @@ const AddProperty = () => {
                             <div className="sticky top-6 p-4 rounded-lg bg-[#F8FAFB]">
                                 <InputNumber
                                     label={'price'}
+									value={formData.price}
                                     placeholder={'enterPriceProperty'}
                                     onValueChange={handleInputPrice}
                                     className="text-3xl font-medium border-0 bg-transparent ps-0"
@@ -540,25 +563,18 @@ const AddProperty = () => {
                 <div className="container">
                     <div className="flex justify-between py-3">
                         <p className="flex items-center gap-2 text-[#272835]">
-                            {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M3.46257 2.43262C5.21556 0.91688 7.5007 0 10 0C15.5228 0 20 4.47715 20 10C20 12.1361 19.3302 14.1158 18.1892 15.7406L15 10H18C18 5.58172 14.4183 2 10 2C7.84982 2 5.89777 2.84827 4.46023 4.22842L3.46257 2.43262ZM16.5374 17.5674C14.7844 19.0831 12.4993 20 10 20C4.47715 20 0 15.5228 0 10C0 7.86386 0.66979 5.88416 1.8108 4.25944L5 10H2C2 14.4183 5.58172 18 10 18C12.1502 18 14.1022 17.1517 15.5398 15.7716L16.5374 17.5674Z" fill="#272835" />
                             </svg>
-                            {translate('lastSavedOn')} 14 February 2024 12:33 */}
+                            {translate('lastSavedOn')} {formData.approvedAt}
                         </p>
                         <div className="flex gap-2">
 							<SubmitButton
-								caption="saveDraft"
-								loading={showLoader}
-								disabled={showLoader}
-								className="tw-btn-outline w-40" 
-								onClick={handlePostPropertyDraft}
-							/>
-							<SubmitButton
-								caption="publish"
+								caption="save"
 								loading={showLoader}
 								disabled={showLoader}
 								className="tw-btn-solid w-40" 
-								onClick={handlePostPropertyPublish}
+								onClick={handleUpdatePostproperty}
 							/>
                         </div>
                     </div>
@@ -568,4 +584,5 @@ const AddProperty = () => {
     );
 };
 
-export default AddProperty;
+export default EditProperty;
+
