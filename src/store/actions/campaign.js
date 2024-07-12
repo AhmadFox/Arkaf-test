@@ -2,6 +2,7 @@ import {
     getCategorieApi,
     getAllProperties,
     getSliderApi,
+    postAdditionRequest,
     update_profile,
     getArticlesApi,
     getCountByCitysCategories,
@@ -377,6 +378,37 @@ export const PostProperty = ({
         })
     );
 };
+
+export const PostAdditionRequest = ({
+    category_id = "",
+    max_price = "",
+    property_type = "",
+    size = "",
+    full_name = "",
+    phone_number = "",
+    onSuccess = () => { },
+    onError = () => { },
+    onStart = () => { }
+}
+) => {
+    store.dispatch(
+        apiCallBegan({
+            ...postAdditionRequest(
+                category_id,
+                max_price,
+                property_type,
+                size,
+                full_name,
+                phone_number,
+                ),
+                displayToast: false,
+            onStart,
+            onSuccess,
+            onError,
+        })
+    );
+};
+
 // GET LIMITS API
 export const GetLimitsApi = (package_type, onSuccess, onError, onStart) => {
     store.dispatch(

@@ -24,7 +24,7 @@
 }
 
 html, body, #__next {
-	@apply h-full
+	@apply h-full !p-0
 }
 
 #__next > div:first-of-type {
@@ -44,11 +44,11 @@ html, body, #__next {
 }
 
 .tw-btn-solid {
-    @apply mt-2 py-3 px-4 rounded-[8px] bg-[#34484F] border-[#34484F] font-medium capitalize hover:border-[#405861] hover:bg-[#405861] text-white text-center ease-out duration-300
+    @apply py-3 px-4 rounded-[8px] bg-[#34484F] border-[#34484F] font-medium capitalize hover:border-[#405861] hover:bg-[#405861] text-white text-center ease-out duration-300
 }
 
 .tw-btn-outline {
-    @apply mt-2 py-3 cursor-pointer px-4 rounded-[8px] border font-medium capitalize hover:bg-[#405861] text-[#405861] hover:text-white text-center ease-out duration-300
+    @apply py-3 cursor-pointer px-4 rounded-[8px] border font-medium capitalize hover:bg-[#405861] text-[#405861] hover:text-white text-center ease-out duration-300
 }
 
 .tw-btn-sm {

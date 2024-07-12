@@ -10,7 +10,18 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        customRadioColor: '#34484F', // Example custom color
+      },
+    },
   },
-  plugins: [],
+  variants: {
+    extend: {
+      backgroundColor: ['checked'], // Enable 'checked' variant for background color
+    },
+  },
+  plugins: [
+    require('@tailwindcss/forms'), // Include Tailwind CSS forms plugin for better form controls
+  ],
 }

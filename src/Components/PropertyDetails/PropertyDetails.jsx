@@ -12,8 +12,6 @@ import { isSupported } from "firebase/messaging";
 import { Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-
-
 import { getChatData } from "@/store/reducer/momentSlice";
 import { languageData } from "@/store/reducer/languageSlice";
 import { settingsData } from "@/store/reducer/settingsSlice";

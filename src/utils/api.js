@@ -12,6 +12,7 @@ export const UPDATE_PROFILE = "update_profile"
 export const GET_SLIDERS = "get_slider"
 export const GET_CATEGORES = "get_categories"
 export const GET_PROPETRES = "get_property"
+export const POST_ADDITION_REQUEST = "post_property_request"
 export const GET_ARTICLES = "get_articles"
 export const GET_COUNT_BY_CITIES_CATEGORIS = "get_count_by_cities_categoris"
 export const ADD_FAVOURITE = "add_favourite"
@@ -539,6 +540,35 @@ export const postProperty = (
     
     return {
         url: `${POST_PROPERTY}`,
+        method: 'POST',
+        data,
+        authorizationHeader: true,
+    };
+};
+
+
+// POST ADITIONAL REQUIST
+
+export const postAdditionRequest = (
+    category_id,
+    max_price,
+    property_type,
+    size,
+    full_name,
+    phone_number,
+) => {
+    let data = new FormData();
+
+    // Append the property data to the FormData object
+    data.append('category_id', category_id);
+    data.append('max_price', max_price);
+    data.append('property_type', property_type);
+    data.append('size', size);
+    data.append('full_name', full_name);
+    data.append('phone_number', phone_number);
+    
+    return {
+        url: `${POST_ADDITION_REQUEST}`,
         method: 'POST',
         data,
         authorizationHeader: true,

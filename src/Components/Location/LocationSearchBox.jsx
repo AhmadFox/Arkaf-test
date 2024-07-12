@@ -4,7 +4,7 @@ import { loadGoogleMaps, translate } from "@/utils";
 import MapCard from "../Cards/MapCard";
 import Map from "../GoogleMap/GoogleMap";
 
-const LocationSearchBox = ({ onLocationSelected, initialLatitude, initialLongitude, clearfilterLocation, className, reset }) => {
+const LocationSearchBox = ({ onLocationSelected, initialLatitude, initialLongitude, clearfilterLocation, className, reset, placeholder }) => {
 
     const inputRef = useRef();
     const { isLoaded } = loadGoogleMaps();
@@ -152,8 +152,8 @@ const LocationSearchBox = ({ onLocationSelected, initialLatitude, initialLongitu
                     <input
                         type="text"
                         // className="searchLocationInput"
-                        placeholder={translate('enterAddress')}
-                        className={className}
+                        placeholder={placeholder ? translate(placeholder) : translate('enterAddress')}
+                        className={`p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F] ${className}`}
                         onKeyPress={handleKeyPress}
                         onChange={handleInputChange}  // Use onChange event to update inputValue
                         value={inputValue} // Set the input value

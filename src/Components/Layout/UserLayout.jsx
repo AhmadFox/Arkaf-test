@@ -13,7 +13,7 @@ import { loadSystemSettings } from "@/store/reducer/settingsSlice";
 import FooterUser from "../Footer/FooterUser";
 import UserInfo from "./UserInfo";
 
-const UserLayout = ({ children }) => {
+const UserLayout = ({ children, footer }) => {
 
 	const [isLoading, setIsLoading] = useState(false);
     const isLoggedIn = useSelector((state) => state.User_signup);
@@ -99,7 +99,10 @@ const UserLayout = ({ children }) => {
                             <UserInfo /> : null
                         }
                         {children}
-                        <FooterUser />
+                        {
+                            footer &&
+                            <FooterUser />
+                        }
                     </Suspense>
                 </div>
             )}
