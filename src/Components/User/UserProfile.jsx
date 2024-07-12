@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, Fragment } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -21,6 +21,7 @@ import LocationSearchBox from "../Location/LocationSearchBox";
 
 const UserProfile = () => {
 
+
     const GoogleMapApi = process.env.NEXT_PUBLIC_GOOGLE_API;
     const signupData = useSelector(userSignUpData);
     const FcmToken = useSelector(Fcmtoken);
@@ -38,8 +39,8 @@ const UserProfile = () => {
         fullName: user?.name,
         email: user?.email,
         phoneNumber: user?.mobile,
+        profile: user?.profile,
         address: user?.address,
-        profile: user?.profile
     });
 
     const [selectedLocationAddress, setSelectedLocationAddress] = useState({
@@ -48,7 +49,7 @@ const UserProfile = () => {
         city: user?.city,
         state: user?.state,
         country: user?.country,
-        formatted_address: user?.address,
+        address: user?.address,
     });
 
     // useEffect(() => { }, [lang]);
@@ -88,33 +89,18 @@ const UserProfile = () => {
 	const handleLocationSelect = (address) => {
         // Update the form field with the selected address
 		setSelectedLocationAddress({
-			lat: address?.lat,
+            lat: address?.lat,
 			lng: address?.lng,
 			city: address?.city,
 			state: address?.state,
 			country: address?.country,
-			formatted_address: address?.address
-		});
-        setFormData({
+			address: address?.address
+        });
+		setFormData({
             ...formData,
             selectedLocation: address
         });
     };
-
-    const handleLocationSelected = (value) => {
-		setSelectedLocationAddress({
-			lat: value?.lat,
-			lng: value?.lng,
-			city: value?.city,
-			state: value?.state,
-			country: value?.country,
-			formatted_address: value?.address
-		});
-        setFormData({
-            ...formData,
-            selectedLocation: value
-        });
-	}
 
     const handlePhone = (valid, value) => {
         valid &&
@@ -145,7 +131,7 @@ const UserProfile = () => {
 			city: user?.city,
 			state: user?.state,
 			country: user?.country,
-			formatted_address: user?.address
+			address: user?.address
 		});
     }
 
@@ -164,11 +150,11 @@ const UserProfile = () => {
             twiiter_id: formData.twiiter ? formData.twiiter : "",
             instagram_id: formData.instagram ? formData.instagram : "",
             pintrest_id: formData.pintrest ? formData.pintrest : "",
-            latitude: formData.selectedLocation?.lat,
-            longitude: formData.selectedLocation?.lng,
-            city: formData.selectedLocation?.city,
-            state: formData.selectedLocation?.state,
-            country: formData.selectedLocation?.country,
+            latitude: selectedLocationAddress?.lat,
+            longitude: selectedLocationAddress?.lng,
+            city: selectedLocationAddress?.city,
+            state: selectedLocationAddress?.state,
+            country: selectedLocationAddress?.country,
             profile: formData.profileImage,
             onSuccess: (response) => {
                 toast.success(translate("profileupdate"));
@@ -198,14 +184,14 @@ const UserProfile = () => {
         );
         setDisabledButtons(!hasFormChanged);
 
-        setSelectedLocationAddress({
-            lat: user?.latitude,
-            lng: user?.longitude,
-            city: user?.city,
-            state: user?.state,
-            country: user?.country,
-            formatted_address: user?.address,
-        });
+        // setSelectedLocationAddress({
+        //     lat: user?.latitude,
+        //     lng: user?.longitude,
+        //     city: user?.city,
+        //     state: user?.state,
+        //     country: user?.country,
+        //     formatted_address: user?.address,
+        // });
 
     }, [formData, user]);
 
@@ -277,12 +263,12 @@ const UserProfile = () => {
                             <div className="">
                                 <label className='d-block mb-1 text-[#272835] text-sm'>{translate('address')}</label>
                                 <LocationSearchBox
-                                    onLocationSelected={handleLocationSelected}
+                                    onLocationSelected={handleLocationSelect}
                                     initialLatitude={selectedLocationAddress.lat}
                                     initialLongitude={selectedLocationAddress.lng}
                                     className={`${inputStyle} my-4`}
                                 />
-								<GoogleMapBox
+                                <GoogleMapBox
                                     apiKey={GoogleMapApi}
                                     onSelectLocation={handleLocationSelect}
                                     latitude={selectedLocationAddress.lat}

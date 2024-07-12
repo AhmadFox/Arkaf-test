@@ -1,44 +1,41 @@
 "use client"
 import React, { Fragment, useEffect, useState } from "react";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import Breadcrumb from "@/Components/Breadcrumb/Breadcrumb";
-import Image from "next/image";
-import { PiPlayCircleThin } from "react-icons/pi";
-import ReactPlayer from "react-player";
-import SimilerPropertySlider from "@/Components/SimilerPropertySlider/SimilerPropertySlider";
-import { settingsData } from "@/store/reducer/settingsSlice";
-import { useSelector } from "react-redux";
-import Map from "@/Components/GoogleMap/GoogleMap";
-import { languageData } from "@/store/reducer/languageSlice";
-import { isThemeEnabled, placeholderImage, translate } from "@/utils";
-import { useRouter } from "next/router";
-import { GetFeturedListingsApi, intrestedPropertyApi } from "@/store/actions/campaign";
-import Header from "@/Components/Header/Header";
-import Footer from "@/Components/Footer/Footer";
-import LightBox from "@/Components/LightBox/LightBox";
-import Loader from "@/Components/Loader/Loader";
-import toast from "react-hot-toast";
-import { isSupported } from "firebase/messaging";
-import { ImageToSvg } from "@/Components/Cards/ImageToSvg";
-import Swal from "sweetalert2";
-import ReportPropertyModal from "@/Components/ReportPropertyModal/ReportPropertyModal";
-import { getChatData } from "@/store/reducer/momentSlice";
-import OwnerDeatilsCard from "../OwnerDeatilsCard/OwnerDeatilsCard";
-import PremiumOwnerDetailsCard from "../OwnerDeatilsCard/PremiumOwnerDetailsCard";
-import Layout from "../Layout/Layout";
-import { message } from "antd";
-import LoginModal from "../LoginModal/LoginModal";
-import useSWR from "swr";
-import setPropertyTotalClicksApi from "@/hooks/setPropertyTotalClicksApi";
-import { formatNumberWithCommas } from "@/utils";
-import TimeComponent from "../Cards/TimeComponent";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-
-import AvatarImage from "@/assets/avatar.png";
-import ScketchOne from "@/assets/scketchplanone.png";
-import ScketchTow from "@/assets/scketchplantow.png";
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/router";
+
+import useSWR from "swr";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { isSupported } from "firebase/messaging";
+import { Scrollbar, A11y } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+
+
+import { getChatData } from "@/store/reducer/momentSlice";
+import { languageData } from "@/store/reducer/languageSlice";
+import { settingsData } from "@/store/reducer/settingsSlice";
+import { GetFeturedListingsApi, intrestedPropertyApi } from "@/store/actions/campaign";
+
+import { formatNumberWithCommas } from "@/utils";
+import { isThemeEnabled, placeholderImage, translate } from "@/utils";
+
+import Layout from "../Layout/Layout";
+import LoginModal from "../LoginModal/LoginModal";
+import Map from "@/Components/GoogleMap/GoogleMap";
+import TimeComponent from "../Cards/TimeComponent";
+import LightBox from "@/Components/LightBox/LightBox";
+import setPropertyTotalClicksApi from "@/hooks/setPropertyTotalClicksApi";
+import PremiumOwnerDetailsCard from "../OwnerDeatilsCard/PremiumOwnerDetailsCard";
+import ReportPropertyModal from "@/Components/ReportPropertyModal/ReportPropertyModal";
+import { ImageToSvg } from "@/Components/Cards/ImageToSvg";
+
+import Loader from "@/Components/Loader/Loader";
+import OwnerDeatilsCard from "../OwnerDeatilsCard/OwnerDeatilsCard";
+import { message } from "antd";
+
 
 // Import Swiper styles
 import 'swiper/css';
@@ -46,14 +43,11 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
-import headerImag from "@/assets/home_header.png"
-import { userAgent } from "next/server";
-
 
 const PropertyDetails = () => {
+
     const router = useRouter();
     const propId = router.query;
-    const currentUrl = process.env.NEXT_PUBLIC_WEB_URL + router.asPath;
     // const { isLoaded } = loadGoogleMaps();
     const [isMessagingSupported, setIsMessagingSupported] = useState(false);
     const [notificationPermissionGranted, setNotificationPermissionGranted] = useState(false);
@@ -105,6 +99,7 @@ const PropertyDetails = () => {
     const CurrencySymbol = priceSymbol && priceSymbol.currency_symbol;
 
     useEffect(() => { }, [lang]);
+
     useEffect(() => {
         const checkMessagingSupport = async () => {
             try {
@@ -124,6 +119,7 @@ const PropertyDetails = () => {
 
         checkMessagingSupport();
     }, [notificationPermissionGranted, isMessagingSupported]);
+
     useEffect(() => {
         setIsLoading(true);
         if (propId.slug && propId.slug != "") {
@@ -236,32 +232,8 @@ const PropertyDetails = () => {
         setViewerIsOpen(false);
         // }
     };
-    const handleShowMap = () => {
-        if (isPremiumProperty) {
-            if (isPremiumUser) {
-                setShowMap(true);
-            } else {
-                Swal.fire({
-                    title: "Opps!",
-                    text: " Private property ahead. Upgrade for premium access. Join now to explore exclusive features!",
-                    icon: "warning",
-                    allowOutsideClick: true,
-                    showCancelButton: false,
-                    customClass: {
-                        confirmButton: 'Swal-confirm-buttons',
-                        cancelButton: "Swal-cancel-buttons"
-                    },
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        router.push("/subscription-plan");
-                    }
-                });
 
-            }
-        } else {
-            setShowMap(true);
-        }
-    }
+
     useEffect(() => {
 
         return () => {
@@ -887,9 +859,27 @@ const PropertyDetails = () => {
                                                             </>
                                                         ) : null}
                                                     </div> */}
+                                                    {/* {getPropData ? (
+                                                        <div className="card google_map">
+                                                            {showMap ? (
+                                                                <Map latitude={getPropData.latitude} longitude={getPropData.longitude} />
+                                                            ) : (
+                                                                <>
+                                                                    <div className="blur-background" />
+                                                                    <div className="blur-container">
+                                                                        <div className="view-map-button-div">
+                                                                            <button onClick={() => setShowMap(true)} id="view-map-button">
+                                                                                {translate("ViewMap")}
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                    ) : null} */}
                                                     {getPropData?.latitude ? (
                                                         <div className="card google_map rounded-4 border-0  overflow-hidden">
-                                                            {/* <Map latitude={getPropData.latitude} longitude={getPropData.longitude} /> */}
+                                                            <Map latitude={getPropData.latitude} longitude={getPropData.longitude} />
                                                         </div>
                                                     ) : null}
                                                 </div>

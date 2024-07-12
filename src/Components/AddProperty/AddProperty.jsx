@@ -467,15 +467,12 @@ const AddProperty = () => {
                                     initialLongitude={selectedLocationAddress.lng}
                                     className={`${inputStyle} my-4`}
                                 />
-								{
-                                    GoogleMapApi && selectedLocationAddress.lat ?
-                                    <GoogleMapBox
-                                        apiKey={GoogleMapApi}
-                                        onSelectLocation={handleLocationSelect}
-                                        latitude={selectedLocationAddress.lat}
-                                        longitude={selectedLocationAddress.lng}
-                                    />: null
-                                }
+								<GoogleMapBox
+                                    apiKey={GoogleMapApi}
+                                    onSelectLocation={handleLocationSelect}
+                                    latitude={selectedLocationAddress.lat}
+                                    longitude={selectedLocationAddress.lng}
+                                />
                             </div>
 
                             
