@@ -75,7 +75,12 @@ const Nav = () => {
 
     const handelAddProperty = () => {
         signupData.data !== null ?
-        router.push('/user/properties') : router.push("/login")
+        router.push('/user/properties/post-listing') : router.push("/login")
+    }
+
+    const handelRequistProperty = () => {
+        signupData.data !== null ?
+        router.push('/user/properties/requist-listing') : router.push("/login")
     }
 
     useEffect(() => {
@@ -284,7 +289,7 @@ const Nav = () => {
                                         <button onClick={handelAddProperty} className="nav-link">{translate("addProperty")}</button>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" href="/add-request">{translate("propertyRequest")}</Link>
+                                        <button onClick={handelRequistProperty} className="nav-link" href="/add-request">{translate("propertyRequest")}</button>
                                     </li>
                                     <li className="nav-item">
                                         <Link className="nav-link" href="/find-agent">{translate("findAgent")}</Link>

@@ -80,6 +80,8 @@ const HomePage = () => {
         setShowModal(false);
     };
 
+    console.log('getFeaturedListing', getFeaturedListing);
+
     const breakpoints = {
         0: {
             slidesPerView: 1,

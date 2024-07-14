@@ -8299,10 +8299,10 @@ embed svg path {
 }
 
 #properties_on_map_googlemap {
-  height: 650px !important;
+  height: 750px !important;
   position: relative !important;
   overflow: hidden !important;
-  margin: 60px 0 !important;
+  /* margin: 60px 0 !important; */
 }
 
 .verticle_card_map {

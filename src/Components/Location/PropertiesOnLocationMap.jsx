@@ -117,7 +117,7 @@ const PropertiesOnLocationMap = ({ onSelectLocation, apiKey, latitude, longitude
                     <>
 
                         {/* // <LoadScript googleMapsApiKey={apiKey} libraries={libraries} onError={handleMapLoadError}> */}
-                        <Autocomplete
+                        {/* <Autocomplete
                             onLoad={(autocomplete) => {
                                 autocompleteRef.current = autocomplete;
                             }}
@@ -155,7 +155,7 @@ const PropertiesOnLocationMap = ({ onSelectLocation, apiKey, latitude, longitude
                                     </div>
                                 </div>
                             </div>
-                        </Autocomplete>
+                        </Autocomplete> */}
 
                         <GoogleMap zoom={11} center={location} id="properties_on_map_googlemap">
                             {data.map((markerData, index) => (

@@ -56,7 +56,7 @@ const EditProperty = () => {
     const [layoutField, setLayoutField] = useState([]);
     const [formData, setFormData] = useState({});
 	const [ showLoader, setShowLoader] = useState(false)
-    const [ selectedOption, setSelectedOption ] = useState(properety.property_type || 'sell');
+    const [ selectedOption, setSelectedOption ] = useState(properety.property_type);
     const [ userName, setUserName] = useState(signupData?.data?.data?.name);
     const [ userPhone, setUserPhone] = useState(signupData?.data?.data?.mobile);
     const [ availableparameter, setAvailableparameter ] = useState([]);
@@ -251,7 +251,7 @@ const EditProperty = () => {
 				video_link: formData.Viewer3D,
 				onSuccess: (response) => {
 					toast.success(response.message);
-					router.push(`/properties-details/${propertyId}`);
+					router.push(`/user/current-listing/`);
 					setShowLoader(false)
 		
 		

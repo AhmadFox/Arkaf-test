@@ -3,6 +3,7 @@ import {
     getAllProperties,
     getSliderApi,
     postAdditionRequest,
+    postPropertyRequest,
     update_profile,
     getArticlesApi,
     getCountByCitysCategories,
@@ -394,6 +395,36 @@ export const PostAdditionRequest = ({
     store.dispatch(
         apiCallBegan({
             ...postAdditionRequest(
+                category_id,
+                max_price,
+                property_type,
+                size,
+                full_name,
+                phone_number,
+                ),
+                displayToast: false,
+            onStart,
+            onSuccess,
+            onError,
+        })
+    );
+};
+
+export const PostPropertyRequest = ({
+    category_id = "",
+    max_price = "",
+    property_type = "",
+    size = "",
+    full_name = "",
+    phone_number = "",
+    onSuccess = () => { },
+    onError = () => { },
+    onStart = () => { }
+}
+) => {
+    store.dispatch(
+        apiCallBegan({
+            ...postPropertyRequest(
                 category_id,
                 max_price,
                 property_type,

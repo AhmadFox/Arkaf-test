@@ -6,7 +6,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { translate } from "@/utils";
-import { PostAdditionRequest } from "@/store/actions/campaign";
+import { PostAdditionRequest, PostPropertyRequest } from "@/store/actions/campaign";
 import { categoriesCacheData, loadCategories } from "@/store/reducer/momentSlice";
 
 import RadioRow from "../ui/RadioRow";
@@ -22,7 +22,7 @@ import SubmitButton from "../AuthForms/SubmitButton";
 import RequistBanner from "@/assets/request_banner.png"
 import SuccessBanner from "@/assets/Images/success_requist.png"
 
-const ApplyRequest = () => {
+const ApplyRequest = ({ type }) => {
 
 	// Init Google Map
 	const GoogleMapApi = process.env.NEXT_PUBLIC_GOOGLE_API;
@@ -35,51 +35,84 @@ const ApplyRequest = () => {
 	const [tab, setTab] = useState(1);
 
 	const handelContinue = async (e) => {
-
-		if (formData.requistBy === 3) {
-			router.push('/user/properties/')
-			return
+		switch (true) {
+			case formData.requistBy === 3:
+				router.push('/user/properties/');
+				return;
+	
+			case tab === 1:
+				setTab(2);
+				setBack(false);
+				return;
+	
+			case tab === 3:
+				router.push('/');
+				return;
+	
+			default:
+				break;
 		}
-
-		if (tab === 1) {
-			setTab(2)
-			setBack(false)
-			return
-		}
-
-		if (tab === 3) {
-			router.push('/')
-			return
-		}
-
+	
 		setLoading(true);
 		setDisabled(true);
+	
 		try {
-			PostAdditionRequest({
-                category_id: formData.categoryId,
-                max_price: formData.maxPrice,
-                property_type: formData.requistType,
-                size: formData.size,
-                full_name: formData.name,
-                phone_number: formData.phone,
-				onSuccess: async (response) => {
-					toast.success(response.message);
-					setTab(3)
-					setLoading(false);
-				},
-				onError: (error) => {
-					toast.error(error);
+			switch (type) {
+				case "request":
+					await PostAdditionRequest({
+						category_id: formData.categoryId,
+						max_price: formData.maxPrice,
+						property_type: formData.requistType,
+						size: formData.size,
+						full_name: formData.name,
+						phone_number: formData.phone,
+						onSuccess: async (response) => {
+							toast.success(response.message);
+							setTab(3);
+							setLoading(false);
+						},
+						onError: (error) => {
+							toast.error(error);
+							setLoading(false);
+							setDisabled(false);
+						}
+					});
+					break;
+	
+				case "post":
+					await PostPropertyRequest({
+						category_id: formData.categoryId,
+						max_price: '333',
+						property_type: formData.requistType,
+						size: formData.size,
+						full_name: formData.name,
+						phone_number: formData.phone,
+						onSuccess: async (response) => {
+							toast.success(response.message);
+							setTab(3);
+							setLoading(false);
+						},
+						onError: (error) => {
+							toast.error(error);
+							setLoading(false);
+							setDisabled(false);
+						}
+					});
+					break;
+	
+				default:
 					setLoading(false);
 					setDisabled(false);
-				}
-			});
-			
+					toast.error("Invalid request type.");
+					break;
+			}
 		} catch (error) {
 			setLoading(false);
 			setDisabled(false);
-		    toast.error("An error occurred. Please try again later.");
+			toast.error("An error occurred. Please try again later.");
 		}
-    };
+	};
+	
 
 	const handelBack = () => {
 		setTab(1);
@@ -154,7 +187,7 @@ const ApplyRequest = () => {
 								<h1 className="text-3xl font-medium text-center mb-2">{translate('choosePost')}</h1>
 								<p className="text-center text-lg">{translate('addAnotherAccount')}</p>
 								<div className="my-9">
-									<RadioRow sendSelectedOption={handelRequestBy} />
+									<RadioRow type={type} sendSelectedOption={handelRequestBy} />
 								</div>
 							</div>
 							<div className={`${tab === 2 ? '' : 'hidden'}`}>
@@ -200,30 +233,38 @@ const ApplyRequest = () => {
 											onValueChange={handleCategory}
 										/>
 									</div>
-									<div className="">
-										<InputNumber
-											label={'maxPrice'}
-											onValueChange={handelMaxPrice}
-											placeholder={'Ex:20,000'}
-										/>
-									</div>
-									<div className="">
-										<label className='d-block mb-1 text-[#272835] text-sm'>{translate('location')}</label>
-										<LocationSearchBox
-											placeholder={'CityNeighborhood'}
-											onLocationSelected={handleLocationSelect}
-											initialLatitude={formData.location.lat}
-											initialLongitude={formData.location.lng}
-										/>
-									</div>
-									<div className="col-span-2">
-										<GoogleMapBox
-											apiKey={GoogleMapApi}
-											onSelectLocation={handleLocationSelect}
-											latitude={formData.location.lat}
-											longitude={formData.location.lng}
-										/>
-									</div>
+									{
+										type === 'request' ? 
+										<div className="col-span-2">
+											<InputNumber
+												label={'maxPrice'}
+												onValueChange={handelMaxPrice}
+												placeholder={'Ex:20,000'}
+											/>
+										</div>: null
+									}
+									{
+										type === 'post' ?
+										<Fragment>
+											<div className="col-span-2">
+												<label className='d-block mb-1 text-[#272835] text-sm'>{translate('location')}</label>
+												<LocationSearchBox
+													placeholder={'CityNeighborhood'}
+													onLocationSelected={handleLocationSelect}
+													initialLatitude={formData.location.lat}
+													initialLongitude={formData.location.lng}
+												/>
+											</div>
+											<div className="col-span-2">
+												<GoogleMapBox
+													apiKey={GoogleMapApi}
+													onSelectLocation={handleLocationSelect}
+													latitude={formData.location.lat}
+													longitude={formData.location.lng}
+												/>
+											</div>
+										</Fragment>: null
+									}
 								</div>
 							</div>
 							<div className={`h-full ${tab === 3 ? '' : 'hidden'}`}>
@@ -235,7 +276,13 @@ const ApplyRequest = () => {
 										height={''}
 									/>
 									<div className="text-center">
-										<h1 className="font-medium text-3xl mb-2">{translate('Success Post Listing')}</h1>
+										<h1 className="font-medium text-3xl mb-2">
+											{	
+											type === "post" ?
+												translate('Success Post Listing'):
+												translate('Success Property Request')
+											}
+										</h1>
 										<p className="opacity-50">{translate('Let’s start for next step with agents who contact you')}</p>
 									</div>
 								</div>

@@ -48,6 +48,7 @@ export const protectedRoutes = [
     '/user/dashboard/',
     '/user/advertisement/',
     '/user/properties/',
+    '/user/properties/post-listing/',
     '/user/subscription/',
     '/user/transaction-history/',
     '/user/intrested/',
