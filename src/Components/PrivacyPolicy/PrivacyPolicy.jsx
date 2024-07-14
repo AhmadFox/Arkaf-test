@@ -25,7 +25,7 @@ const PrivacyPolicy = () => {
     useEffect(() => { }, [lang]);
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("privacyPolicy")} />
             <section id="privacySect">
                 <div className="container">

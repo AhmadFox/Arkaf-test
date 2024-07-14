@@ -38,7 +38,7 @@ import dummyimg from '@/assets/Images/user_profile.png'
 
 
 
-const Nav = () => {
+const Nav = ({ stikyNav }) => {
 
     const router = useRouter();
     const language = store.getState().Language.languages;
@@ -271,7 +271,7 @@ const Nav = () => {
 
     return (
         <>
-            <header className="sticy">
+            <header className={` ${stikyNav ? 'sticy' : 'border-b'}`}>
                 <nav className={`navbar header navbar-expand-lg navbar-light`}>
                 {/* ${scroll > headerTop || (isHomePage && (!sliderdata || sliderdata.length === 0)) ? "is-sticky" : ""} */}
                     <div className="container max-w-full xl:px-9">

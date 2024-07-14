@@ -2,10 +2,10 @@
 import React from 'react'
 import Nav from '../Navbar/Navbar.jsx'
 
-const Header = () => {
+const Header = ({ stikyNav }) => {
 
   return (
-    <Nav />
+    <Nav stikyNav={stikyNav} />
   )
 }
 

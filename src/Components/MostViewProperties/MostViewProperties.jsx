@@ -56,7 +56,7 @@ const MostViewProperties = () => {
 
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("mostViewedProp")} />
             <section id="featured_prop_section">
                 {isLoading ? ( // Show Skeleton when isLoading is true

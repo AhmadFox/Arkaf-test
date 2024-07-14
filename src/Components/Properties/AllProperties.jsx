@@ -180,7 +180,7 @@ const AllProperties = () => {
     }, [clearfilterLocation])
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("allProperties")} />
 
             <div id="all-prop-containt">

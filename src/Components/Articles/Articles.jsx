@@ -113,7 +113,7 @@ const Articles = () => {
     };
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("articles")} />
             <div className="all-articles">
                 <div id="all-articles-content">

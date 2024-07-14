@@ -9899,3 +9899,8 @@ figcaption {
 .bs-pb-40  {
   padding-bottom: 80%;
 }
+
+.gm-ui-hover-effect {
+  right: 0px !important;
+  border: 1px solid #f2f2f2 !important;
+}

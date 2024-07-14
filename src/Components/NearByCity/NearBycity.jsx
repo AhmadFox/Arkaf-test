@@ -33,7 +33,7 @@ const NearBycity = () => {
     useEffect(() => { }, [lang]);
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("propNearByCities")} />
             <section id="all-nearby-citys">
                 {isLoading ? (

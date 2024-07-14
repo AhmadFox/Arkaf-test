@@ -53,7 +53,7 @@ const AllPersonalisedFeeds = () => {
     };
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("personalizeFeeds")} />
             <section id="personalize_feed_properties_all">
                 {isLoading ? ( // Show Skeleton when isLoading is true

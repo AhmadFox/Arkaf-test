@@ -15,7 +15,7 @@ import Image from "next/image";
 import SomthingWentWrong from "../SomthingWentWrong/SomthingWentWrong";
 import { loadSystemSettings } from "@/store/reducer/settingsSlice";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, stikyNav }) => {
     const isLoggedIn = useSelector((state) => state.User_signup);
     const userCurrentId = isLoggedIn && isLoggedIn.data ? isLoggedIn?.data?.data?.id : null;
     const router = useRouter();
@@ -114,7 +114,7 @@ const Layout = ({ children }) => {
                                 </div>
                             ) : (
                                 <Fragment>
-                                    <Header />
+                                    <Header stikyNav={stikyNav} />
                                     {children}
                                     <Footer />
                                 </Fragment>

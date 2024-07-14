@@ -30,7 +30,7 @@ const TermsAndCondition = () => {
     useEffect(() => { }, [lang]);
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("terms&condition")} />
             <section id="termsSect">
                 <div className="container">

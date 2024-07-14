@@ -189,7 +189,7 @@ useEffect(()=>{
         window.scrollTo(0, 0);
     };
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title="" />
             <div className="serach_page_tab">
                 <div id="searchbox" className="container">

@@ -54,7 +54,7 @@ const MostFavPrioperties = () => {
     };
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("mostFavProp")} />
             <section id="featured_prop_section">
                 {isLoading ? ( // Show Skeleton when isLoading is true

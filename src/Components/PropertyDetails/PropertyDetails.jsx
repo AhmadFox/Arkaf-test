@@ -428,7 +428,7 @@ const PropertyDetails = () => {
     return (
         <Fragment>
 
-            <Layout>
+            <Layout stikyNav={true}>
                 {/* <Breadcrumbw
                     data={{
                         type: getPropData && getPropData.category.category,

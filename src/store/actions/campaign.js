@@ -715,24 +715,39 @@ export const addReportApi = ({
     );
 };
 // getNearbyProperties  API
-export const getNearbyPropertiesApi = ({
-    city = "",
-    state = "",
-    type = "",
-    onSuccess = () => { },
-    onError = () => { },
-    onStart = () => { }
-}) => {
-    store.dispatch(
-        apiCallBegan({
-            ...getNearbyProperties(city, state, type),
-            displayToast: false,
-            onStart,
-            onSuccess,
-            onError,
-        })
-    );
+export const getNearbyPropertiesApi = ({ city = "", state = "", type = "" }) => {
+    return new Promise((resolve, reject) => {
+        store.dispatch(
+            apiCallBegan({
+                ...getNearbyProperties(city, state, type),
+                displayToast: false,
+                onStart: () => { },
+                onSuccess: (response) => {
+                    resolve(Array.isArray(response.data) ? response.data : []);
+                },
+                onError: (error) => reject(error),
+            })
+        );
+    });
 };
+// export const getNearbyPropertiesApi = ({
+//     city = "",
+//     state = "",
+//     type = "",
+//     onSuccess = () => { },
+//     onError = () => { },
+//     onStart = () => { }
+// }) => {
+//     store.dispatch(
+//         apiCallBegan({
+//             ...getNearbyProperties(city, state, type),
+//             displayToast: false,
+//             onStart,
+//             onSuccess,
+//             onError,
+//         })
+//     );
+// };
 // setPropertyTotalClicks  API
 export const setPropertyTotalClicksApi = ({
     slug_id = "",

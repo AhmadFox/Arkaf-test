@@ -21,7 +21,7 @@ const AllCategories = () => {
     const Categorydata = useSelector(categoriesCacheData);
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("allCategories")} />
             <section id="view_all_cate_section">
                 <div className="cate_section">

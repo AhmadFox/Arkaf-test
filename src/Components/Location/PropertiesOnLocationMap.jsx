@@ -8,6 +8,7 @@ import Link from "next/link";
 import { ButtonGroup, Modal } from "react-bootstrap";
 import { formatPriceAbbreviated, translate } from "@/utils";
 import MapCard from "../Cards/MapCard";
+import VerticalCard from "../Cards/VerticleCard";
 const PropertiesOnLocationMap = ({ onSelectLocation, apiKey, latitude, longitude, data, setActiveTab, activeTab, fetchAllData }) => {
 
 
@@ -117,14 +118,14 @@ const PropertiesOnLocationMap = ({ onSelectLocation, apiKey, latitude, longitude
                     <>
 
                         {/* // <LoadScript googleMapsApiKey={apiKey} libraries={libraries} onError={handleMapLoadError}> */}
-                        {/* <Autocomplete
+                        <Autocomplete
                             onLoad={(autocomplete) => {
                                 autocompleteRef.current = autocomplete;
                             }}
-                        // onPlaceChanged={handlePlaceSelect}
+                        onPlaceChanged={handlePlaceSelect}
                         >
 
-                            <div id="searchbox1" className="container">
+                            <div id="" className="container">
                                 <ButtonGroup>
                                     <ul className="nav nav-tabs" id="tabs">
                                         <li className="">
@@ -155,7 +156,7 @@ const PropertiesOnLocationMap = ({ onSelectLocation, apiKey, latitude, longitude
                                     </div>
                                 </div>
                             </div>
-                        </Autocomplete> */}
+                        </Autocomplete>
 
                         <GoogleMap zoom={11} center={location} id="properties_on_map_googlemap">
                             {data.map((markerData, index) => (
@@ -176,8 +177,8 @@ const PropertiesOnLocationMap = ({ onSelectLocation, apiKey, latitude, longitude
                                     position={{ lat: parseFloat(clickedMarker.latitude), lng: parseFloat(clickedMarker.longitude) }}
                                     onCloseClick={() => setClickedMarker(null)}
                                 >
-
-                                    <MapCard data={clickedMarker} CurrencySymbol={CurrencySymbol} PlaceHolderImg={PlaceHolderImg} />
+                                    <VerticalCard ele={clickedMarker} horizontal={true} />
+                                    {/* <MapCard data={clickedMarker} CurrencySymbol={CurrencySymbol} PlaceHolderImg={PlaceHolderImg} /> */}
                                 </InfoWindow>
                             )}
                         </GoogleMap>

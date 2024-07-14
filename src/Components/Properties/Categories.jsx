@@ -187,7 +187,7 @@ const Categories = () => {
 
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={`${cateName} Properties`} />
             <div id="all-prop-containt">
                 <div className="all-properties container">

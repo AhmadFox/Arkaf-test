@@ -167,7 +167,7 @@ const City = () => {
     };
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={city.slug ? `Properties Listed in ${city.slug} ` : `No Properties in ${city.slug}`} />
 
             <div id="all-prop-containt">

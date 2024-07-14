@@ -23,8 +23,11 @@ import { FreeMode, Pagination, Navigation } from "swiper/modules";
 
 import { languageData } from "@/store/reducer/languageSlice";
 import TimeComponent from "./TimeComponent";
+import { useRouter } from "next/router";
 
-function VerticalCard({ ele, removeCard, onImageLoad }) {
+function VerticalCard({ ele, removeCard, onImageLoad, withButtons }) {
+
+    const router = useRouter();
 
     const lang = useSelector(languageData);
     useEffect(() => { }, [lang]);
@@ -92,6 +95,7 @@ function VerticalCard({ ele, removeCard, onImageLoad }) {
                 icon: "warning",
                 allowOutsideClick: false,
                 showCancelButton: false,
+                showCancelButton: true,
                 allowOutsideClick: true,
                 customClass: {
                     confirmButton: 'Swal-confirm-buttons',
@@ -100,7 +104,7 @@ function VerticalCard({ ele, removeCard, onImageLoad }) {
                 confirmButtonText: "Ok",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    setShowModal(true)
+                    router.push("/login")
                 }
             });
         }
@@ -222,7 +226,7 @@ function VerticalCard({ ele, removeCard, onImageLoad }) {
 
                         </div> */}
                         <span className="feature_body_title"> {ele?.category && ele?.category.category} </span>
-                        <TimeComponent timeAgo={ele?.post_created} />
+                        {/* <TimeComponent timeAgo={ele?.post_created} /> */}
                     </div>
 
                     <div className="feature_card_middletext">
@@ -264,11 +268,15 @@ function VerticalCard({ ele, removeCard, onImageLoad }) {
 
                             ))}
                         </div>
-                        
-                        <div className="card_footer_button mt-3">
-                            <button onClick={(event) => event.preventDefault()} className="button button-outline">{translate('contactAgent')}</button>
-                            <button onClick={(event) => event.preventDefault()} className="button button-outline">{translate('whatsapp')}</button>
-                        </div>
+
+                        {
+                            withButtons === false ?
+                            '':
+                            <div className="card_footer_button mt-3">
+                                <button onClick={(event) => event.preventDefault()} className="button button-outline">{translate('contactAgent')}</button>
+                                <button onClick={(event) => event.preventDefault()} className="button button-outline">{translate('whatsapp')}</button>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

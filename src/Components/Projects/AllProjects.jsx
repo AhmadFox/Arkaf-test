@@ -105,7 +105,7 @@ const AllProjects = () => {
 
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("projects")} />
             <section id="featured_prop_section">
                 {isLoading ? ( // Show Skeleton when isLoading is true

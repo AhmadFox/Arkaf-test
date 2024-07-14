@@ -246,7 +246,7 @@ const ProjectDetails = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <Layout>
+        <Layout stikyNav={true}>
           <Breadcrumb title="Project Details" />
           <section id="project_details">
             <div className="project_main_details">

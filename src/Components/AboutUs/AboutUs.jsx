@@ -36,7 +36,7 @@ const AboutUs = () => {
 
   
   return (
-    <Layout>
+    <Layout stikyNav={true}>
       <Breadcrumb title={translate("aboutUs")} />
       <section id="termsSect">
         <div className="container">

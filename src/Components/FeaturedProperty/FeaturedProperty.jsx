@@ -56,7 +56,7 @@ const FeaturedProperty = () => {
     };
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("featurdAllProp")} />
             <section id="featured_prop_section">
                 {isLoading ? ( // Show Skeleton when isLoading is true

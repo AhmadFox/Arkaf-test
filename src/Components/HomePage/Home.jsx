@@ -397,7 +397,7 @@ const HomePage = () => {
     
 
     return (
-        <Layout>
+        <Layout  stikyNav={true}>
 
             {/* HERO HEADER SECTION  */}
             <HeroHeader />

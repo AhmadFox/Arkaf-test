@@ -98,7 +98,7 @@ const ContactUS = () => {
 
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("contactUs")} />
             <section id="contact-us">
                 <div className="container">

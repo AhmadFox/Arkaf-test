@@ -388,7 +388,7 @@ const SubscriptionPlan = () => {
 
 
     return (
-        <Layout>
+        <Layout stikyNav={true}>
             <Breadcrumb title={translate("subscriptionPlan")} />
 
             <section id="subscription" className="mb-5">
