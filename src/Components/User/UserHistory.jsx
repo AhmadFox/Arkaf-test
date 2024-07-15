@@ -9,10 +9,9 @@ const UserHistory = () => {
 	const limit = 2;
 	const [offsetdata, setOffsetdata] = useState(0);
 	const handlePageChange = (selectedPage) => {
-		alert(selectedPage.selected)
 		const newOffset = selectedPage.selected * limit;
 		setOffsetdata(newOffset);
-		window.scrollTo(0, 0);
+		window.scrollTo(0, 300);
 	};
 
 	return (

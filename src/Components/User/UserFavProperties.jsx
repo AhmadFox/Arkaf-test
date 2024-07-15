@@ -96,9 +96,13 @@ const UserFavProperties = () => {
                             )}
                         </div>
                     </div>
-                    <div className="px-4 py-8 border-t">  
-                        <ReactPagination pageCount={Math.ceil(total / limit)} onPageChange={handlePageChange} s />
-                    </div>
+                    {
+                        total / limit > 1 &&
+                        <div className="px-4 py-8 border-t">
+                            
+                            <ReactPagination pageCount={Math.ceil(total / limit)} onPageChange={handlePageChange} s />
+                        </div>
+                    }
                 </div>
             </div>
         </UserLayout>
