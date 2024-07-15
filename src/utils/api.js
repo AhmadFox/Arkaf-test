@@ -599,25 +599,25 @@ export const postAdditionRequest = (
 // POST PROPERTY REQUIST
 export const postPropertyRequest = (
     category_id,
-    max_price,
     property_type,
     size,
     full_name,
     phone_number,
     address,
     rentduration,
+    max_price,
 ) => {
     let data = new FormData();
 
     // Append the property data to the FormData object
     data.append('category_id', category_id);
-    data.append('max_price', max_price);
     data.append('property_type', property_type);
     data.append('size', size);
     data.append('full_name', full_name);
     data.append('phone_number', phone_number);
-    data.append('rentduration', rentduration);
     data.append('address', address);
+    data.append('rentduration', rentduration);
+    data.append('max_price', max_price);
     
     return {
         url: `${POST_PROPERTY_REQUEST}`,

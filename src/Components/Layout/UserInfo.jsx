@@ -106,7 +106,7 @@ const UserInfo = () => {
 						<Link href="/user/current-listing" className={`${tabItemStyle} ${router.pathname === '/user/current-listing' && activeItemStyle }`}>{translate('currentListing')}</Link>
 					</li>
 					<li className='mb-2'>
-						<Link href="/user/transaction-history" className={`${tabItemStyle} ${router.pathname === '/user/transaction-history' && activeItemStyle }`}>{translate('history')}</Link>
+						<Link href="/user/history" className={`${tabItemStyle} ${router.pathname === '/user/history' && activeItemStyle }`}>{translate('history')}</Link>
 					</li>
 					<li className='mb-2'>
 						<Link href="/user/favorites-properties" className={`${tabItemStyle} ${router.pathname === '/user/favorites-properties' && activeItemStyle }`}>{translate('favoriteList')}</Link>

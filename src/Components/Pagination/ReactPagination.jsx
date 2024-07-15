@@ -10,7 +10,7 @@ const ReactPagination = ({ pageCount, onPageChange }) => {
             breakClassName="break-me"
             pageCount={pageCount}
             marginPagesDisplayed={2}
-            pageRangeDisplayed={6}
+            pageRangeDisplayed={3}
             onPageChange={onPageChange}
             containerClassName={"pagination"}
             previousLinkClassName={"pagination__link"}

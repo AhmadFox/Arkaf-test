@@ -65,7 +65,7 @@ const ApplyRequest = ({ type }) => {
 				case "post":
 					await PostAdditionRequest({
 						category_id: formData.categoryId,
-						property_type: formData.requistType === 'sell' ? '0' : 1,
+						property_type: formData.requistType === 'sell' ? '0' : '1',
 						size: formData.size,
 						full_name: formData.name,
 						phone_number: formData.phone,
@@ -73,7 +73,6 @@ const ApplyRequest = ({ type }) => {
 						address: formData.location.city,
 						latitude: formData.location.lat,
 						longitude: formData.location.lng,
-						max_price: formData.maxPrice,
 						onSuccess: async (response) => {
 							toast.success(response.message);
 							setTab(3);
@@ -90,12 +89,13 @@ const ApplyRequest = ({ type }) => {
 				case "request":
 					await PostPropertyRequest({
 						category_id: formData.categoryId,
-						property_type: formData.requistType === 'sell' ? '0' : 1,
+						property_type: formData.requistType === 'sell' ? '0' : '1',
 						size: formData.size,
 						full_name: formData.name,
 						phone_number: formData.phone,
 						rentduration: formData.duration,
 						address: formData.location.city,
+						max_price: formData.maxPrice,
 						onSuccess: async (response) => {
 							toast.success(response.message);
 							setTab(3);
