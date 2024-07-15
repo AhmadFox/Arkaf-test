@@ -572,6 +572,8 @@ export const postAdditionRequest = (
     phone_number,
     rentduration,
     address,
+    latitude,
+    longitude,
 ) => {
     let data = new FormData();
 
@@ -583,6 +585,8 @@ export const postAdditionRequest = (
     data.append('phone_number', phone_number);
     data.append('address', address);
     data.append('rentduration', rentduration);
+    data.append('latitude', latitude);
+    data.append('longitude', longitude);
     
     return {
         url: `${POST_ADDITION_REQUEST}`,
@@ -602,8 +606,6 @@ export const postPropertyRequest = (
     phone_number,
     address,
     rentduration,
-    latitude,
-    longitude,
 ) => {
     let data = new FormData();
 
@@ -616,8 +618,6 @@ export const postPropertyRequest = (
     data.append('phone_number', phone_number);
     data.append('rentduration', rentduration);
     data.append('address', address);
-    data.append('latitude', latitude);
-    data.append('longitude', longitude);
     
     return {
         url: `${POST_PROPERTY_REQUEST}`,
