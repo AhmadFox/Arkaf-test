@@ -16,7 +16,7 @@ const Index = () => {
                 pathName="/user/properties/post-listing/"
             />
             <UserLayout>
-				<ApplyRequest type="post" />
+				<ApplyRequest type="request" />
 			</UserLayout>
         </Fragment>
     );

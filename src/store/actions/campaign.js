@@ -394,13 +394,17 @@ export const PostProperty = ({
     );
 };
 
+
 export const PostAdditionRequest = ({
     category_id = "",
-    max_price = "",
     property_type = "",
     size = "",
     full_name = "",
     phone_number = "",
+    rentduration = "",
+    address = "",
+    latitude = "",
+    longitude = "",
     onSuccess = () => { },
     onError = () => { },
     onStart = () => { }
@@ -410,11 +414,14 @@ export const PostAdditionRequest = ({
         apiCallBegan({
             ...postAdditionRequest(
                 category_id,
-                max_price,
                 property_type,
                 size,
                 full_name,
                 phone_number,
+                rentduration,
+                address,
+                latitude,
+                longitude,
                 ),
                 displayToast: false,
             onStart,
@@ -424,15 +431,16 @@ export const PostAdditionRequest = ({
     );
 };
 
+
 export const PostPropertyRequest = ({
     category_id = "",
-    max_price = "",
     property_type = "",
     size = "",
     full_name = "",
     phone_number = "",
     address = "",
     rentduration = "",
+    max_price = "",
     onSuccess = () => { },
     onError = () => { },
     onStart = () => { }
@@ -442,13 +450,13 @@ export const PostPropertyRequest = ({
         apiCallBegan({
             ...postPropertyRequest(
                 category_id,
-                max_price,
                 property_type,
                 size,
                 full_name,
                 phone_number,
                 address,
                 rentduration,
+                max_price,
                 ),
                 displayToast: false,
             onStart,

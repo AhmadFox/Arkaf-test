@@ -65,13 +65,15 @@ const ApplyRequest = ({ type }) => {
 				case "post":
 					await PostAdditionRequest({
 						category_id: formData.categoryId,
-						max_price: formData.maxPrice,
-						property_type: formData.requistType,
+						property_type: formData.requistType === 'sell' ? '0' : 1,
 						size: formData.size,
 						full_name: formData.name,
 						phone_number: formData.phone,
-						rentduration: formData.rentduration,
-						address: formData.address,
+						rentduration: formData.duration,
+						address: formData.location.city,
+						latitude: formData.location.lat,
+						longitude: formData.location.lng,
+						max_price: formData.maxPrice,
 						onSuccess: async (response) => {
 							toast.success(response.message);
 							setTab(3);
@@ -88,14 +90,12 @@ const ApplyRequest = ({ type }) => {
 				case "request":
 					await PostPropertyRequest({
 						category_id: formData.categoryId,
-						property_type: formData.requistType,
+						property_type: formData.requistType === 'sell' ? '0' : 1,
 						size: formData.size,
 						full_name: formData.name,
 						phone_number: formData.phone,
-						rentduration: formData.rentduration,
-						address: formData.address,
-						latitude: formData.latitude,
-						longitude: formData.longitude,
+						rentduration: formData.duration,
+						address: formData.location.city,
 						onSuccess: async (response) => {
 							toast.success(response.message);
 							setTab(3);
@@ -258,18 +258,18 @@ const ApplyRequest = ({ type }) => {
 										/>
 									</div>
 									{
-										type === 'post' ? 
-										<div className="col-span-1">
+										type === 'request' &&
+										<div className="">
 											<InputNumber
 												label={'maxPrice'}
 												onValueChange={handelMaxPrice}
 												placeholder={'Ex:20,000'}
 											/>
-										</div>: null
+										</div>
 									}
 									
 										<Fragment>
-											<div className={`${type === 'post' ? 'col-span-1' : 'col-span-2'}`}>
+											<div className={`${type === 'request' ? 'col-span-1' : 'col-span-2'}`}>
 												<label className='d-block mb-1 text-[#272835] text-sm'>{translate('location')}</label>
 												<LocationSearchBox
 													placeholder={'CityNeighborhood'}
@@ -278,7 +278,7 @@ const ApplyRequest = ({ type }) => {
 													initialLongitude={formData.location.lng}
 												/>
 											</div>
-											{ type === 'request' ?
+											{ type === 'post' ?
 												<div className="col-span-2">
 													<GoogleMapBox
 														apiKey={GoogleMapApi}

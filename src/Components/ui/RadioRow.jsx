@@ -28,7 +28,7 @@ const RadioRow = ({ sendSelectedOption, type }) => {
 	};
 
 	const filteredListingBy = listingBy.filter((item, idx) => {
-		if (type === "post") {
+		if (type === "request") {
 			return idx < 2; // Only include the first two items
 		}
 		return true; // Include all items for other types
