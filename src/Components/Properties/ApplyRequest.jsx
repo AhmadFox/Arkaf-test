@@ -21,6 +21,7 @@ import SubmitButton from "../AuthForms/SubmitButton";
 
 import RequistBanner from "@/assets/request_banner.png"
 import SuccessBanner from "@/assets/Images/success_requist.png"
+import SelectOptions from "../ui/SelectOptions";
 
 const ApplyRequest = ({ type }) => {
 
@@ -29,6 +30,7 @@ const ApplyRequest = ({ type }) => {
 
 	// Handiling UI 
 	const router = useRouter();
+	const [ selectedOption, setSelectedOption ] = useState('sell');
 	const [ loading, setLoading ] = useState(false);
 	const [ disabled, setDisabled ] = useState(true);
 	const [ back, setBack ] = useState(true);
@@ -55,10 +57,12 @@ const ApplyRequest = ({ type }) => {
 	
 		setLoading(true);
 		setDisabled(true);
+
+		console.log('formData', formData);
 	
 		try {
 			switch (type) {
-				case "request":
+				case "post":
 					await PostAdditionRequest({
 						category_id: formData.categoryId,
 						max_price: formData.maxPrice,
@@ -66,6 +70,8 @@ const ApplyRequest = ({ type }) => {
 						size: formData.size,
 						full_name: formData.name,
 						phone_number: formData.phone,
+						rentduration: formData.rentduration,
+						address: formData.address,
 						onSuccess: async (response) => {
 							toast.success(response.message);
 							setTab(3);
@@ -79,14 +85,17 @@ const ApplyRequest = ({ type }) => {
 					});
 					break;
 	
-				case "post":
+				case "request":
 					await PostPropertyRequest({
 						category_id: formData.categoryId,
-						max_price: '333',
 						property_type: formData.requistType,
 						size: formData.size,
 						full_name: formData.name,
 						phone_number: formData.phone,
+						rentduration: formData.rentduration,
+						address: formData.address,
+						latitude: formData.latitude,
+						longitude: formData.longitude,
 						onSuccess: async (response) => {
 							toast.success(response.message);
 							setTab(3);
@@ -161,7 +170,12 @@ const ApplyRequest = ({ type }) => {
 	const handelPhone = (isValid, value) => handelFormData('phone', value);
 	const handelRequestBy = value => handelFormData('requistBy', value);
 	const handleCategory = value => handelFormData('categoryId', value);
-	const handelRequestType = value => handelFormData('requistType', value);
+	const handleInputDuration = value => handelFormData('duration', value);
+
+	const handelRequestType = (value) => {
+		setSelectedOption(value)
+		handelFormData('requistType', value);
+	}
 
 	// Effect for load categorys
     useEffect(() => {
@@ -195,14 +209,24 @@ const ApplyRequest = ({ type }) => {
 								<p className="text-center text-lg">{translate('addAnotherAccount')}</p>
 								<div className="grid grid-cols-2 gap-4 my-9">
 									<div className="col-span-2">
-									<ButtonGroup
-										label="propertyType"
-										options={['sell', 'rent']}
-										name="example"
-										selectedOption={formData.requistType}
-										onChange={handelRequestType}
-									/>
+										<ButtonGroup
+											label="propertyType"
+											options={['sell', 'rent']}
+											name="example"
+											selectedOption={formData.requistType}
+											onChange={handelRequestType}
+										/>
 									</div>
+									{
+										selectedOption === 'rent' &&
+										<div className="col-span-2">
+											<SelectOptions
+												label={'duration'}
+												options={['daily', 'monthly', 'yearly', 'qruarterly']}
+												onValueChange={handleInputDuration}
+											/>
+										</div>
+									}
 									<div className="">
 										<InputText
 											label={'fullName'}
@@ -234,8 +258,8 @@ const ApplyRequest = ({ type }) => {
 										/>
 									</div>
 									{
-										type === 'request' ? 
-										<div className="col-span-2">
+										type === 'post' ? 
+										<div className="col-span-1">
 											<InputNumber
 												label={'maxPrice'}
 												onValueChange={handelMaxPrice}
@@ -243,10 +267,9 @@ const ApplyRequest = ({ type }) => {
 											/>
 										</div>: null
 									}
-									{
-										type === 'post' ?
+									
 										<Fragment>
-											<div className="col-span-2">
+											<div className={`${type === 'post' ? 'col-span-1' : 'col-span-2'}`}>
 												<label className='d-block mb-1 text-[#272835] text-sm'>{translate('location')}</label>
 												<LocationSearchBox
 													placeholder={'CityNeighborhood'}
@@ -255,16 +278,18 @@ const ApplyRequest = ({ type }) => {
 													initialLongitude={formData.location.lng}
 												/>
 											</div>
-											<div className="col-span-2">
-												<GoogleMapBox
-													apiKey={GoogleMapApi}
-													onSelectLocation={handleLocationSelect}
-													latitude={formData.location.lat}
-													longitude={formData.location.lng}
-												/>
-											</div>
-										</Fragment>: null
-									}
+											{ type === 'request' ?
+												<div className="col-span-2">
+													<GoogleMapBox
+														apiKey={GoogleMapApi}
+														onSelectLocation={handleLocationSelect}
+														latitude={formData.location.lat}
+														longitude={formData.location.lng}
+													/>
+												</div>: null
+											}
+										</Fragment>
+									
 								</div>
 							</div>
 							<div className={`h-full ${tab === 3 ? '' : 'hidden'}`}>

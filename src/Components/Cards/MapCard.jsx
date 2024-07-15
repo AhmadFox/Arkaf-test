@@ -24,6 +24,7 @@ import { FreeMode, Pagination, Navigation } from "swiper/modules";
 
 import { languageData } from "@/store/reducer/languageSlice";
 import TimeComponent from "./TimeComponent";
+import Link from "next/link";
 
 function MapCard({ ele, removeCard, onImageLoad }) {
 
@@ -151,8 +152,8 @@ function MapCard({ ele, removeCard, onImageLoad }) {
 	const themeEnabled = isThemeEnabled();
 
 	return (
-		<div className="overflow-hidden flex rounded-xl bg-white">
-			<div className="relative w-60 h-60">
+		<Link target="_blank" href={`/properties-details/${ele.slug_id}`} className="overflow-hidden flex rounded-xl bg-white map-card">
+			<div className="relative w-60 h-48">
 				<div className="verticle_card_img_div h-full">
 					<Swiper
 						ref={swiperRefNavg}
@@ -167,7 +168,7 @@ function MapCard({ ele, removeCard, onImageLoad }) {
 						}}
 						navigation={true}
 						modules={[FreeMode, Pagination, Navigation]}
-						className="properity-card-gallery h-60"
+						className="properity-card-gallery h-48"
 					>
 						{ele?.gallery ? (
 							// Show skeleton loading when data is being fetched
@@ -180,14 +181,14 @@ function MapCard({ ele, removeCard, onImageLoad }) {
 								className="properity-card-gallery "
 							>
 								<SwiperSlide>
-									<div className="loading_data">
-										<Image loading="lazy" className="properity-card-gallery-image" src={ele?.title_image} alt="no_img" width={200} height={200} onLoad={handleImageLoad} onError={placeholderImage} />
+									<div className="w-full h-full">
+										<Image loading="lazy" className="h-full w-full object-cover" src={ele?.title_image} alt="no_img" width={200} height={200} onLoad={handleImageLoad} onError={placeholderImage} />
 									</div>
 								</SwiperSlide>
 								{ele?.gallery.slice(0, 4).map((img, index) => (
 									<SwiperSlide key={index}>
-										<div className="loading_data">
-											<Image loading="lazy" className="properity-card-gallery-image" src={img?.image_url ? img?.image_url : PlaceHolderImg} alt="no_img" width={200} height={200} onLoad={handleImageLoad} onError={placeholderImage} />
+										<div className="w-full h-full">
+											<Image loading="lazy" className="h-full w-full object-cover" src={img?.image_url ? img?.image_url : PlaceHolderImg} alt="no_img" width={200} height={200} onLoad={handleImageLoad} onError={placeholderImage} />
 										</div>
 									</SwiperSlide>
 								))}
@@ -198,48 +199,44 @@ function MapCard({ ele, removeCard, onImageLoad }) {
 					</Swiper>
 				</div>
 
-				<div className="absolute top-2 end-2 z-10">
+				<div className="absolute top-1 right-1 z-2 bg-slate-800 bg-opacity-70 rounded-full w-9 h-9 flex items-center justify-center">
 					{ele?.promoted ? <span className="feature_tag">{translate("feature")}</span> : null}
-					<span className="like_tag">
+					<span className="">
 						{isLiked ? (
-							<AiFillHeart size={25} className="liked-property" onClick={handleDislike} />
+							<AiFillHeart size={23} className="fill-red-500" onClick={handleDislike} />
 						) : isDisliked ? (
-							<AiOutlineHeart size={25} className="disliked-property" onClick={handleLike} />
+							<AiOutlineHeart size={23} className="" onClick={handleLike} />
 						) : (
-							<AiOutlineHeart size={25} onClick={handleLike} />
+							<AiOutlineHeart size={23} className="fill-slate-100" onClick={handleLike} />
 						)}
 					</span>
+					
+				</div>
 					{
 						ele?.added_by === 0 &&
-						<span className="verified_badge">
-							By Arkaf
+						<span className="absolute bg-white w-max flex items-center gap-1 py-1.5 z-[2] ps-2 pe-1 top-1 left-0 border rounded-br-full rounded-tr-full">
+							<p className="shrink-0 text-xs font-medium">By Arkaf</p>
 							<Image src={verifiedBadge} alt="verified Badge" width={24} height={24} />
 						</span>
 					}
-				</div>
 			</div>
-			<div className="p-3 w-80">
-				<div className="flex flex-col gap-3">
+			<div className="p-3 w-80 flex">
+				<div className="flex flex-col justify-between gap-2 w-full">
 					<div className="flex items-center justify-between">
 						<span className="border rounded-full py-2 px-3"> {ele?.category && ele?.category.category} </span>
-						<span>24 January 2024</span>
-						{/* <TimeComponent timeAgo={ele?.post_created} /> */}
+						<TimeComponent timeAgo={ele?.post_created} />
 					</div>
 					<span className="text-xl font-medium">
 						{formatPriceAbbreviated(ele?.price)} {CurrencySymbol}
 					</span>
-					<p className="text-base">
+					<p className="text-base text-slate-900 mb-2">
 						{ele?.city} {ele?.city ? "," : null} {ele?.state} {ele?.state ? "," : null} {ele?.country}
 					</p>
-				</div>
-
-
-				{/*  */}
-				<div className="d-flex gap-2 flex-wrap">
+					<div className="d-flex gap-2 flex-wrap">
 						{ele?.parameters &&
 							ele?.parameters.slice(0, 4).map((elem, index) => (
 								elem?.value !== "" && elem?.value !== "0" &&
-								<div className="border px-3 py-2 rounded-full" key={index}>
+								<div className="border px-3 py-1.5 rounded-full" key={index}>
 									<div className="flex items-center gap-1">
 										{themeEnabled ? (
 
@@ -260,9 +257,9 @@ function MapCard({ ele, removeCard, onImageLoad }) {
 
 						))}
 					</div>
-				{/*  */}
+				</div>
 			</div>
-		</div >
+		</Link >
 	);
 }
 

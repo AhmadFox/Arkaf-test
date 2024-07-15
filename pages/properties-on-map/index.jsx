@@ -30,8 +30,26 @@ const fetchDataFromSeo = async (page) => {
 const Index = ({ seoData, currentURL, initialProperties }) => {
 	const GoogleMapApi = process.env.NEXT_PUBLIC_GOOGLE_API;
 
+	const [ sorting, setSorting ] = useState('asc');
 	const [properties, setProperties] = useState(initialProperties || []);
-	const [locationFilters, setLocationFilters] = useState({ city: "", state: "", type: "" });
+	const [ filters, setFilters] = useState({ 
+        type: "", 
+        max_price: "", 
+        min_price: "", 
+        property_type: "", 
+        search: "", 
+        parameter_id: "", 
+        price_sort: "", 
+        userid: "", 
+        filter_type: "", 
+        addressInfo: {
+            city_id: "",  
+            lat: null, 
+            lng: null,
+            city: "", 
+            state: "", 
+        }
+	 });
 
 	const fetchProperties = async (filters) => {
 		try {
@@ -43,11 +61,46 @@ const Index = ({ seoData, currentURL, initialProperties }) => {
 		}
 	};
 
-	const handleLocationSelect = (filters) => {
-		// console.log('filters', filters);
-		setLocationFilters(filters);
-		fetchProperties(filters);
+	const handleFiltersSelect = (filters) => {
+		console.log('filters', filters);
+		setFilters(filters);
+		fetchProperties(
+			{
+				city: filters.addressInfo.city,
+				state: filters.addressInfo.state,
+				type: filters.type,
+				max_price: filters.max_price,
+				min_price: filters.min_price,
+				property_type: filters.property_type,
+				search: filters.search,
+				parameter_id: filters.parameter_id,
+				price_sort: sorting,
+				userid: '',
+				filter_type: filters.filter_type,
+				city_id: '',
+			}
+		);
 	};
+
+	const handelSorting = (e) => {
+		const sortValue = e.target.value
+		fetchProperties(
+			{
+				city: filters.addressInfo.city,
+				state: filters.addressInfo.state,
+				type: filters.type,
+				max_price: filters.max_price,
+				min_price: filters.min_price,
+				property_type: filters.property_type,
+				search: filters.search,
+				parameter_id: filters.parameter_id,
+				price_sort: sortValue,
+				userid: '',
+				filter_type: filters.filter_type,
+				city_id: '',
+			}
+		);
+	}
 
 	return (
 		<>
@@ -61,14 +114,14 @@ const Index = ({ seoData, currentURL, initialProperties }) => {
 
 			<Layout stikyNav={false}>
 				<div className="grid grid-cols-12">
-					<Filer onSelectLocation={handleLocationSelect} />
+					<Filer onSelectFilter={handleFiltersSelect} />
 					<div className="col-span-7">
 						<div className="sticky top-[77px]">
 							<PropertiesOnMap
 								apiKey={GoogleMapApi}
 								data={properties}
-								latitude={locationFilters.lat}
-								longitude={locationFilters.lng}
+								latitude={filters.addressInfo.lat}
+								longitude={filters.addressInfo.lng}
 							/>
 						</div>
 					</div>
@@ -83,8 +136,12 @@ const Index = ({ seoData, currentURL, initialProperties }) => {
 								<span>{properties.length} {translate('result')}</span>
 								<div className="flex items-center gap-1">
 									<label htmlFor="">{translate('sort')} : </label>
-									<select name="" id="" className="border-0 shadow-none">
-										<option value="">Homes for You</option>
+									<select name="" id="" className="border-0 shadow-none"
+										onChange={handelSorting}
+									>
+										<option value="">Newest</option>
+										<option value="dsc">Price high to low</option>
+										<option value="asc">Price low to high</option>
 									</select>
 								</div>
 							</div>

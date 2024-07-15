@@ -95,6 +95,7 @@ const UserLayout = ({ children, footer }) => {
                             router.pathname === '/user/profile' ||
                             router.pathname === '/user/favorites-properties' ||
                             router.pathname === '/user/current-listing' ||
+                            router.pathname === '/user/request-list' ||
                             router.pathname === '/user/transaction-history' ?
                             <UserInfo /> : null
                         }

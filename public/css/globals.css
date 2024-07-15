@@ -141,3 +141,13 @@ input[disabled]  {
     @apply hidden
 }
 
+.map-card .swiper-button-prev,
+.map-card .swiper-button-next {
+    @apply bg-white w-8 h-8 rounded-full border p-0
+}
+
+.map-card .swiper-button-prev:after,
+.map-card .swiper-button-next:after {
+    @apply text-sm text-slate-800
+}
+

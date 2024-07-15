@@ -86,7 +86,7 @@ const UserFavProperties = () => {
                                             ))}
                                         </Fragment>
                                     ) : (
-                                        <div className="">
+                                        <div className="col-span-3 my-12">
                                             <div className="flex justify-center">
                                                 <NoData />
                                             </div>

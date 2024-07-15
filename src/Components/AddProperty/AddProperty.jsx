@@ -160,7 +160,7 @@ const AddProperty = () => {
     const handle360Viewer = (isValid, value) => handleInputChange('Viewer3D', value);
     
     const handleInputPrice = (isValid, value) => handleInputChange('price', value);
-    const handleInputBuiltAt = value => handleInputChange('builtIn', value);
+    const handleInputBuiltAt = (isValid, value) => handleInputChange('builtIn', value);
     const handleInputContact = (isValid, value) => handleInputChange('secondContact', value);
     const handleInputContactName = (isValid, value) => handleInputChange('contactName', value);
 
@@ -168,13 +168,6 @@ const AddProperty = () => {
         const value = e.target.value
         handleInputChange('description', value);
     }
-
-    
-    // const handelLayout = (id, value) => {
-
-    //     console.log('layout id:', id);
-    //     console.log('layout value:', value);
-    // }
 
     const handelLayout = (id, value) => {
         setLayoutsData(prevLayouts => {
@@ -236,7 +229,7 @@ const AddProperty = () => {
 				rentduration: formData.date,
 				video_link: formData.Viewer3D,
 				status: '0',
-                built_in: formData.builtIn.startDate,
+                built_in: formData.builtIn,
                 second_contact_number: formData.secondContact,
                 contact_name: formData.contactName,
                 property_layout: layoutsData,
@@ -283,7 +276,7 @@ const AddProperty = () => {
 				rentduration: formData.date,
 				video_link: formData.Viewer3D,
 				status: '0',
-                built_in: formData.builtIn.startDate,
+                built_in: formData.builtIn,
                 second_contact_number: '',
                 contact_name: formData.contactName,
 				onSuccess: async (response) => {
@@ -349,16 +342,11 @@ const AddProperty = () => {
                                     />
                                 </div>
                                 <div className="">
-                                    {/* <InputNumber
+                                    <InputNumber
                                         label={'builtIn'}
                                         placeholder={'Ex: 1999'}
                                         minLength={4}
                                         maxLength={4}
-                                        onValueChange={handleInputBuiltAt}
-                                    /> */}
-                                    <DatePicker
-                                        single={true}
-                                        label='builtIn'
                                         onValueChange={handleInputBuiltAt}
                                     />
                                 </div>

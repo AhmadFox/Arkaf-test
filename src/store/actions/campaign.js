@@ -6,6 +6,7 @@ import {
     postPropertyRequest,
     update_profile,
     getArticlesApi,
+    getCities,
     getCountByCitysCategories,
     addFavourite,
     ContactUs,
@@ -176,6 +177,19 @@ export const GetAllArticlesApi = (id, category_id, get_simiilar, slug_id, onSucc
     store.dispatch(
         apiCallBegan({
             ...getArticlesApi(id, category_id, get_simiilar, slug_id),
+            displayToast: false,
+            onStart,
+            onSuccess,
+            onError,
+        })
+    );
+};
+
+// GET_CITIES
+export const GetCitiesApi = (onSuccess, onError, onStart) => {
+    store.dispatch(
+        apiCallBegan({
+            ...getCities(),
             displayToast: false,
             onStart,
             onSuccess,
@@ -417,6 +431,8 @@ export const PostPropertyRequest = ({
     size = "",
     full_name = "",
     phone_number = "",
+    address = "",
+    rentduration = "",
     onSuccess = () => { },
     onError = () => { },
     onStart = () => { }
@@ -431,6 +447,8 @@ export const PostPropertyRequest = ({
                 size,
                 full_name,
                 phone_number,
+                address,
+                rentduration,
                 ),
                 displayToast: false,
             onStart,
@@ -483,18 +501,10 @@ export const UpdatePostProperty = ({
     property_type = "",
     video_link = "",
     parameters = [],
-    facilities = [],
     title_image = "",
     threeD_image = "",
     gallery_images = [],
-    property_layout = [], // new attribute by @ahmad_gharaibeh
-    meta_title = "",
-    meta_description = "",
-    meta_keywords = "",
-    meta_image = "",
     rentduration = "",
-    is_premium = "",
-    status = "",
     built_in= '',
     second_contact_number = "",
     contact_name = "",
@@ -511,32 +521,24 @@ export const UpdatePostProperty = ({
                 title,
                 size,
                 description,
+                price,
+                category_id,
+                property_type,
+                rentduration,
+                title_image,
+                threeD_image,
+                gallery_images,
+                built_in,
+                second_contact_number,
+                contact_name,
                 city,
                 state,
                 country,
                 latitude,
                 longitude,
                 address,
-                price,
-                category_id,
-                property_type,
                 video_link,
                 parameters,
-                facilities,
-                title_image,
-                threeD_image,
-                gallery_images,
-                property_layout, // new attribute by @ahmad_gharaibeh
-                meta_title,
-                meta_description,
-                meta_keywords,
-                meta_image,
-                rentduration,
-                is_premium,
-                status,
-                built_in,
-                second_contact_number,
-                contact_name
             ),
             displayToast: false,
             onStart,
@@ -715,11 +717,37 @@ export const addReportApi = ({
     );
 };
 // getNearbyProperties  API
-export const getNearbyPropertiesApi = ({ city = "", state = "", type = "" }) => {
+export const getNearbyPropertiesApi = ({ 
+    city = "", 
+    state = "", 
+    type = "", 
+    max_price = "", 
+    min_price = "", 
+    property_type = "", 
+    search = "", 
+    parameter_id = "", 
+    price_sort = "", 
+    userid = "", 
+    filter_type = "", 
+    city_id = "", 
+ }) => {
     return new Promise((resolve, reject) => {
         store.dispatch(
             apiCallBegan({
-                ...getNearbyProperties(city, state, type),
+                ...getNearbyProperties(
+                    city, 
+                    state, 
+                    type, 
+                    max_price, 
+                    min_price, 
+                    property_type, 
+                    search, 
+                    parameter_id, 
+                    price_sort, 
+                    userid, 
+                    filter_type, 
+                    city_id, 
+                ),
                 displayToast: false,
                 onStart: () => { },
                 onSuccess: (response) => {

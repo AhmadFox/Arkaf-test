@@ -18,7 +18,7 @@ import Layout from '../Layout/Layout';
 
 const City = () => {
 
-    const [grid, setGrid] = useState(false);
+    const [grid, setGrid] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [CategoryListByPropertyData, setCategoryListByPropertyData] = useState();
 
@@ -168,12 +168,12 @@ const City = () => {
 
     return (
         <Layout stikyNav={true}>
-            <Breadcrumb title={city.slug ? `Properties Listed in ${city.slug} ` : `No Properties in ${city.slug}`} />
+            {/* <Breadcrumb title={city.slug ? `Properties Listed in ${city.slug} ` : `No Properties in ${city.slug}`} /> */}
 
-            <div id="all-prop-containt">
-                <div className="all-properties container">
-                    <div className="row " id="main-all-prop">
-                        <div className="col-12 col-md-12 col-lg-3">
+            <div id="" className='py-12'>
+                <div className="container">
+                    <div className="grid grid-cols-12 gap-9">
+                        <div className="col-span-3">
                             <FilterForm
                                 filterData={filterData}
                                 getCategories={Categorydata}
@@ -185,40 +185,21 @@ const City = () => {
                                 handleClearFilter={handleClearFilter}
                             />
                         </div>
-                        <div className="col-12 col-md-12 col-lg-9">
+                        <div className="col-span-9">
                             <div className="all-prop-rightside">
-                                {CategoryListByPropertyData && CategoryListByPropertyData.length > 0 ? <GridCard total={total} setGrid={setGrid} /> : null}
+                               <div className="border-b pb-3"> {CategoryListByPropertyData && CategoryListByPropertyData.length > 0 ? `${total} Properties found` : ''}</div>
                                 {CategoryListByPropertyData && CategoryListByPropertyData.length > 0 ? (
-                                    // Row cards
-                                    !grid ? (
-                                        <div className="all-prop-cards" id="rowCards">
-                                            {isLoading
-                                                ? // Show skeleton loading when data is being fetched
-                                                Array.from({ length: 8 }).map((_, index) => (
-                                                    <div className="col-sm-12  loading_data">
-                                                        <CustomHorizontalSkeleton />
-                                                    </div>
-                                                ))
-                                                : CategoryListByPropertyData.map((ele) => (
+                                    <div id="columnCards">
+                                        <div className="row" id="all-prop-col-cards">
+                                            {CategoryListByPropertyData.map((ele, index) => (
+                                                <div className="col-12 col-md-6 col-lg-4" key={index}>
                                                     <Link href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
-                                                        <AllPropertieCard ele={ele} />
+                                                        <VerticalCard ele={ele} />
                                                     </Link>
-                                                ))}
+                                                </div>
+                                            ))}
                                         </div>
-                                    ) : (
-                                        // Column cards
-                                        <div id="columnCards">
-                                            <div className="row" id="all-prop-col-cards">
-                                                {CategoryListByPropertyData.map((ele, index) => (
-                                                    <div className="col-12 col-md-6 col-lg-4" key={index}>
-                                                        <Link href="/properties-details/[slug]" as={`/properties-details/${ele.slug_id}`} passHref>
-                                                            <VerticalCard ele={ele} />
-                                                        </Link>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )
+                                    </div>
                                 ) : (
                                     <div className="noDataFoundDiv">
                                         <NoData />

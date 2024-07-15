@@ -7,8 +7,10 @@ import { MdReport } from 'react-icons/md'
 import { RiMailSendLine, RiThumbUpFill } from 'react-icons/ri'
 import { FaArrowRight } from "react-icons/fa6";
 import { useRouter } from 'next/router'
+import { AddFavourite } from "@/store/actions/campaign";
 import Swal from 'sweetalert2';
 import { formatNumberWithCommas } from "@/utils";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import Link from 'next/link'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 
@@ -35,41 +37,80 @@ const PremiumOwnerDetailsCard = (
         interested,
         isReported,
         handleInterested,
-        isMessagingSupported,
         handleNotInterested,
+        isMessagingSupported,
         notificationPermissionGranted,
         handleChat,
         userCurrentId,
         handleReportProperty,
     }) => {
-    
+
+
+    // Initialize isDisliked as false
+    const [isDisliked, setIsDisliked] = useState(false);
+    const [isLiked, setIsLiked] = useState(getPropData && getPropData.is_favourite);
     const [openModal, setOpenModal] = useState(false)
     const router = useRouter();
     const { asPath } = router;
     const fullPath = `${process.env.NEXT_PUBLIC_WEB_URL}${asPath}`;
 
-    const handleCheckPremium = (e) => {
-        e.preventDefault()
-        Swal.fire({
-            title: "Opps!",
-            text: " Private property ahead. Upgrade for premium access. Join now to explore exclusive features!",
-            icon: "warning",
-            allowOutsideClick: true,
-            showCancelButton: false,
-            customClass: {
-                confirmButton: 'Swal-confirm-buttons',
-                cancelButton: "Swal-cancel-buttons"
+    const [showModal, setShowModal] = useState(false);
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
+    const handleLike = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (userCurrentId) {
+            AddFavourite(
+                getPropData.id,
+                "1",
+                (response) => {
+                    setIsLiked(true);
+                    setIsDisliked(false);
+                    toast.success(response.message);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        } else {
+            Swal.fire({
+                title: translate("plzLogFirst"),
+                icon: "warning",
+                allowOutsideClick: false,
+                showCancelButton: false,
+                allowOutsideClick: true,
+                customClass: {
+                    confirmButton: 'Swal-confirm-buttons',
+                    cancelButton: "Swal-cancel-buttons"
+                },
+                confirmButtonText: "Ok",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setShowModal(true)
+                }
+            });
+        }
+    };
+
+    const handleDislike = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        AddFavourite(
+            getPropData.id,
+            "0",
+            (response) => {
+                setIsLiked(false);
+                setIsDisliked(true);
+                toast.success(response.message);
             },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                router.push("/subscription-plan");
+            (error) => {
+                console.log(error);
             }
-        });
-    }
-    const handleNavigateSubScribe = (e) => {
-        e.preventDefault()
-        router.push('/subscription-plan')
-    }
+        );
+    };
 
     console.log('getPropData.mobile', getPropData.mobile);
 
@@ -98,20 +139,20 @@ const PremiumOwnerDetailsCard = (
                     </Link>
                 </div>
                 <div className="d-flex gap-3 mt-3">
-                    {interested || getPropData?.is_interested === 1 ? (
-                        <button  onClick={handleNotInterested} className="button button-outline d-flex justify-content-center gap-1 w-50">
+                    {isLiked ? (
+                        <button onClick={handleDislike} className='button button-solid d-flex justify-content-center gap-1 w-50'>
                             {translate("save")}
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" style={{width: '20px'}}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                            </svg>
+                            <AiFillHeart size={21} className="liked_property text-white" />
+                        </button>
+                    ) : isDisliked ? (
+                        <button onClick={handleLike} className='button button-outline d-flex justify-content-center gap-1 w-50'>
+                            {translate("save")}
+                            <AiOutlineHeart size={21} className="disliked_property" />
                         </button>
                     ) : (
-                        <button  onClick={handleInterested} className="button button-solid d-flex justify-content-center gap-1 w-50">
+                        <button onClick={handleLike} className='button button-outline d-flex justify-content-center gap-1 w-50'>
                             {translate("save")}
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style={{width: '20px'}}>
-                                <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
-                            </svg>
-
+                            <AiOutlineHeart size={21} className='' />
                         </button>
                     )}
                     <button onClick={() => setOpenModal(true)} className="button button-outline d-flex justify-content-center gap-1 w-50">

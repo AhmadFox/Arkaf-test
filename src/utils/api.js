@@ -15,6 +15,7 @@ export const GET_PROPETRES = "get_property"
 export const POST_ADDITION_REQUEST = "post_property_addition_request"
 export const POST_PROPERTY_REQUEST = "post_property_request"
 export const GET_ARTICLES = "get_articles"
+export const GET_CITIES = "cities"
 export const GET_COUNT_BY_CITIES_CATEGORIS = "get_count_by_cities_categoris"
 export const ADD_FAVOURITE = "add_favourite"
 export const GET_LANGUAGES = "get_languages"
@@ -293,6 +294,19 @@ export const getArticlesApi = (id, category_id, get_simiilar, slug_id) => {
             category_id: category_id,
             get_simiilar: get_simiilar,
             slug_id: slug_id,
+        },
+        authorizationHeader: false,
+
+    }
+}
+
+// GET CITIES
+export const getCities = () => {
+    return {
+        url: `${GET_CITIES}`,
+        method: "GET",
+        params: {
+
         },
         authorizationHeader: false,
 
@@ -584,6 +598,8 @@ export const postPropertyRequest = (
     size,
     full_name,
     phone_number,
+    address,
+    rentduration,
 ) => {
     let data = new FormData();
 
@@ -594,6 +610,8 @@ export const postPropertyRequest = (
     data.append('size', size);
     data.append('full_name', full_name);
     data.append('phone_number', phone_number);
+    data.append('rentduration', rentduration);
+    data.append('address', address);
     
     return {
         url: `${POST_PROPERTY_REQUEST}`,
@@ -652,32 +670,24 @@ export const updatePostProperty = (
     title,
     size,
     description,
+    price,
+    category_id,
+    property_type,
+    rentduration,
+    title_image,
+    threeD_image,
+    gallery_images,
+    built_in,
+    second_contact_number,
+    contact_name,
     city,
     state,
     country,
     latitude,
     longitude,
     address,
-    price,
-    category_id,
-    property_type,
     video_link,
     parameters,
-    facilities,
-    title_image,
-    threeD_image,
-    gallery_images,
-    // property_layout, // new attribute by @ahmad_gharaibeh
-    meta_title,
-    meta_description,
-    meta_keywords,
-    meta_image,
-    rentduration,
-    is_premium,
-    status,
-    built_in,
-    second_contact_number,
-    contact_name
 ) => {
     let data = new FormData();
 
@@ -697,13 +707,7 @@ export const updatePostProperty = (
     data.append('category_id', category_id);
     data.append('property_type', property_type);
     data.append('video_link', video_link);
-    data.append('meta_title', meta_title);
-    data.append('meta_description', meta_description);
-    data.append('meta_keywords', meta_keywords);
-    data.append('meta_image', meta_image);
     data.append('rentduration', rentduration);
-    data.append('is_premium', is_premium);
-    data.append('status', status);
     data.append('built_in', built_in);
     data.append('second_contact_number', second_contact_number);
     data.append('contact_name', contact_name);
@@ -716,12 +720,12 @@ export const updatePostProperty = (
         });
     }
     // Append the facilities array if it is an array
-    if (Array.isArray(facilities)) {
-        facilities.forEach((facility, index) => {
-            data.append(`facilities[${index}][facility_id]`, facility.facility_id);
-            data.append(`facilities[${index}][distance]`, facility.distance);
-        });
-    }
+    // if (Array.isArray(facilities)) {
+    //     facilities.forEach((facility, index) => {
+    //         data.append(`facilities[${index}][facility_id]`, facility.facility_id);
+    //         data.append(`facilities[${index}][distance]`, facility.distance);
+    //     });
+    // }
     data.append('title_image', title_image);
     data.append('threeD_image', threeD_image);
 
@@ -928,14 +932,36 @@ export const addReport = (reason_id, property_id, other_message) => {
     }
 }
 // GET_NEARBY_PROPERTIES    
-export const getNearbyProperties = (city, state, type) => {
+export const getNearbyProperties = (
+    city, 
+    state, 
+    type, 
+    max_price, 
+    min_price, 
+    property_type, 
+    search, 
+    parameter_id, 
+    price_sort, 
+    userid, 
+    filter_type, 
+    city_id, 
+) => {
     return {
         url: `${GET_NEARBY_PROPERTIES}`,
         method: "GET",
         params: {
-            city: city,
-            state: state,
-            type: type,
+            city, 
+            state, 
+            type, 
+            max_price, 
+            min_price, 
+            property_type, 
+            search, 
+            parameter_id, 
+            price_sort, 
+            userid, 
+            filter_type, 
+            city_id, 
         },
         authorizationHeader: false,
     }

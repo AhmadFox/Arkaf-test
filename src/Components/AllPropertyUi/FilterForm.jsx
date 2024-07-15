@@ -9,22 +9,22 @@ const FiletrForm = (props) => {
 
 
     return (
-        <div className="card" id="filter-card">
-            <div className="card title" id="filter-title">
-                <span>{translate("filterProp")}</span>
-                <button onClick={props.handleClearFilter}>{translate("clearFilter")}</button>
+        <div className="border p-4 rounded-lg sticky top-24">
+            <div className="flex justify-between items-center border-b pb-2" id="">
+                <span className="font-medium text-lg">{translate("filter")}</span>
+                <button className="tw-btn-outline py-2" onClick={props.handleClearFilter}>{translate("clear")}</button>
             </div>
             <div className="card-body">
                 <div className="filter-button-box">
                     <ButtonGroup id="propertie_button_grup">
                         <ul className="nav nav-tabs" id="props-tabs">
                             <li className="">
-                                <a className={`nav-link ${props.filterData.propType === 0 ? "active" : ""}`} aria-current="page" id="prop-sellbutton" onClick={() => props.handleTabClick("sell")}>
+                                <a className={`nav-link ${props.filterData.propType === 0 ? "bg-[#b9f2ff]" : ""}`} aria-current="page" id="prop-sellbutton" onClick={() => props.handleTabClick("0")}>
                                     {translate("forSell")}
                                 </a>
                             </li>
                             <li className="">
-                                <a className={`nav-link ${props.filterData.propType === 1 ? "active" : ""}`} onClick={() => props.handleTabClick("rent")} aria-current="page" id="prop-rentbutton">
+                                <a className={`nav-link ${props.filterData.propType === 1 ? "active" : ""}`} onClick={() => props.handleTabClick("1")} aria-current="page" id="prop-rentbutton">
                                     {translate("forRent")}
                                 </a>
                             </li>

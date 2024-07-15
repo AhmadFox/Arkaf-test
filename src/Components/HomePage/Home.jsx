@@ -12,7 +12,8 @@ import { FreeMode, Pagination, Navigation } from "swiper/modules";
 // Import Utils
 import { 
     GetFeturedListingsApi,
-    getUserRecommendationApi
+    getUserRecommendationApi,
+    GetCitiesApi
 } from "@/store/actions/campaign";
 import { store } from "@/store/store";
 import { languageData } from "@/store/reducer/languageSlice";
@@ -68,6 +69,7 @@ const HomePage = () => {
     const [getMostViewedProp, setGetMostViewedProp] = useState();
     const [getMostFavProperties, setGetMostFavProperties] = useState();
     const [userRecommendationData, setUserRecommendationData] = useState();
+    const [cities, setCities] = useState();
 
     const isLoggedIn = useSelector((state) => state.User_signup);
     const userCurrentId = isLoggedIn && isLoggedIn?.data ? isLoggedIn?.data?.data?.id : null;
@@ -79,8 +81,6 @@ const HomePage = () => {
     const handleCloseModal = () => {
         setShowModal(false);
     };
-
-    console.log('getFeaturedListing', getFeaturedListing);
 
     const breakpoints = {
         0: {
@@ -112,42 +112,42 @@ const HomePage = () => {
     const citys = [
         {
             name: "Riyadh",
-            url: "cityes/riyadh/",
+            url: "properties/city/riyadh/",
             image: city_1
         },
         {
             name: "Makkah",
-            url: "cityes/makkah/",
+            url: "properties/city/makkah/",
             image: city_2
         },
         {
             name: "Madinah",
-            url: "cityes/madinah/",
+            url: "properties/city/madinah/",
             image: city_3
         },
         {
             name: "Jeddah",
-            url: "cityes/jeddah/",
+            url: "properties/city/jeddah/",
             image: city_4
         },
         {
             name: "Dammam",
-            url: "cityes/dammam/",
+            url: "properties/city/dammam/",
             image: city_5
         },
         {
             name: "Qaassim",
-            url: "cityes/qaassim/",
+            url: "properties/city/qaassim/",
             image: city_6
         },
         {
             name: "Khobar",
-            url: "cityes/khobar/",
+            url: "properties/city/khobar/",
             image: city_7
         },
         {
             name: "Abha",
-            url: "cityes/abha/",
+            url: "properties/city/abha/",
             image: city_8
         },
     ];
@@ -267,6 +267,23 @@ const HomePage = () => {
             })
         }
     }, [isLoggedIn])
+
+
+    useEffect(() => {
+        GetCitiesApi(
+            (response) => {
+                const citiesData = response.data;
+                setCities(citiesData);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }, []);
+
+
+    console.log('cities', cities);
+
 
     useEffect(() => {
 
@@ -845,8 +862,8 @@ const HomePage = () => {
                         
                             <div className="citys_grid">
                                 {
-                                    citys.map((item, idx) => (
-                                        <Link href={item.url} key={idx}>
+                                    cities && cities.filter(item => item.status !== 0).map((item, idx) => (
+                                        <Link href={`properties/city/${item.name}`} key={idx}>
                                             <figure>
                                                 <Image 
                                                     loading="lazy"

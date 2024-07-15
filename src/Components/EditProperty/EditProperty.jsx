@@ -202,28 +202,9 @@ const EditProperty = () => {
     };
 
 	const handleUpdatePostproperty = async (e) => {
+        console.log('second_contact_number', formData.secondContact)
+        console.log('contact_name', formData.contactName)
         e.preventDefault();
-
-		console.log('properety id', properety.id);
-		console.log('properety slug', propertyId);
-		console.log('description', formData.description);
-		console.log('price', formData.price);
-		console.log('categoryId', formData.categoryId);
-		console.log('selectedOption', selectedOption);
-		console.log('size', formData.size);
-		console.log('titleImage', formData.titleImage);
-		console.log('Viewer3D', formData.Viewer3D);
-		console.log('galleryImages', formData.galleryImages);
-		console.log('builtIn', formData.builtIn.Z);
-		console.log('secondContact', formData.secondContact);
-		console.log('contactName', formData.contactName);
-		
-		console.log('city', selectedLocationAddress.city);
-		console.log('state', selectedLocationAddress.state);
-		console.log('country', selectedLocationAddress.country);
-		console.log('latitude', selectedLocationAddress.lat);
-		console.log('longitude', selectedLocationAddress.lng);
-		console.log('address', selectedLocationAddress.address);
 		try {
 			UpdatePostProperty({
 				id: properety.id,
@@ -294,8 +275,8 @@ const EditProperty = () => {
 					'size': propertyData.size,
 					'duration': propertyData.rentduration,
 					'Viewer3D': propertyData.video_link,
-					'contactName': propertyData.contact_name,
 					'secondContact': propertyData.second_contact_number,
+					'contactName': propertyData.contact_name,
 					'description': propertyData.description,
 					'selectedLocation': propertyData.selectedLocation,
 					'builtIn': propertyData.built_in,
