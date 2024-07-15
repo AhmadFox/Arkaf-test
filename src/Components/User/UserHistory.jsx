@@ -16,7 +16,7 @@ const UserHistory = () => {
 	};
 
 	return (
-		<UserLayout>
+		<UserLayout footer={true}>
 			<div className="">
 				<div className="container">
 					<div className="border border-[#C1C7D0] rounded-lg xl:rounded-xl bg-white">

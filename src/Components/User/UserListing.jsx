@@ -222,7 +222,7 @@ const UserDashboard = () => {
 
 	console.log('getFeaturedListing', getFeaturedListing);
     return (
-        <UserLayout>
+        <UserLayout footer={true}>
             <div className="container">
                 <div className="border rounded-xl overflow-hidden" id="dashboard_top_card">
 				<div className="border-b py-3 px-4">

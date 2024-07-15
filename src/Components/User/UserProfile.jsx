@@ -200,7 +200,7 @@ const UserProfile = () => {
     `
 
     return (
-        <UserLayout>
+        <UserLayout footer={true}>
             <div className="container">
             <form>
                 <div className="">

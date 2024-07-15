@@ -63,7 +63,7 @@ const UserFavProperties = () => {
     };
 
     return (
-        <UserLayout>
+        <UserLayout footer={true}>
             <div className="container">
                 <div className="border rounded-xl overflow-hidden">
                     <div className="border-b py-3 px-4">
