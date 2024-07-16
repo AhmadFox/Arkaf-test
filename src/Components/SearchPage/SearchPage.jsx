@@ -194,7 +194,7 @@ useEffect(()=>{
             <div className="serach_page_tab">
                 <div id="searchbox" className="container">
                     <ButtonGroup>
-                        <ul className="nav nav-tabs" id="tabs">
+                        {/* <ul className="nav nav-tabs" id="tabs">
                             <li className="">
                                 <a className={`nav-link ${activeTab === 0 ? "tab-0" : ""}`} aria-current="page" id="sellbutton" onClick={() => handleTabClick("sell")}>
                                     {translate("sell")}
@@ -205,10 +205,22 @@ useEffect(()=>{
                                     {translate("rent")}
                                 </a>
                             </li>
+                        </ul> */}
+                        <ul className="nav nav-tabs" id="tabs">
+                            <li className="">
+                                <a className={`search-tap nav-link ${activeTab === 0 ? "tab-0" : ""}`} aria-current="page" id="sellbutton" onClick={() => handleTabClick("sell")}>
+                                    {translate("sell")}
+                                </a>
+                            </li>
+                            <li className="">
+                                <a className={`search-tap nav-link ${activeTab === 1 ? "tab-1" : ""}`} onClick={() => handleTabClick("rent")} aria-current="page" id="rentbutton">
+                                    {translate("rent")}
+                                </a>
+                            </li>
                         </ul>
                     </ButtonGroup>
                     <div id="searchcard">
-                        <div id="searchbuttoon">
+                        <div id="searchbuttoon" className='w-80'>
                             <FiSearch size={20} />
                             <input
                                 className="searchinput"
@@ -226,11 +238,11 @@ useEffect(()=>{
                                 }}
                             />
                         </div>
-                        <div id="leftside-buttons">
-                            <button className="filter" onClick={() => setShowFilterModal(true)}>
+                        <div id="leftside-buttons" className='w-80'>
+                            {/* <button className="filter" onClick={() => setShowFilterModal(true)}>
                                 <BiFilter size={25} />
                                 {translate("filter")}
-                            </button>
+                            </button> */}
                             <button className="find" onClick={handleSearch}>
                                 {translate("search")}
                             </button>

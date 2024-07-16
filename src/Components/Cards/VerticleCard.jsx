@@ -24,6 +24,7 @@ import { FreeMode, Pagination, Navigation } from "swiper/modules";
 import { languageData } from "@/store/reducer/languageSlice";
 import TimeComponent from "./TimeComponent";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 function VerticalCard({ ele, removeCard, onImageLoad, withButtons }) {
 
@@ -273,8 +274,8 @@ function VerticalCard({ ele, removeCard, onImageLoad, withButtons }) {
                             withButtons === false ?
                             '':
                             <div className="card_footer_button mt-3">
-                                <button onClick={(event) => event.preventDefault()} className="button button-outline">{translate('contactAgent')}</button>
-                                <button onClick={(event) => event.preventDefault()} className="button button-outline">{translate('whatsapp')}</button>
+                                <button onClick={(event) => event.preventDefault()} className="button button-outline" disabled>{translate('contactAgent')}</button>
+                                <Link href={`https://wa.me/${ele.mobile.replace(/\s+/g, '')}`} target="_blank" className="button button-outline">{translate('whatsapp')}</Link>
                             </div>
                         }
                     </div>

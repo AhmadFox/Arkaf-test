@@ -165,8 +165,6 @@ const Filer = ({ onSelectFilter }) => {
                                 <option value="">{translate("all")}</option>
                                 <option value={0}>{translate("forSell")}</option>
                                 <option value={1}>{translate("forRent")}</option>
-                                <option value={2}>{translate("sold")}</option>
-                                <option value={3}>{translate("rented")}</option>
                             </select>
                         </div>
                         <div className="col-span-2">

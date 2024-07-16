@@ -16,13 +16,13 @@ const ListingCard = ({ data }) => {
 		<div className='flex gap-3 group'>
 			{
 				data.title_image &&
-				<div className="relative overflow-hidden rounded-xl w-4/12">
+				<div className="relative overflow-hidden w-48 rounded-xl">
 					<Image
 						loading="lazy"
 						src={data.title_image}
 						alt="no_img"
 						fill
-						className="object-cover scale-100 group-hover:scale-105 ease-in-out duration-500"
+						className="object-cover bg-slate-100 scale-100 group-hover:scale-105 ease-in-out duration-500"
 						onError={placeholderImage} />
 				</div>
 			}
@@ -30,7 +30,7 @@ const ListingCard = ({ data }) => {
 				<div className="rounded-full border font-light text-sm py-1 px-3.5 w-max">{translate(data.category.category)}</div>
 				<span className='text-xl xl:text-xl font-medium'>{formatPriceAbbreviated(data.price)} {CurrencySymbol}</span>
 				<span className="text-slate-500 font-light truncate whitespace-nowrap overflow-hidden max-w-[280px]">{data.address}</span>
-				<div className="d-flex gap-2 flex-wrap">
+				<div className="d-flex gap-2 flex-wrap h-8">
 					{data.parameters &&
 						data.parameters.slice(0, 4).map((elem, index) => (
 							elem?.value !== "" && elem?.value !== "0" &&

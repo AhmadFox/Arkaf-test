@@ -32,8 +32,8 @@ import dynamic from "next/dynamic.js";
 import { FaRegEye } from "react-icons/fa";
 import Link from "next/link.js";
 import TablePagination from "../Pagination/TablePagination.jsx";
+import UserLayout from "../Layout/UserLayout.jsx";
 
-const VerticleLayout = dynamic(() => import('../AdminLayout/VerticleLayout.jsx'), { ssr: false })
 const UserDashboard = () => {
 
     const limit = 8;
@@ -88,10 +88,10 @@ const UserDashboard = () => {
                 toast.success(response.message);
 
                 GetFeturedListingsApi({
-                    filter_type: '0',
                     offset: offsetdata.toString(),
                     limit: limit.toString(),
                     userid: isLoggedIn ? userCurrentId : "",
+                    filter_type: 0,
                     onSuccess: (response) => {
                         setTotal(response.total);
                         setView(response.total_clicks);
@@ -188,10 +188,10 @@ const UserDashboard = () => {
     useEffect(() => {
         setIsLoading(true);
         GetFeturedListingsApi({
-            filter_type: '0',
             offset: offsetdata.toString(),
             limit: limit.toString(),
             userid: isLoggedIn ? userCurrentId : "",
+            filter_type: 0,
             onSuccess: (response) => {
                 setTotal(response.total);
                 setView(response.total_clicks);
@@ -220,87 +220,49 @@ const UserDashboard = () => {
     const handleShowIntrestedUser = (slug_id) => {
         router.push(`/user/intrested/${slug_id}`);
     }
-    return (
-        <VerticleLayout>
-            <div className="container">
-                <div className="row" id="dashboard_top_card">
-                    <div className="col-12">
-                        <div className="row" id="dashboard_top_card">
-                            <div className="col-12 col-md-12 col-lg-4">
-                                <div className="card" id="dashboard_card">
-                                    <div id="dashboard_user">
-                                        <div>
-                                            <span className="dashboard_user_title">
-                                                {translate("hy")} {""} {userData}
-                                            </span>
-                                            <p className="card-text">{translate("manageYourProfile")}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-12 col-md-12 col-lg-4">
-                                <div className="card" id="dashboard_total_prop_card">
-                                    <div className="totalprop">
-                                        <span>{translate("totalProperty")}</span>
-                                        {total > 0 ? <h4>{total}</h4> : <h4>0</h4>}
-                                    </div>
-                                    <div className="total_prop_icon">
-                                        <span>
-                                            <HomeIcon sx={{ fontSize: "35px" }} />
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-12 col-md-12 col-lg-4">
-                                <div className="card" id="dashboard_total_prop_card">
-                                    <div className="totalprop">
-                                        <span>{translate("totalViews")}</span>
-                                        {view > 0 ? <h4>{view}</h4> : <h4>0</h4>}
-                                    </div>
-                                    <div className="total_prop_icon">
-                                        <span>
-                                            <StarIcon sx={{ fontSize: "35px" }} />
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div className="col-12">
-                        <div className="table_content card bg-white">
+
+	console.log('getFeaturedListing', getFeaturedListing);
+    return (
+        <UserLayout footer={true}>
+            <div className="container">
+                <div className="border rounded-xl overflow-hidden" id="dashboard_top_card">
+				<div className="border-b py-3 px-4">
+                        <h3 className="text-xl md:text-2xl">{translate("currentListing")}</h3>
+                    </div>
+                    <div className="">
+                        <div className="">
                             <TableContainer
+							className="p-0"
                                 component={Paper}
                                 sx={{
                                     background: "#fff",
-                                    padding: "10px",
+                                    padding: "0px",
                                 }}
                             >
                                 <Table sx={{ minWidth: 650 }} aria-label="caption table">
                                     <TableHead
-                                        sx={{
-                                            background: "#f5f5f5",
-                                        }}
+                                       
                                     >
                                         <TableRow>
-                                            <TableCell sx={{ fontWeight: "600" }}>{translate("listingTitle")}</TableCell>
-                                            <TableCell sx={{ fontWeight: "600" }} align="center">
+                                            <TableCell sx={{ fontWeight: "400" }}>{translate("listing")}</TableCell>
+                                            {/* <TableCell sx={{ fontWeight: "600" }} align="center">
                                                 {translate("category")}
+                                            </TableCell> */}
+                                            <TableCell sx={{ fontWeight: "400" }} align="center">
+                                                {translate("stats")}
                                             </TableCell>
-                                            <TableCell sx={{ fontWeight: "600" }} align="center">
-                                                {translate("views")}
-                                            </TableCell>
-                                            <TableCell sx={{ fontWeight: "600" }} align="center">
-                                                {translate("intrestedUsers")}
-                                            </TableCell>
-                                            <TableCell sx={{ fontWeight: "600" }} align="center">
-                                                {translate("postedOn")}
-                                            </TableCell>
-                                            <TableCell sx={{ fontWeight: "600" }} align="center">
+                                            <TableCell sx={{ fontWeight: "400" }} align="center">
                                                 {translate("status")}
                                             </TableCell>
-                                            <TableCell sx={{ fontWeight: "600" }} align="center">
-                                                {translate("action")}
+                                            {/* <TableCell sx={{ fontWeight: "600" }} align="center">
+                                                {translate("intrestedUsers")}
+                                            </TableCell> */}
+                                            {/* <TableCell sx={{ fontWeight: "600" }} align="center">
+                                                {translate("postedOn")}
+                                            </TableCell> */}
+                                            <TableCell sx={{ fontWeight: "400" }} align="center">
+                                                {/* {translate("action")} */}
                                             </TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -317,24 +279,24 @@ const UserDashboard = () => {
                                             getFeaturedListing.map((elem, index) => (
                                                 <TableRow key={index}>
                                                     <TableCell component="th" scope="row" sx={{ width: "40%" }}>
-                                                        <div className="card" id="listing_card">
-                                                            <div className="listing_card_img">
-                                                                <Image loading="lazy" src={elem.title_image} alt="no_img" id="main_listing_img" width={150} height={0} style={{ height: "auto" }} onError={placeholderImage}/>
-                                                                <span className="listing_type_tag">{elem.property_type}</span>
+                                                        <div className="" id="listing_card">
+                                                            <div className="listing_card_img h-32 w-64 relative overflow-hidden">
+                                                                <Image loading="lazy" src={elem.title_image} alt="no_img" id="main_listing_img" fill onError={placeholderImage}/>
+                                                                <span className="absolute z-[3] top-2 left-2 rounded-full capitalize bg-amber-300 py-1 px-3 text--white font-medium text-xs">{elem.property_type}</span>
                                                             </div>
-                                                            <div className="listing_card_body">
-                                                                <span className="listing_prop_title">{elem.title}</span>
+                                                            <div className="listing_card_body ps-3">
+																<span className="rounded-full border px-3 py-1 w-min">{elem.category.category}</span>
+																<span className="listing_prop_pirce">
+                                                                     {elem.price} {CurrencySymbol}
+                                                                </span>
                                                                 <span className="listing_prop_loc">
                                                                     {elem.city} {elem.state} {elem.country}
-                                                                </span>
-                                                                <span className="listing_prop_pirce">
-                                                                    {CurrencySymbol} {elem.price}
-                                                                </span>
+                                                                </span>                                                                
                                                             </div>
                                                         </div>
                                                     </TableCell>
-                                                    <TableCell align="center">{elem.category.category}</TableCell>
-                                                    <TableCell align="center">{elem.total_view}</TableCell>
+                                                    {/* <TableCell align="center">{elem.category.category}</TableCell> */}
+                                                    {/* <TableCell align="center">{elem.total_view}</TableCell> */}
                                                     <TableCell align="center" onClick={() => handleShowIntrestedUser(elem.slug_id)}>
                                                         <div className="intrested_users">
                                                             <span>
@@ -342,8 +304,8 @@ const UserDashboard = () => {
                                                             </span>
                                                         </div>
                                                     </TableCell>
-                                                    <TableCell align="center">{elem.post_created}</TableCell>
-                                                    <TableCell align="center">{elem.status === 1 ? <span className="active_status">{translate("active")}</span> : <span className="inactive_status">{translate("inactive")}</span>}</TableCell>
+                                                    {/* <TableCell align="center">{elem.post_created}</TableCell> */}
+                                                    <TableCell align="center">{elem.status === 1 ? <span className="inactive_status bg-green-100 text-green-600 border-green-600">{translate("active")}</span> : <span className="inactive_status">{translate("inactive")}</span>}</TableCell>
                                                     <TableCell align="center">
                                                         <Dropdown
                                                             visible={anchorEl === index}
@@ -387,7 +349,7 @@ const UserDashboard = () => {
                                                             }
                                                         >
                                                             <Button id="simple-menu">
-                                                                <BsThreeDotsVertical />
+                                                                Actions <BsThreeDotsVertical />
                                                             </Button>
                                                         </Dropdown>
                                                     </TableCell>
@@ -396,7 +358,10 @@ const UserDashboard = () => {
                                         ) : (
                                             <TableRow>
                                                 <TableCell colSpan={6} align="center">
-                                                    <p>{translate("noDataAvailabe")}</p>
+                                                    <div className="text-center pb-4">
+                                                        <p className="text-xl font-medium text-slate-700 mb-4" >{translate("noDataAvailabe")}</p>
+                                                        <Link href="/user/properties" className="tw-btn-solid !px-12">{translate('addProp')}</Link>
+                                                    </div>
                                                 </TableCell>
                                             </TableRow>
                                         )}
@@ -409,7 +374,7 @@ const UserDashboard = () => {
                             <ChangeStatusModal show={changestatusModal} onHide={() => setChangestatusModal(false)} propertyId={propertyId} propertyType={propertyType} setChangeStatus={setChangeStatus} />
 
                             {getFeaturedListing && getFeaturedListing.length > 0 ? (
-                                <div className="col-12">
+                                <div className="py-12">
 
                                     <ReactPagination pageCount={Math.ceil(total / limit)} onPageChange={handlePageChange} />
                                 </div>
@@ -418,7 +383,7 @@ const UserDashboard = () => {
                     </div>
                 </div>
             </div>
-        </VerticleLayout>
+        </UserLayout>
 
     )
 }

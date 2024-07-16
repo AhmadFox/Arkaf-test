@@ -127,16 +127,16 @@ const Index = ({ seoData, currentURL, initialProperties }) => {
 					</div>
 					<div className="col-span-5 p-4 pt-0">
 						<div className="flex flex-col gap-2 sticky pt-4 top-[77px] bg-white z-[2] mb-3 border-b">
-							<ul className="flex gap-2 flex-wrap">
+							{/* <ul className="flex gap-2 flex-wrap">
 								<li className="py-2 px-3 border rounded-3xl text-sm">{translate('all')}</li>
 								<li className="py-2 px-3 border rounded-3xl text-sm">{translate('Top Villa')}(255)</li>
 								<li className="py-2 px-3 border rounded-3xl text-sm">{translate('Free Cancelation')}(10)</li>
-							</ul>
+							</ul> */}
 							<div className="flex justify-between items-center">
 								<span>{properties.length} {translate('result')}</span>
 								<div className="flex items-center gap-1">
 									<label htmlFor="">{translate('sort')} : </label>
-									<select name="" id="" className="border-0 shadow-none"
+									<select disabled name="" id="" className="border-0 shadow-none"
 										onChange={handelSorting}
 									>
 										<option value="">Newest</option>

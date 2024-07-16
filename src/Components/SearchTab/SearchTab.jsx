@@ -146,10 +146,10 @@ const SearchTab = ({ getCategories }) => {
                             <span>{translate("map")}
                             </span>
                         </button>
-                        <button className="button button-outline w-32 flex justify-center items-center gap-1.5 py-2.5" onClick={() => setShowFilterModal(true)}>
+                        {/* <button className="button button-outline w-32 flex justify-center items-center gap-1.5 py-2.5" onClick={() => setShowFilterModal(true)}>
                             <BiFilter size={25} />
                             {translate("filter")}
-                        </button>
+                        </button> */}
                         <button className="button button-solid w-32 flex justify-center items-center gap-1.5 py-2.5" onClick={handleSearch}>
                             {translate("search")}
                         </button>

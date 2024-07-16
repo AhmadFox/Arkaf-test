@@ -285,7 +285,7 @@ const EditProperty = () => {
         setIsLoading(true);
         GetFeturedListingsApi({
             userid: isLoggedIn ? userCurrentId : "",
-            slug_id: propertyId,
+            id: propertyId,
             onSuccess: (response) => {
                 const propertyData = response?.data[0];
 

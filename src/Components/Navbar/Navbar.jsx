@@ -280,10 +280,10 @@ const Nav = ({ stikyNav }) => {
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                     <li className="nav-item">
-                                        <Link className="nav-link" aria-current="page" href="/properties/all-properties">{translate("rent")}</Link>
+                                        <Link className="nav-link" aria-current="page" href="/properties/rent">{translate("rent")}</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="/properties/all-properties" className="nav-link">{translate("buy")}</Link>
+                                        <Link href="/properties/buy" className="nav-link">{translate("buy")}</Link>
                                     </li>
                                     <li className="nav-item">
                                         <button onClick={handelAddProperty} className="nav-link">{translate("addProperty")}</button>

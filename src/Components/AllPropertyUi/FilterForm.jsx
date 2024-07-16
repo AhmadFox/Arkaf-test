@@ -83,10 +83,10 @@ const FiletrForm = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="apply-filter" onClick={props.handleApplyfilter}>
+                {/* <div className="apply-filter" onClick={props.handleApplyfilter}>
                     <RiSendPlane2Line size={25} />
                     <button id="apply-filter-button">{translate("applyFilter")}</button>
-                </div>
+                </div> */}
             </div>
         </div>
     );

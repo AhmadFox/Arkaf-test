@@ -112,7 +112,7 @@ const PremiumOwnerDetailsCard = (
         );
     };
 
-    console.log('getPropData.mobile', getPropData.mobile);
+    // console.log('getPropData.mobile', getPropData.mobile);
 
     const mobile = getPropData.mobile.replace(/\s+/g, '');
     return (

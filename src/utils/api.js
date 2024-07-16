@@ -266,13 +266,13 @@ export const getAllProperties = (
     max_price,
     min_price,
     posted_since,
-    state,
     country,
     search,
     userid,
     users_promoted,
     slug_id,
     category_slug_id,
+    filter_type,
 ) => {
 
     return {
@@ -295,13 +295,13 @@ export const getAllProperties = (
             max_price,
             min_price,
             posted_since,
-            state,
             country,
             search,
             userid,
             users_promoted,
             slug_id,
             category_slug_id,
+            filter_type,
         },
         authorizationHeader: false,
 

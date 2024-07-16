@@ -50,7 +50,7 @@ export const protectedRoutes = [
     '/user/properties/',
     '/user/properties/post-listing/',
     '/user/subscription/',
-    '/user/transaction-history/',
+    '/user/history/',
     '/user/intrested/',
 
 ]

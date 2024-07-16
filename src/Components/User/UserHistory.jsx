@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { translate } from '@/utils'
-import { GetListingsApi } from '@/store/actions/campaign'
+import { GetFeturedListingsApi, GetListingsApi } from '@/store/actions/campaign'
 
 import ReactPagination from '../Pagination/ReactPagination'
 import NoData from '../NoDataFound/NoData'
@@ -29,12 +29,12 @@ const UserHistory = () => {
 
 	// GET LISTING DATA
 	useEffect(() => {
-		console.log('user Id', userCurrentId);
 		// setIsLoading(true);
 		if (isLoggedIn) {
-			GetListingsApi({
+			GetFeturedListingsApi({
 				offset: offsetdata.toString(),
 				limit: limit.toString(),
+				filter_type: 1,
 				userid: isLoggedIn ? userCurrentId : "",
 				onSuccess: (response) => {
 					setListing(response.data);
@@ -65,7 +65,7 @@ const UserHistory = () => {
 						<div className="">
 							{
 								total > 0 ?
-								<TableListing data={listing} />:
+								<TableListing data={listing} type="history" />:
 								<div className="p-12">
 									{/* Return when no data found */}
 									<NoData data={listing} type={1} />
