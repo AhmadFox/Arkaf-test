@@ -34,6 +34,8 @@ import Loader from "@/Components/Loader/Loader";
 import OwnerDeatilsCard from "../OwnerDeatilsCard/OwnerDeatilsCard";
 import { message } from "antd";
 
+import Avatar from '@/assets/Images/user_profile.png'
+
 
 // Import Swiper styles
 import 'swiper/css';
@@ -661,9 +663,11 @@ const PropertyDetails = () => {
                                 <div className="col-12 col-md-12 col-lg-7" id="prop-deatls-card">
                                     <div className="">
                                         <div className="h3 mb-2">{getPropData.address}</div>
-                                        
-                                        <span className="text-muted">{translate("listedOn")} {` `} <TimeComponent timeAgo={getPropData.post_created} /></span>
-
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-muted">{translate("listedOn")} {` `} <TimeComponent timeAgo={getPropData.post_created} /></span> |
+                                            <div className="text-muted">{translate('Built In')}: <span className="text-[#1c789a]">{getPropData.built_in}</span></div>
+                                        </div>
+                                       
                                         <div className="d-flex gap-2 flex-wrap mt-3">
                                             <div className="features-and-amenities">
 
@@ -741,21 +745,42 @@ const PropertyDetails = () => {
                                     
                                     <div className="card border-slate rounded-4 bg-light p-4">
                                             <div className="h4 mb-3">{translate("propertyListedBy")}</div>
-                                            <div className="d-flex align-items-center justify-content-between">
-                                                <div className="d-flex gap-2 align-items-center">
-                                                    <Image 
-                                                        src={getPropData.profile}
-                                                        alt={`properity List Avatar`}
-                                                        width={54}
-                                                        height={54}
-                                                        className="rounded-pill object-cover h-[54px] border"
-                                                    />
-                                                    <div className="">
-                                                        <p className="fs-5 fw-normal mb-0 text-black">{getPropData.customer_name}</p>
-                                                        <p className="text-muted mb-0">{getPropData.mobile}</p>
+                                            <div className="d-flex flex-col gap-y-3">
+                                                <div className="flex justify-between">
+                                                   <div className="flex flex-col gap-3">
+                                                   <div className="d-flex gap-3 align-items-start">
+                                                        <Image 
+                                                            src={getPropData.profile}
+                                                            alt={`properity List Avatar`}
+                                                            width={54}
+                                                            height={54}
+                                                            className="rounded-pill object-cover h-[54px] border"
+                                                        />
+                                                        <div className="flex flex-col gap-2">
+                                                            <p className="fs-5 fw-normal mb-0 text-black">{getPropData.customer_name}</p>
+                                                            <p className="text-muted mb-0">{getPropData.mobile}</p>
+                                                        </div>
                                                     </div>
+                                                    {
+                                                        getPropData.second_contact_number &&
+                                                        <div className="d-flex gap-3 align-items-start">
+                                                            <Image 
+                                                                src={Avatar}
+                                                                alt={`properity List Avatar`}
+                                                                width={54}
+                                                                height={54}
+                                                                className="rounded-pill object-cover h-[54px] border"
+                                                            />
+                                                            <div className="flex flex-col gap-2">
+                                                                <p className="fs-5 fw-normal mb-0 text-black">{getPropData.contact_name}</p>
+                                                                <p className="text-muted mb-0">{getPropData.second_contact_number}</p>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                   </div>
+                                                    <button className="button button-outline mt-auto" disabled>{translate("getMoreInfo")}</button>
                                                 </div>
-                                                <Link href={`/profile/${getPropData.user_id}`} className="button button-outline">{translate("getMoreInfo")}</Link>
+                                                
                                             </div>
                                     </div>
 
@@ -935,7 +960,7 @@ const PropertyDetails = () => {
                                         </Fragment>
                                     ) : null} */}
 
-                                    { getPropData?.layout > 0 ? (
+                                    { getPropData?.layout.length > 0 ? (
                                         <Fragment>
                                             <hr className="my-3" />
                                             <div className="h4">{translate("propertyLayout")} ({getPropData.layout.length})</div>
@@ -988,7 +1013,7 @@ const PropertyDetails = () => {
                                                                                 )
                                                                             }
                                                                         </div>
-                                                                        <p className="fs-5 fw-semibold mb-0 text-black">56,732.06 SAR</p>
+                                                                        <p className="fs-5 fw-semibold mb-0 text-black">{item.price}</p>
                                                                     </div>
                                                                 </div>
                                                             ))

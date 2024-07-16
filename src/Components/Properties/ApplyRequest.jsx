@@ -244,7 +244,7 @@ const ApplyRequest = ({ type }) => {
 									</div>
 									<div className="">
 										<InputNumber
-											label={'size(sqm)'}
+											label={'Size (sqm)'}
 											onValueChange={handelSize}
 											placeholder={'Ex:200'}
 										/>
