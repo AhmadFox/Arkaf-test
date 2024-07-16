@@ -171,6 +171,46 @@ export const GetFeturedListingsApi = ({
     );
 };
 
+// GET PROPERTIES
+export const GetListingsApi = ({
+    is_featured = '',
+    promoted = "",
+    top_rated = "",
+    id = "",
+    category_id = "",
+    most_liked = "",
+    city = "",
+    get_simiilar = "",
+    offset = "",
+    limit = "",
+    current_user = "",
+    property_type = "",
+    max_price = "",
+    min_price = "",
+    posted_since = "",
+    state = "",
+    country = "",
+    search = "",
+    userid = "",
+    users_promoted = "",
+    slug_id = "",
+    category_slug_id = "",
+    onSuccess = () => { },
+    onError = () => { },
+    onStart = () => { }
+
+}) => {
+    store.dispatch(
+        apiCallBegan({
+            ...getAllProperties(is_featured, promoted, top_rated, id, category_id, most_liked, city, get_simiilar, offset, limit, current_user, property_type, max_price, min_price, posted_since, state, country, search, userid, users_promoted, slug_id, category_slug_id),
+            displayToast: false,
+            onStart,
+            onSuccess,
+            onError,
+        })
+    );
+};
+
 
 // GET_ARTICLES
 export const GetAllArticlesApi = (id, category_id, get_simiilar, slug_id, onSuccess, onError, onStart) => {
@@ -322,6 +362,7 @@ export const PostProperty = ({
     size = "",
     description = "",
     city = "",
+    city_id = "",
     state = "",
     country = "",
     latitude = "",
@@ -359,6 +400,7 @@ export const PostProperty = ({
                 title,
                 description,
                 city,
+                city_id,
                 size,
                 state,
                 country,
@@ -499,6 +541,7 @@ export const UpdatePostProperty = ({
     size = "",
     description = "",
     city = "",
+    city_id = "",
     state = "",
     country = "",
     latitude = "",
@@ -540,6 +583,7 @@ export const UpdatePostProperty = ({
                 second_contact_number,
                 contact_name,
                 city,
+                city_id,
                 state,
                 country,
                 latitude,

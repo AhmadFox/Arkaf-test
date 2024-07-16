@@ -452,6 +452,7 @@ export const postProperty = (
     title,
     description,
     city,
+    city_id,
     size,
     state,
     country,
@@ -487,6 +488,7 @@ export const postProperty = (
     data.append('title', title);
     data.append('description', description);
     data.append('city', city);
+    data.append('city_id', city_id);
     data.append('state', state);
     data.append('country', country);
     data.append('latitude', latitude);
@@ -687,6 +689,7 @@ export const updatePostProperty = (
     second_contact_number,
     contact_name,
     city,
+    city_id,
     state,
     country,
     latitude,
@@ -704,6 +707,7 @@ export const updatePostProperty = (
     data.append('size', size);
     data.append('description', description);
     data.append('city', city);
+    data.append('city_id', city_id);
     data.append('state', state);
     data.append('country', country);
     data.append('latitude', latitude);

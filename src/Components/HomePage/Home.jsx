@@ -109,51 +109,6 @@ const HomePage = () => {
         },
     };
 
-    const citys = [
-        {
-            name: "Riyadh",
-            url: "properties/city/riyadh/",
-            image: city_1
-        },
-        {
-            name: "Makkah",
-            url: "properties/city/makkah/",
-            image: city_2
-        },
-        {
-            name: "Madinah",
-            url: "properties/city/madinah/",
-            image: city_3
-        },
-        {
-            name: "Jeddah",
-            url: "properties/city/jeddah/",
-            image: city_4
-        },
-        {
-            name: "Dammam",
-            url: "properties/city/dammam/",
-            image: city_5
-        },
-        {
-            name: "Qaassim",
-            url: "properties/city/qaassim/",
-            image: city_6
-        },
-        {
-            name: "Khobar",
-            url: "properties/city/khobar/",
-            image: city_7
-        },
-        {
-            name: "Abha",
-            url: "properties/city/abha/",
-            image: city_8
-        },
-    ];
-
-
-
     // GET NEARBY CITY DATA
     useEffect(() => {
         setIsLoading(true);

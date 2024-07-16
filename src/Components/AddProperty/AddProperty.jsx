@@ -8,7 +8,7 @@ import { translate } from "@/utils";
 import { userSignUpData } from "@/store/reducer/authSlice";
 import { languageData } from "@/store/reducer/languageSlice";
 import { settingsData } from "@/store/reducer/settingsSlice";
-import { GetFacilitiesApi, PostProperty } from "@/store/actions/campaign";
+import { GetCitiesApi, GetFacilitiesApi, PostProperty } from "@/store/actions/campaign";
 import { categoriesCacheData, loadCategories } from "@/store/reducer/momentSlice";
 
 import { useDropzone } from "react-dropzone";
@@ -23,7 +23,6 @@ import ProperetyGellary from "./ProperetyGellary";
 import SubmitButton from "../AuthForms/SubmitButton";
 import ButtonGroup from "../ui/ButtonGroup";
 import InputText from "../ui/InputText";
-import DatePicker from "../ui/Datepicker";
 import InputTel from "../ui/InputTel";
 import LayoutForm from "../ui/forms/LayoutForm";
 
@@ -42,6 +41,7 @@ const AddProperty = () => {
     const GoogleMapApi = process.env.NEXT_PUBLIC_GOOGLE_API;
 
     const signupData = useSelector(userSignUpData);
+    const [cities, setCities] = useState([]);
     const categorydata = useSelector(categoriesCacheData);
     const [ addContactToggle, setAddContactToggle ] = useState(false);
     const [layoutField, setLayoutField] = useState([]);
@@ -156,17 +156,22 @@ const AddProperty = () => {
 
     // const handleLocationSelected = value => handleInputChange('selectedLocation', value);
     const handleInputSize = (isValid, value) => handleInputChange('size', value);
-    const handleInputDuration = value => handleInputChange('duration', value);
+    const handleInputDuration = (isValid, value) => handleInputChange('duration', value);
     const handle360Viewer = (isValid, value) => handleInputChange('Viewer3D', value);
-    
     const handleInputPrice = (isValid, value) => handleInputChange('price', value);
     const handleInputBuiltAt = (isValid, value) => handleInputChange('builtIn', value);
     const handleInputContact = (isValid, value) => handleInputChange('secondContact', value);
     const handleInputContactName = (isValid, value) => handleInputChange('contactName', value);
-
+    
     const handleInputDescription = (e) => {
         const value = e.target.value
         handleInputChange('description', value);
+    }
+
+    const handleInputCityID = (e) => {
+        const value = e.target.value
+        handleInputChange('cityId', value);
+
     }
 
     const handelLayout = (id, value) => {
@@ -203,16 +208,41 @@ const AddProperty = () => {
 
 
 
-    }, [formData.categoryId])
+    }, [formData.categoryId]);
+
+
+    useEffect(() => {
+        GetCitiesApi(
+            (response) => {
+                const citiesData = response.data;
+                setCities(citiesData);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }, [formData]);
 
     const handlePostPropertyPublish = async (e) => {
         e.preventDefault();
+
+        if (!formData.description || formData.description === '') {
+            toast.error('description fields is requierds');
+            return
+        }
+
+        if (!formData.cityId || formData.cityId === '') {
+            toast.error('City fields is requierds');
+            return
+        }
+
 		setShowLoader(true);
 		try {
 			PostProperty({
 				title: 'properety title',
 				description: formData.description,
 				city: formData.selectedLocation.city,
+				city_id: formData.cityId,
 				latitude: formData.selectedLocation.lat,
 				longitude: formData.selectedLocation.lng,
 				country: formData.selectedLocation.country,
@@ -253,48 +283,59 @@ const AddProperty = () => {
 
 	const handlePostPropertyDraft = async (e) => {
         e.preventDefault();
-		setShowLoader(true);
-		try {
-			PostProperty({
-				title: 'properety title',
-				description: formData.description,
-				city: formData.selectedLocation.city,
-				latitude: formData.selectedLocation.lat,
-				longitude: formData.selectedLocation.lng,
-				country: formData.selectedLocation.country,
-				address: formData.selectedLocation.formatted_address,
-				price: formData.price,
-				category_id: formData.categoryId,
-				property_type: selectedOption === 'sell' ? '0' : '1',
+        
+        if (!formData.description || formData.description === '') {
+            toast.error('description fields is requierds');
+            return
+        }
+
+        if (!formData.cityId || formData.cityId === '') {
+            toast.error('City fields is requierds');
+            return
+        }
+        setShowLoader(true);
+        try {
+            PostProperty({
+                title: 'properety title',
+                description: formData.description,
+                city: formData.selectedLocation.city,
+                city_id: formData.cityId,
+                latitude: formData.selectedLocation.lat,
+                longitude: formData.selectedLocation.lng,
+                country: formData.selectedLocation.country,
+                address: formData.selectedLocation.formatted_address,
+                price: formData.price,
+                category_id: formData.categoryId,
+                property_type: selectedOption === 'sell' ? '0' : '1',
                 rentduration: formData.duration,
-				parameters: parameter.parameters,
-				title_image: formData.titleImage,
-				gallery_images: formData.galleryImages,
+                parameters: parameter.parameters,
+                title_image: formData.titleImage,
+                gallery_images: formData.galleryImages,
                 property_layout: layoutsData,
-				size: formData.size,
-				threeD_image: formData.Viewer3D,
-				rentduration: formData.date,
-				video_link: formData.Viewer3D,
-				status: '0',
+                size: formData.size,
+                threeD_image: formData.Viewer3D,
+                rentduration: formData.date,
+                video_link: formData.Viewer3D,
+                status: '0',
                 built_in: formData.builtIn,
                 second_contact_number: '',
                 contact_name: formData.contactName,
-				onSuccess: async (response) => {
-					toast.success(response.message);
-					router.push("/user/current-listing");
-					setShowLoader(false);
-				},
-				onError: (error) => {
-					toast.error(error);
-					setShowLoader(false);
-				}
-			});
-			
-		} catch (error) {
-			setShowLoader(false);
-		    console.error("An error occurred:", error);
-		    toast.error("An error occurred. Please try again later.");
-		}
+                onSuccess: async (response) => {
+                    toast.success(response.message);
+                    router.push("/user/current-listing");
+                    setShowLoader(false);
+                },
+                onError: (error) => {
+                    toast.error(error);
+                    setShowLoader(false);
+                }
+            });
+            
+        } catch (error) {
+            setShowLoader(false);
+            console.error("An error occurred:", error);
+            toast.error("An error occurred. Please try again later.");
+        }
     };
 
     return (
@@ -373,6 +414,7 @@ const AddProperty = () => {
                                         <div key={idx}>
                                             <label className='d-block mb-1 text-[#272835] text-sm'>{translate(item.name)}</label>
                                             <select
+                                                required
                                                 className={inputStyle}
                                                 onChange={(e) => handleParametersChange(e, item.id)}
                                             >
@@ -396,6 +438,7 @@ const AddProperty = () => {
                             <h2 className="text-2xl font-medium mb-2 mt-6">{translate('descriptionProperty')}</h2>
                             <div>
                                 <textarea
+                                    required
                                     cols="30" rows="6"
                                     onChange={handleInputDescription}
                                     placeholder={translate('inputDescription')}
@@ -446,22 +489,44 @@ const AddProperty = () => {
                                     </div>
                                 </div>
                             }
-
-                            <div>
-                                <h2 className="text-2xl font-medium mb-2 mt-6">{translate('Address')}</h2>
-                                <LocationSearchBox
-                                    onLocationSelected={handleLocationSelected}
-                                    initialLatitude={selectedLocationAddress.lat}
-                                    initialLongitude={selectedLocationAddress.lng}
-                                    className={`${inputStyle} my-4`}
-                                />
-								<GoogleMapBox
-                                    apiKey={GoogleMapApi}
-                                    onSelectLocation={handleLocationSelect}
-                                    latitude={selectedLocationAddress.lat}
-                                    longitude={selectedLocationAddress.lng}
-                                />
+                            
+                            <h2 className="text-2xl font-medium mb-2 mt-6">{translate('Address')}</h2>
+                            <div className="grid grid-cols-2 gap-3">
+                                <div className="">
+                                    <label className='d-block mb-1 text-[#272835] text-sm'>{translate('city')}</label>
+                                    <select
+                                        required
+                                        className={inputStyle}
+                                        onChange={handleInputCityID}
+                                    >
+                                        <option disabled selected>{translate('Select city')}</option>
+                                        {
+                                            cities.map((city) => (
+                                                <option key={city.id} value={city.id}>{city.name}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+                                <div className="">
+                                    <label className='d-block mb-1 text-[#272835] text-sm'>{translate('location')}</label>
+                                    <LocationSearchBox
+                                        onLocationSelected={handleLocationSelected}
+                                        initialLatitude={selectedLocationAddress.lat}
+                                        initialLongitude={selectedLocationAddress.lng}
+                                        className={`${inputStyle}`}
+                                    />
+                                </div>
+                                
+                                <div className="col-span-2">
+                                    <GoogleMapBox
+                                        apiKey={GoogleMapApi}
+                                        onSelectLocation={handleLocationSelect}
+                                        latitude={selectedLocationAddress.lat}
+                                        longitude={selectedLocationAddress.lng}
+                                    />
+                                </div>
                             </div>
+
 
                             
                             {/* <InputMultibleImage onValueChange={handelLayoutImage} /> */}

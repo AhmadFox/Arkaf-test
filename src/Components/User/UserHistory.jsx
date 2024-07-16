@@ -1,18 +1,54 @@
-import React, { useState } from 'react'
-import UserLayout from '../Layout/UserLayout'
+import React, { useState, useEffect } from 'react'
+
+import { useSelector } from 'react-redux'
+
 import { translate } from '@/utils'
+import { GetListingsApi } from '@/store/actions/campaign'
+
 import ReactPagination from '../Pagination/ReactPagination'
 import NoData from '../NoDataFound/NoData'
+import UserLayout from '../Layout/UserLayout'
+import TableListing from '../ui/TableListing'
 
 const UserHistory = () => {
 
 	const limit = 2;
+
+	const [ total, setTotal ] = useState(0);
+	const [ listing, setListing ] = useState([]);
 	const [offsetdata, setOffsetdata] = useState(0);
+	const isLoggedIn = useSelector((state) => state.User_signup);
+    const userCurrentId = isLoggedIn && isLoggedIn?.data ? isLoggedIn?.data?.data?.id : null;
+
+
 	const handlePageChange = (selectedPage) => {
 		const newOffset = selectedPage.selected * limit;
 		setOffsetdata(newOffset);
 		window.scrollTo(0, 300);
 	};
+
+	// GET LISTING DATA
+	useEffect(() => {
+		console.log('user Id', userCurrentId);
+		// setIsLoading(true);
+		if (isLoggedIn) {
+			GetListingsApi({
+				offset: offsetdata.toString(),
+				limit: limit.toString(),
+				userid: isLoggedIn ? userCurrentId : "",
+				onSuccess: (response) => {
+					setListing(response.data);
+					setTotal(response.total)
+					// setIsLoading(false);
+				},
+				onError: (error) => {
+					console.log(error);
+					// setIsLoading(true);
+				}
+			}
+			);
+		}
+	}, []);
 
 	return (
 		<UserLayout footer={true}>
@@ -25,19 +61,25 @@ const UserHistory = () => {
 							<span className="text-xl xl:text-2xl font-light">{translate("currentListing")}</span>
 						</div>
 
-						{/* Listiong */}
-						<div className="p-3">
-
-							{/* Return when no data found */}
-							<div className="p-12">
-								<NoData />
-							</div>
+						{/* Listing */}
+						<div className="">
+							{
+								total > 0 ?
+								<TableListing data={listing} />:
+								<div className="p-12">
+									{/* Return when no data found */}
+									<NoData data={listing} type={1} />
+								</div>
+							}
 						</div>
 
 						{/* Pagenations */}
-						<div className="p-3 border-t">
-							<ReactPagination pageCount={Math.ceil(50 / limit)} onPageChange={handlePageChange} />
-						</div>
+						{
+							total / limit > 1 &&
+							<div className="p-3 border-t">
+								<ReactPagination pageCount={Math.ceil(listing.total / limit)} onPageChange={handlePageChange} />
+							</div>
+						}
 					</div>
 				</div>
 			</div>

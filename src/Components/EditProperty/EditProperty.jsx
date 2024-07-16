@@ -8,7 +8,7 @@ import { translate } from "@/utils";
 import { userSignUpData } from "@/store/reducer/authSlice";
 import { languageData } from "@/store/reducer/languageSlice";
 import { settingsData } from "@/store/reducer/settingsSlice";
-import { GetFeturedListingsApi, UpdatePostProperty } from "@/store/actions/campaign";
+import { GetCitiesApi, GetFeturedListingsApi, UpdatePostProperty } from "@/store/actions/campaign";
 import { categoriesCacheData, loadCategories } from "@/store/reducer/momentSlice";
 
 import { useDropzone } from "react-dropzone";
@@ -52,6 +52,7 @@ const EditProperty = () => {
 
 
     const signupData = useSelector(userSignUpData);
+    const [cities, setCities] = useState([]);
     const categorydata = useSelector(categoriesCacheData);
     const [layoutField, setLayoutField] = useState([]);
     const [formData, setFormData] = useState({});
@@ -171,6 +172,12 @@ const EditProperty = () => {
         handleInputChange('description', value);
     }
 
+    const handleInputCityID = (e) => {
+        const value = e.target.value
+        handleInputChange('cityId', value);
+
+    }
+
     const handelLayout = (id, value) => {
         setLayoutsData(prevLayouts => {
             const newLayouts = [...prevLayouts];
@@ -178,6 +185,18 @@ const EditProperty = () => {
             return newLayouts;
         });
     };
+
+    useEffect(() => {
+        GetCitiesApi(
+            (response) => {
+                const citiesData = response.data;
+                setCities(citiesData);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }, [formData]);
 
     const handleParametersChange = (e, parameterId) => {
         const select = e.target.value;
@@ -202,9 +221,13 @@ const EditProperty = () => {
     };
 
 	const handleUpdatePostproperty = async (e) => {
-        console.log('second_contact_number', formData.secondContact)
-        console.log('contact_name', formData.contactName)
         e.preventDefault();
+
+        if (!formData.description || formData.description === '') {
+            toast.error('description fields is requierds');
+            return
+        }
+
 		try {
 			UpdatePostProperty({
 				id: properety.id,
@@ -223,6 +246,7 @@ const EditProperty = () => {
                 second_contact_number: formData.secondContact,
                 contact_name: formData.contactName,
 				city: selectedLocationAddress.city,
+                city_id: formData.cityId,
 				state: selectedLocationAddress.state,
 				country: selectedLocationAddress.country,
 				latitude: selectedLocationAddress.lat,
@@ -274,6 +298,7 @@ const EditProperty = () => {
 					'price': propertyData.price,
 					'size': propertyData.size,
 					'duration': propertyData.rentduration,
+					'cityId': propertyData.city_id,
 					'Viewer3D': propertyData.video_link,
 					'secondContact': propertyData.second_contact_number,
 					'contactName': propertyData.contact_name,
@@ -461,23 +486,46 @@ const EditProperty = () => {
                                     </div>
                                 </div>
 
-                            <div>
-                                <h2 className="text-2xl font-medium mb-2 mt-6">{translate('Address')}</h2>
-                                <LocationSearchBox
-                                    onLocationSelected={handleLocationSelected}
-                                    initialLatitude={selectedLocationAddress.lat}
-                                    initialLongitude={selectedLocationAddress.lng}
-                                    className={`${inputStyle} my-4`}
-                                />
-								{
+
+                                      <h2 className="text-2xl font-medium mb-2 mt-6">{translate('Address')}</h2>
+                            <div className="grid grid-cols-2 gap-3">
+                                <div className="">
+                                    <label className='d-block mb-1 text-[#272835] text-sm'>{translate('city')}</label>
+                                    <select
+                                        required
+                                        className={inputStyle}
+                                        value={formData.cityId}
+                                        onChange={handleInputCityID}
+                                    >
+                                        <option disabled selected>{translate('Select city')}</option>
+                                        {
+                                            cities.map((city) => (
+                                                <option key={city.id} value={city.id}>{city.name}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+                                <div className="">
+                                    <label className='d-block mb-1 text-[#272835] text-sm'>{translate('location')}</label>
+                                    <LocationSearchBox
+                                        onLocationSelected={handleLocationSelected}
+                                        initialLatitude={selectedLocationAddress.lat}
+                                        initialLongitude={selectedLocationAddress.lng}
+                                        className={`${inputStyle}`}
+                                    />
+                                </div>
+
+                                {
 									selectedLocationAddress?.lat && selectedLocationAddress?.lng ?
+                                    <div className="col-span-2">
 									<GoogleMapBox
 										apiKey={GoogleMapApi}
 										onSelectLocation={handleLocationSelect}
 										latitude={selectedLocationAddress.lat}
 										longitude={selectedLocationAddress.lng}
-									/> : null
+									/></div> : null
 								}
+                                
                             </div>
 
                             
