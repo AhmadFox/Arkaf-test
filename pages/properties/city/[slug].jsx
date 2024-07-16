@@ -35,7 +35,7 @@ const Index = ({ seoData, currentURL, citySlug }) => {
         }
     };
 
-    return (
+    return (    
         <>
             <Meta
                 title={seoData?.data && seoData.data.length > 0 && seoData.data[0].meta_title}

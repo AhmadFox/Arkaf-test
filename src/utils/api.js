@@ -262,7 +262,7 @@ export const getAllProperties = (is_featured, promoted, top_rated, id, category_
             category_id: category_id,
             most_liked: most_liked,
             city: city,
-            city: city_id,
+            city_id: city_id,
             get_simiilar: get_simiilar,
             offset: offset,
             limit: limit,

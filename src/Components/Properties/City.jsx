@@ -50,7 +50,7 @@ const City = () => {
         setIsLoading(true);
 
         GetFeturedListingsApi({
-            city: city.slug,
+            city_id: city.slug,
             offset: offsetdata.toString(),
             limit: limit.toString(),
             current_user: isLoggedIn ? userCurrentId : "",
@@ -148,7 +148,7 @@ const City = () => {
             selectedLocation: null,
         });
         GetFeturedListingsApi({
-            city: city.slug,
+            city_id: city.slug,
             offset: offsetdata.toString(),
             limit: limit.toString(),
             current_user: isLoggedIn ? userCurrentId : "",
