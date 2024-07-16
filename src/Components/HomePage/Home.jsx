@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 
 // Import 3th party packeges
-import Skeleton from "react-loading-skeleton";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination, Navigation } from "swiper/modules";
 
@@ -45,16 +44,6 @@ import "swiper/css/pagination";
 import 'swiper/css/navigation';
 // import AOS animation style
 import "aos/dist/aos.css";
-
-// Import Static Images
-import city_1 from "@/assets/citys/1.png";
-import city_2 from "@/assets/citys/2.png";
-import city_3 from "@/assets/citys/3.png";
-import city_4 from "@/assets/citys/4.png";
-import city_5 from "@/assets/citys/5.png";
-import city_6 from "@/assets/citys/6.png";
-import city_7 from "@/assets/citys/7.png";
-import city_8 from "@/assets/citys/8.png";
 
 
 const HomePage = () => {
@@ -235,10 +224,6 @@ const HomePage = () => {
             }
         );
     }, []);
-
-
-    console.log('cities', cities);
-
 
     useEffect(() => {
 
@@ -818,7 +803,7 @@ const HomePage = () => {
                             <div className="citys_grid">
                                 {
                                     cities && cities.filter(item => item.status !== 0).map((item, idx) => (
-                                        <Link href={`properties/city/${item.name}`} key={idx}>
+                                        <Link href={`properties/city/${item.id}`} key={idx}>
                                             <figure>
                                                 <Image 
                                                     loading="lazy"

@@ -140,6 +140,7 @@ export const GetFeturedListingsApi = ({
     category_id = "",
     most_liked = "",
     city = "",
+    city_id = "",
     get_simiilar = "",
     offset = "",
     limit = "",
@@ -162,7 +163,7 @@ export const GetFeturedListingsApi = ({
 }) => {
     store.dispatch(
         apiCallBegan({
-            ...getAllProperties(is_featured, promoted, top_rated, id, category_id, most_liked, city, get_simiilar, offset, limit, current_user, property_type, max_price, min_price, posted_since, state, country, search, userid, users_promoted, slug_id, category_slug_id),
+            ...getAllProperties(is_featured, promoted, top_rated, id, category_id, most_liked, city, city_id, get_simiilar, offset, limit, current_user, property_type, max_price, min_price, posted_since, state, country, search, userid, users_promoted, slug_id, category_slug_id),
             displayToast: false,
             onStart,
             onSuccess,

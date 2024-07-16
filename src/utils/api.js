@@ -249,7 +249,7 @@ export const getProfileApi = () => {
 }
 
 // get Propertyes 
-export const getAllProperties = (is_featured, promoted, top_rated, id, category_id, most_liked, city, get_simiilar, offset, limit, current_user, property_type, max_price, min_price, posted_since, state, country, search, userid, users_promoted, slug_id, category_slug_id) => {
+export const getAllProperties = (is_featured, promoted, top_rated, id, category_id, most_liked, city, city_id, get_simiilar, offset, limit, current_user, property_type, max_price, min_price, posted_since, state, country, search, userid, users_promoted, slug_id, category_slug_id) => {
 
     return {
         url: `${GET_PROPETRES}`,
@@ -262,6 +262,7 @@ export const getAllProperties = (is_featured, promoted, top_rated, id, category_
             category_id: category_id,
             most_liked: most_liked,
             city: city,
+            city: city_id,
             get_simiilar: get_simiilar,
             offset: offset,
             limit: limit,
