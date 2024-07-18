@@ -4,7 +4,8 @@ const Badeg = ({ icon, count, type }) => {
   return (
 	<div className={`
 		border px-2.5 py-1.5 rounded-full w-fit text-sm flex items-center gap-1.5
-		${type === 'sold' && 'border-0 text-red-500 bg-red-100'}
+		${type === 'Sold' && 'border-0 text-red-500 bg-red-100'}
+		${type === 'Rented' && 'border-0 text-red-500 bg-red-100'}
 		${type === 'Available' && 'border-0 text-green-700 bg-green-100'}
 		${type === 'On Agent' && 'border-0 text-indigo-600 bg-indigo-100'}
 		${type === 'Unavailable' && 'border-0 text-slate-600 bg-slate-100'}

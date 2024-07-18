@@ -12,6 +12,7 @@ import ListingCard from '../Cards/ListingCard'
 import Badeg from './Badeg'
 import Link from 'next/link';
 import { useState } from 'react';
+import ToggleSwitch from './ToggleSwitch';
 
 const TableListing = ({ data, type }) => {
 
@@ -43,7 +44,22 @@ const TableListing = ({ data, type }) => {
             status: status,
             onSuccess: (res) => {
                 toast.success(res.message)
-				router.push('/user/current-listing/')
+				type === 'history' ?
+				router.push('/user/current-listing/'):
+				router.push('/user/history/')
+            },
+            onError: (error) => {
+                console.log(error)
+            }
+        })
+    }
+
+	const handleChangeVisability = (id, value) => {
+        changePropertyStatusApi({
+            property_id: id,
+            is_visible: value,
+            onSuccess: (res) => {
+                toast.success(res.message)
             },
             onError: (error) => {
                 console.log(error)
@@ -55,16 +71,20 @@ const TableListing = ({ data, type }) => {
 		<table class="table-auto w-full">
 			<thead>
 				<tr className='text-lg xl:text-xl font-light border-b text-[#4D4D4D]'>
-					<td className='py-3 px-4'>{translate('listing')}</td>
-					<td className='py-3 px-4 text-center'>{translate('stats')}</td>
-					<td className='py-3 px-4 text-center'>{translate('status')}</td>
+					<td className='py-3 px-4'>{type === 'request-list'? translate('property') : translate('listing')}</td>
+					<td className='py-3 px-4 text-center'>{type === 'request-list'? translate('status') : translate('stats')}</td>
+					<td className='py-3 px-4 text-center'>{type === 'request-list'? translate('agent') : translate('status')}</td>
+					{
+						type === 'current' &&
+						<td className='py-3 px-4 text-center'>{translate('publish')}</td>
+					}
 					<td className='py-3 px-4'></td>
 				</tr>
 			</thead>
 			<tbody>
 				{
 					data.map((item, idx) => (
-						<tr key={idx}>
+						<tr className='border-b last:border-b-0' key={idx}>
 							{/* Listing component data */}
 							<td className='py-3 px-4'>
 								<ListingCard data={item} />
@@ -91,32 +111,41 @@ const TableListing = ({ data, type }) => {
 							<td className='py-3 px-4'>
 								<div className="flex flex-col justify-center items-center space-y-3">
 									{
-										type === 'current' &&
-											<span className="px-3 py-1 bg-green-100 text-green-500 rounded-full">{item.property_type}</span>
+										type === 'current' ?
+										item.is_approved === 1 ?
+											<span className="px-3 py-1 bg-green-100 text-green-500 rounded-full capitalize">{item.property_type}</span>:
+											<span className="px-3 py-1 bg-amber-100 text-amber-500 rounded-full capitalize">{item.property_type}</span>: null
 									}
 									{ type === "history" &&
-										item.property_type === 'sold' ? 
+										item.property_type === 'Rented' ?
 										<Badeg
-											count={'sold'}
-											type={'sold'}
+											count={'Rented'}
+											type={'Rented'}
 										/>:
-										item.property_type === 'unavailable' ? 
+										item.property_type === 'sold' ? 
 											<Badeg
-											count={'Unavailable'}
-											type={'Unavailable'}
+											count={'Sold'}
+											type={'Sold'}
 										/>: null
 									}
-									{/* <Badeg
-										count={'Available'}
-										type={'Available'}
-									/>
-									<Badeg
-										count={'On Agent'}
-										type={'On Agent'}
-									/> */}
 									
 								</div>
 							</td>
+							{
+								type === 'current' &&
+								<td className='py-3 px-4'>
+									<div className="flex flex-col justify-center items-center space-y-3">
+										{
+											item.status === 2 ?
+												<span className='text-slate-500 bg-slate-100 px-3 py-1 rounded-full'>{translate('draft')}</span>:
+											item.is_approved === 1 ?
+											<ToggleSwitch id={item.id} isVisabile={item.is_visible} sendSwitchValu={handleChangeVisability} />:
+											<span className='text-slate-500 bg-slate-100 px-3 py-1 rounded-full'>{translate('pendingToApprove')}</span>
+											
+										}
+									</div>
+								</td>
+							}
 							<td className='py-3 px-4'>
 								<div className="w-full h-full flex justify-end">
 									<Menu as="div" className="relative inline-block">
@@ -136,57 +165,14 @@ const TableListing = ({ data, type }) => {
 											className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
 										>
 											<div className="p-1.5">
-
-												{
-													item.property_type === 'sell' &&
-													<MenuItem>
-														<button
-															onClick={() => handleChangeStatus(item.id, '2')}
-															className="flex rounded-md w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 ease-in-out duration-200"
-														>
-
-
-														<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
-															<path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
-														</svg>
-
-
-
-															{translate('sold')}
-														</button>
-													</MenuItem>
-												}
-
-
-{
-													item.property_type === 'rent' &&
-													<MenuItem>
-														<button
-															onClick={() => handleChangeStatus(item.id, '3')}
-															className="flex rounded-md w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 ease-in-out duration-200"
-														>
-
-
-														<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
-															<path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
-														</svg>
-
-
-
-															{translate('rented')}
-														</button>
-													</MenuItem>
-												}
-
-												
-
-												
-
 												{
 													type === 'history' &&
 													<MenuItem>
 														<button
-														onClick={() => handleChangeStatus(item.id, '3')}
+														onClick={() => 
+
+															handleChangeStatus(item.id, item.property_type === 'sold' ? '0' : '1')
+														}
 															className="flex rounded-md w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 ease-in-out duration-200"
 														>
 															<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
@@ -195,8 +181,35 @@ const TableListing = ({ data, type }) => {
 															{translate('Listing Again')}
 														</button>
 													</MenuItem>
+
 												}
-<MenuItem>
+
+												{
+													type === 'current' && item.is_approved === 1 &&
+													<MenuItem>
+														<button
+														onClick={() => 
+
+															handleChangeStatus(item.id, item.property_type === 'rent' ? '3' : '2')
+														}
+															className="flex rounded-md w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 ease-in-out duration-200"
+														>
+															<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+																<path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+															</svg>
+
+															{
+																item.property_type === 'rent' ?
+																translate('Change to rented'):
+																translate('Change to sold')
+															}
+
+														</button>
+													</MenuItem>
+
+												}
+
+												<MenuItem>
 													<Link
 														target='_blank'
 														href={`/user/edit-property/${item.id}`}
@@ -212,6 +225,7 @@ const TableListing = ({ data, type }) => {
 														{translate('edit')}
 													</Link>
 												</MenuItem>
+												
 												<MenuItem>
 													<button
 														onClick={() => handelDeleteItem(item.id)}

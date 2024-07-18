@@ -34,7 +34,10 @@ const ApplyRequest = ({ type }) => {
 	const [ loading, setLoading ] = useState(false);
 	const [ disabled, setDisabled ] = useState(true);
 	const [ back, setBack ] = useState(true);
-	const [tab, setTab] = useState(1);
+	const [tab, setTab] = useState(
+		type === 'post' ? 1 :
+		type === 'request' ? 2 : 3
+	);
 
 	const handelContinue = async (e) => {
 		switch (true) {
@@ -57,8 +60,6 @@ const ApplyRequest = ({ type }) => {
 	
 		setLoading(true);
 		setDisabled(true);
-
-		console.log('formData', formData);
 	
 		try {
 			switch (type) {
@@ -100,6 +101,7 @@ const ApplyRequest = ({ type }) => {
 							toast.success(response.message);
 							setTab(3);
 							setLoading(false);
+							setDisabled(false);
 						},
 						onError: (error) => {
 							toast.error(error);
@@ -112,7 +114,7 @@ const ApplyRequest = ({ type }) => {
 				default:
 					setLoading(false);
 					setDisabled(false);
-					toast.error("Invalid request type.");
+					toast.error("Invalid request property");
 					break;
 			}
 		} catch (error) {
@@ -193,7 +195,7 @@ const ApplyRequest = ({ type }) => {
 
 	return (
 		<Fragment>
-			<div className="grid grid-cols-12 gap-12" style={{ height: tab === 3 && '100%' }}>
+			<div className="grid grid-cols-12" style={{ height: tab === 3 && '100%' }}>
 				<div className={`h-full ${tab === 3 ? 'col-span-12' : 'col-span-8'} w-8/12 mx-auto`}>
 					<div className="container h-full">
 						<div className="py-12 mt-9 h-full">
@@ -267,28 +269,28 @@ const ApplyRequest = ({ type }) => {
 											/>
 										</div>
 									}
-									
-										<Fragment>
-											<div className={`${type === 'request' ? 'col-span-1' : 'col-span-2'}`}>
-												<label className='d-block mb-1 text-[#272835] text-sm'>{translate('location')}</label>
-												<LocationSearchBox
-													placeholder={'CityNeighborhood'}
-													onLocationSelected={handleLocationSelect}
-													initialLatitude={formData.location.lat}
-													initialLongitude={formData.location.lng}
+								
+									<Fragment>
+										<div className={`${type === 'request' ? 'col-span-1' : 'col-span-2'}`}>
+											<label className='d-block mb-1 text-[#272835] text-sm'>{translate('location')}</label>
+											<LocationSearchBox
+												placeholder={'CityNeighborhood'}
+												onLocationSelected={handleLocationSelect}
+												initialLatitude={formData.location.lat}
+												initialLongitude={formData.location.lng}
+											/>
+										</div>
+										{ type === 'post' ?
+											<div className="col-span-2">
+												<GoogleMapBox
+													apiKey={GoogleMapApi}
+													onSelectLocation={handleLocationSelect}
+													latitude={formData.location.lat}
+													longitude={formData.location.lng}
 												/>
-											</div>
-											{ type === 'post' ?
-												<div className="col-span-2">
-													<GoogleMapBox
-														apiKey={GoogleMapApi}
-														onSelectLocation={handleLocationSelect}
-														latitude={formData.location.lat}
-														longitude={formData.location.lng}
-													/>
-												</div>: null
-											}
-										</Fragment>
+											</div>: null
+										}
+									</Fragment>
 									
 								</div>
 							</div>

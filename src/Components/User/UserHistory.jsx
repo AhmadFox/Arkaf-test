@@ -48,7 +48,7 @@ const UserHistory = () => {
 			}
 			);
 		}
-	}, []);
+	}, [offsetdata]);
 
 	return (
 		<UserLayout footer={true}>

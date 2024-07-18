@@ -5,15 +5,15 @@ import { settingsData } from "@/store/reducer/settingsSlice";
 import { placeholderImage, translate, formatPriceAbbreviated, isThemeEnabled } from "@/utils";
 
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
 
 const ListingCard = ({ data }) => {
 
-	console.log('datadatadatadata', data);
 	const themeEnabled = isThemeEnabled();
 	const priceSymbol = useSelector(settingsData);
     const CurrencySymbol = priceSymbol && priceSymbol.currency_symbol;
 	return (
-		<div className='flex gap-3 group'>
+		<Link target={ data.is_approved === 1 && data.is_visible === 1 ? '_blank' : ''} href={data.is_approved === 1 && data.is_visible === 1 ? `/properties-details/${data.slug_id}` : '#'} className='flex gap-3 group'>
 			{
 				data.title_image &&
 				<div className="relative overflow-hidden w-48 rounded-xl">
@@ -56,7 +56,7 @@ const ListingCard = ({ data }) => {
 						))}
 				</div>
 			</div>
-		</div>
+		</Link>
 	)
 }
 

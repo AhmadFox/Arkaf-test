@@ -52,6 +52,7 @@ export const POST_PROJECT = "post_project"
 export const GET_PROJECTS = "get_projects"
 export const USER_INTREST = "personalised-fields"
 export const GET_USER_RECOMMENDATION = "get_user_recommendation"
+export const GET_PROPERTY_ADDITION_REQUEST = "get_property_addition_request"
 
 
 // is login user check
@@ -337,6 +338,20 @@ export const getCities = () => {
 
     }
 }
+
+// GET PROPERTY ADDITION REQUEST
+export const getPropertyAdditionRequest = () => {
+    return {
+        url: `${GET_PROPERTY_ADDITION_REQUEST}`,
+        method: "GET",
+        params: {
+
+        },
+        authorizationHeader: true,
+
+    }
+}
+
 
 // GET_COUNT_BY_CITIES_CATEGORIS
 export const getCountByCitysCategories = () => {
@@ -1014,10 +1029,11 @@ export const setPropertyTotalClicks = (slug_id) => {
     }
 }
 // set property status     
-export const changePropertyStatus = (property_id, status) => {
+export const changePropertyStatus = (property_id, status, is_visible) => {
     let data = new FormData();
     data.append("property_id", property_id);
     data.append("status", status);
+    data.append("is_visible", is_visible);
     return {
         url: `${UPDATE_PROPERTYY_STATUS}`,
         method: "POST",

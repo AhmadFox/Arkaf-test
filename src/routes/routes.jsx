@@ -44,6 +44,8 @@ export const protectedRoutes = [
     '/user/profile/',
     '/user/favorites-properties/',
     '/user/personalize-feed/',
+    '/user/request-list/',
+    '/user/current-listing/',
 
     '/user/dashboard/',
     '/user/advertisement/',

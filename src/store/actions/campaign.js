@@ -44,7 +44,8 @@ import {
     getSettingApi,
     GetUserIntrest,
     DeleteUserIntrest,
-    getProfileApi
+    getProfileApi,
+    getPropertyAdditionRequest
 } from "@/utils/api";
 import { store } from "../store";
 import { apiCallBegan } from "./apiActions";
@@ -131,6 +132,23 @@ export const GetCategorieApi = (onSuccess, onError, onStart) => {
         })
     );
 };
+
+
+// GET ADDITIONAL REQUEST
+export const GetAdditionRequest = (onSuccess, onError, onStart) => {
+    store.dispatch(
+        apiCallBegan({
+            ...getPropertyAdditionRequest(),
+            displayToast: false,
+            onStart,
+            onSuccess,
+            onError,
+        })
+    );
+}
+
+
+
 // GET PROPERTIES
 export const GetFeturedListingsApi = ({
     is_featured = '',
@@ -898,13 +916,14 @@ export const setPropertyTotalClicksApi = ({
 export const changePropertyStatusApi = ({
     property_id = "",
     status = "",
+    is_visible = "",
     onSuccess = () => { },
     onError = () => { },
     onStart = () => { }
 }) => {
     store.dispatch(
         apiCallBegan({
-            ...changePropertyStatus(property_id, status),
+            ...changePropertyStatus(property_id, status, is_visible),
             displayToast: false,
             onStart,
             onSuccess,

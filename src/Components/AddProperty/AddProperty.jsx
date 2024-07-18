@@ -316,7 +316,7 @@ const AddProperty = () => {
                 threeD_image: formData.Viewer3D,
                 rentduration: formData.date,
                 video_link: formData.Viewer3D,
-                status: '0',
+                status: '2',
                 built_in: formData.builtIn,
                 second_contact_number: '',
                 contact_name: formData.contactName,
