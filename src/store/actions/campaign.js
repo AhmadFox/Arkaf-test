@@ -505,15 +505,16 @@ export const PostProperty = ({
 
 
 export const PostAdditionRequest = ({
-    category_id = "",
     property_type = "",
-    size = "",
     full_name = "",
     phone_number = "",
-    rentduration = "",
+    size = "",
+    category_id = "",
     address = "",
     latitude = "",
     longitude = "",
+    rentduration = "",
+    request_to = "",
     onSuccess = () => { },
     onError = () => { },
     onStart = () => { }
@@ -522,15 +523,16 @@ export const PostAdditionRequest = ({
     store.dispatch(
         apiCallBegan({
             ...postAdditionRequest(
-                category_id,
                 property_type,
-                size,
                 full_name,
                 phone_number,
-                rentduration,
+                size,
+                category_id,
                 address,
                 latitude,
                 longitude,
+                rentduration,
+                request_to,
                 ),
                 displayToast: false,
             onStart,

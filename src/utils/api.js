@@ -607,28 +607,30 @@ export const postProperty = (
 
 // POST ADITIONAL REQUIST
 export const postAdditionRequest = (
-    category_id,
     property_type,
-    size,
     full_name,
     phone_number,
-    rentduration,
+    size,
+    category_id,
     address,
     latitude,
     longitude,
+    rentduration,
+    request_to,
 ) => {
     let data = new FormData();
 
     // Append the property data to the FormData object
-    data.append('category_id', category_id);
     data.append('property_type', property_type);
-    data.append('size', size);
     data.append('full_name', full_name);
     data.append('phone_number', phone_number);
+    data.append('size', size);
+    data.append('category_id', category_id);
     data.append('address', address);
-    data.append('rentduration', rentduration);
     data.append('latitude', latitude);
     data.append('longitude', longitude);
+    data.append('rentduration', rentduration);
+    data.append('request_to', request_to);
     
     return {
         url: `${POST_ADDITION_REQUEST}`,

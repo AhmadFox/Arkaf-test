@@ -24,7 +24,7 @@ const RadioRow = ({ sendSelectedOption, type }) => {
 
 	const handleRadioChange = (index) => {
 		setSelectedOption(index);
-		sendSelectedOption(index + 1);
+		sendSelectedOption(index);
 	};
 
 	const filteredListingBy = listingBy.filter((item, idx) => {

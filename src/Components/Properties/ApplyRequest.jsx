@@ -41,7 +41,7 @@ const ApplyRequest = ({ type }) => {
 
 	const handelContinue = async (e) => {
 		switch (true) {
-			case formData.requistBy === 3:
+			case formData.requistBy === 2:
 				router.push('/user/properties/');
 				return;
 	
@@ -65,15 +65,16 @@ const ApplyRequest = ({ type }) => {
 			switch (type) {
 				case "post":
 					await PostAdditionRequest({
-						category_id: formData.categoryId,
 						property_type: formData.requistType === 'sell' ? '0' : '1',
-						size: formData.size,
 						full_name: formData.name,
 						phone_number: formData.phone,
-						rentduration: formData.duration,
+						size: formData.size,
+						category_id: formData.categoryId,
 						address: formData.location.city,
 						latitude: formData.location.lat,
 						longitude: formData.location.lng,
+						rentduration: formData.duration,
+						request_to: formData.requistBy,
 						onSuccess: async (response) => {
 							toast.success(response.message);
 							setTab(3);
@@ -149,7 +150,7 @@ const ApplyRequest = ({ type }) => {
             ...prevFormData,
             [field]: value,
         }));
-		field !== 'requistBy' ? setDisabled(false): null
+		// field !== 'requistBy' ? setDisabled(false): null
     };
 
 	const handleLocationSelect = (address) => {
@@ -187,8 +188,18 @@ const ApplyRequest = ({ type }) => {
 	// Effect for change button disabled state
 	useEffect(() => {
 
-		formData.requistBy && setDisabled(false)
+		formData.requistBy >= 0 && setDisabled(false)
 		tab === 2 && setDisabled(true)
+
+		if (tab === 2) {
+			formData.name !== '' &&
+			formData.maxPrice !== '' &&
+			formData.size !== '' &&
+			formData.phone !== '' &&
+			formData.categoryId !== '' &&
+			formData.duration !== '' &&
+			formData.requistType !== '' ? setDisabled(false) : setDisabled(true)
+		}
 
     }, [formData.requistBy, tab]);
 
@@ -367,17 +378,20 @@ const ApplyRequest = ({ type }) => {
 				</div>
 				<div className="container">
 					<div className="flex justify-between">
-						<SubmitButton 
-							caption="back"
-							disabled={back}
-							className="tw-btn-outline w-40"
-							onClick={handelBack}
-						/>
+						{
+							tab === 2 &&
+							<SubmitButton 
+								caption="back"
+								disabled={back}
+								className="tw-btn-outline w-40"
+								onClick={handelBack}
+							/>
+						}
 						<SubmitButton 
 							caption="continue"
 							loading={loading}
 							disabled={disabled}
-							className="tw-btn-solid w-40"
+							className="tw-btn-solid w-40 ms-auto"
 							onClick={handelContinue}
 						/>
 					</div>
