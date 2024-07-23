@@ -53,10 +53,11 @@ export const { signupRequested, signupSuccess, signupFailure, updateDataSuccess,
 export default authSlice.reducer;
 
 // API CALLS
-export const signupLoaded = (email, phone, password, password_confirmation, type, firebase_id, onSuccess, onError, onStart) => {
+export const signupLoaded = (user_type, email, phone, password, password_confirmation, type, firebase_id, onSuccess, onError, onStart) => {
+    console.log('data user_type', user_type);
     store.dispatch(
         apiCallBegan({
-            ...user_signupApi(email, phone, password, password_confirmation, type, firebase_id),
+            ...user_signupApi(user_type, email, phone, password, password_confirmation, type, firebase_id),
             displayToast: false,
             onStartDispatch: signupRequested.type,
             onSuccessDispatch: signupSuccess.type,

@@ -11,11 +11,13 @@ import InputTel from "../ui/InputTel";
 import InputPassword from "../ui/InputPassword";
 import InputEmail from "../ui/InputEmail";
 import SubmitButton from "./SubmitButton";
+import UserType from "../ui/UserType";
 
 const SignupForm = () => {
 
 	const navigate = useRouter();
 
+	const [ user_type, setUserType ] = useState('');
 	const [phone, setPhone] = useState('');
 	const [valedPhone, setValedPhone] = useState(false);
     const [email, setEmail] = useState('');
@@ -35,13 +37,19 @@ const SignupForm = () => {
 		valid ? setPassword(value) : setPassword('');
 	};
 
+	const handleUserType = (value) => {
+		console.log('user type', value);
+		setUserType(value);
+	};
+
 	useEffect(() => {
 
-		valedPhone && email && password ? 
+		valedPhone && email && password && user_type !== '' ? 
 			setIsButtonDisabled(false) :
 			setIsButtonDisabled(true);
 
 		setFormData({
+			user_type,
             email,
             phone,
             password,
@@ -50,15 +58,17 @@ const SignupForm = () => {
 			firebase_id: 2
         });
 
-	}, [phone, email, password, valedPhone])
+	}, [phone, email, password, valedPhone, user_type])
 
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setIsLoading(true);
-	
+
+		console.log('formData', formData);
 		try {
 			signupLoaded(
+				formData.user_type,
 				formData.email,
 				formData.phone,
 				formData.password,
@@ -105,6 +115,9 @@ const SignupForm = () => {
 
 	return (
 		<form className='mb-4 grid gap-4' onSubmit={handleSubmit}>
+			<div className="">
+				<UserType sendSelectedOption={handleUserType} />
+			</div>
 			<div>
 				<InputTel
 					code={'+966'}

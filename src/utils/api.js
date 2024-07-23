@@ -86,10 +86,9 @@ export const getSettingApi = (user_id) => {
 }
 
 // USER SIGNUP
-// export const user_signupApi = (name, email, mobile, type, address, firebase_id, logintype, profile, fcm_id) => {
-export const user_signupApi = (email, mobile, password, password_confirmation, type, firebase_id) => {
+export const user_signupApi = (user_type, email, mobile, password, password_confirmation, type, firebase_id) => {
     let data = new FormData();
-    data.append("user_type", "0");
+    data.append("user_type", user_type);
     data.append("email", email);
     data.append("mobile", mobile);
     data.append("password", password);

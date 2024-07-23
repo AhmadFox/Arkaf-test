@@ -45,7 +45,7 @@ const AuthLayout = ({ children }) => {
 						`}>
 							<div className="flex flex-col md:flex-row gap-12 items-center justify-between">
 								<Link className="navbar-brand" href="/">
-									<Image loading="lazy" src={arkafLogo} alt="Arkaf Brand Logo" width={350} height={157} className="w-32 h-auto"/>
+									<Image loading="lazy" src={arkafLogo} alt="Arkaf Brand Logo" width={350} height={157} className="w-32 h-auto mb-9"/>
 								</Link>
 								
 								{
