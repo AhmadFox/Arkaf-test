@@ -78,6 +78,14 @@ const Nav = ({ stikyNav }) => {
         router.push('/user/properties/post-listing') : router.push("/login")
     }
 
+    const handelRentRedirect = () => {
+        router.push("/properties-on-map/?&property_type=1");
+    }
+
+    const handelBuytRedirect = () => {
+        router.push("/properties-on-map/?&property_type=0");
+    }
+
     const handelRequistProperty = () => {
         signupData.data !== null ?
         router.push('/user/properties/requist-listing') : router.push("/login")
@@ -280,10 +288,10 @@ const Nav = ({ stikyNav }) => {
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                     <li className="nav-item">
-                                        <Link className="nav-link" aria-current="page" href="/properties/rent">{translate("rent")}</Link>
+                                        <button onClick={handelRentRedirect} className="nav-link">{translate("rent")}</button>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="/properties/buy" className="nav-link">{translate("buy")}</Link>
+                                        <button onClick={handelBuytRedirect} className="nav-link">{translate("buy")}</button>
                                     </li>
                                     <li className="nav-item">
                                         <button onClick={handelAddProperty} className="nav-link">{translate("addProperty")}</button>

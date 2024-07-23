@@ -7,7 +7,7 @@ import { placeholderImage, translate, formatPriceAbbreviated, isThemeEnabled } f
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
-const ListingCard = ({ data }) => {
+const ListingCard = ({ data, type }) => {
 
 	const themeEnabled = isThemeEnabled();
 	const priceSymbol = useSelector(settingsData);
@@ -15,7 +15,7 @@ const ListingCard = ({ data }) => {
 	return (
 		<Link target={ data.is_approved === 1 && data.is_visible === 1 ? '_blank' : ''} href={data.is_approved === 1 && data.is_visible === 1 ? `/properties-details/${data.slug_id}` : '#'} className='flex gap-3 group'>
 			{
-				data.title_image &&
+				type !== 'request-list' && data.title_image &&
 				<div className="relative overflow-hidden w-48 rounded-xl">
 					<Image
 						loading="lazy"
@@ -27,8 +27,11 @@ const ListingCard = ({ data }) => {
 				</div>
 			}
 			<div className={`flex-grow-1 flex flex-col gap-2 my-2 justify-center ${data.title_image ? 'w-8/12' : 'w-full'}`}>
-				<div className="rounded-full border font-light text-sm py-1 px-3.5 w-max">{translate(data.category.category)}</div>
-				<span className='text-xl xl:text-xl font-medium'>{formatPriceAbbreviated(data.price)} {CurrencySymbol}</span>
+				<div className="rounded-full border font-light text-sm py-1 px-3.5 w-max">{translate(data.category.category)}</div>{type}
+				{
+					type !== 'request-list' &&
+						<span className='text-xl xl:text-xl font-medium'>{formatPriceAbbreviated(data.price)} {CurrencySymbol}</span>
+				}
 				<span className="text-slate-500 font-light truncate whitespace-nowrap overflow-hidden max-w-[280px]">{data.address}</span>
 				<div className="d-flex gap-2 flex-wrap h-8">
 					{data.parameters &&

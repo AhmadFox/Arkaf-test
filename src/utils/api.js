@@ -53,6 +53,7 @@ export const GET_PROJECTS = "get_projects"
 export const USER_INTREST = "personalised-fields"
 export const GET_USER_RECOMMENDATION = "get_user_recommendation"
 export const GET_PROPERTY_ADDITION_REQUEST = "get_property_addition_request"
+export const GET_PROPERTY_REQUEST = "get_property_request"
 
 
 // is login user check
@@ -339,19 +340,35 @@ export const getCities = () => {
     }
 }
 
-// GET PROPERTY ADDITION REQUEST
-export const getPropertyAdditionRequest = () => {
+// GET ADDITION REQUEST
+export const getPropertyAdditionRequest = (offset, limit, userid) => {
     return {
         url: `${GET_PROPERTY_ADDITION_REQUEST}`,
         method: "GET",
         params: {
-
+            userid: userid,
+            offset: offset,
+            limit: limit
         },
         authorizationHeader: true,
 
     }
 }
 
+// GET PROPERTY REQUEST
+export const getPropertyPropertyRequest = (offset, limit, userid) => {
+    return {
+        url: `${GET_PROPERTY_REQUEST}`,
+        method: "GET",
+        params: {
+            userid: userid,
+            offset: offset,
+            limit: limit
+        },
+        authorizationHeader: true,
+
+    }
+}
 
 // GET_COUNT_BY_CITIES_CATEGORIS
 export const getCountByCitysCategories = () => {
@@ -987,7 +1004,6 @@ export const addReport = (reason_id, property_id, other_message) => {
 // GET_NEARBY_PROPERTIES    
 export const getNearbyProperties = (
     city, 
-    // state, 
     type, 
     max_price, 
     min_price, 
@@ -1004,7 +1020,6 @@ export const getNearbyProperties = (
         method: "GET",
         params: {
             city, 
-            // state, 
             type, 
             max_price, 
             min_price, 
@@ -1014,7 +1029,7 @@ export const getNearbyProperties = (
             price_sort, 
             userid, 
             filter_type, 
-            city_id, 
+            city_id,
         },
         authorizationHeader: false,
     }

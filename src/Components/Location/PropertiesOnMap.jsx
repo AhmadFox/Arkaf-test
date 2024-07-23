@@ -31,8 +31,6 @@ const PropertiesOnMap = ({ latitude, longitude, data }) => {
 
     }, [clickedMarker]);
 
-	console.log('location on map', location);
-
     return (
 		<div id="map">
 			{mapError ? (

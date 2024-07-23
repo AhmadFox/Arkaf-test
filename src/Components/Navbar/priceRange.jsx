@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { formatPriceAbbreviated} from "@/utils";
 
-const PriceRange = ({ setPriceRange, reset }) => {
+const PriceRange = ({ setPriceRange, reset, min, max }) => {
+
   const [isOpen, setIsOpen] = useState(false);
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
+  const [minPrice, setMinPrice] = useState(min || '');
+  const [maxPrice, setMaxPrice] = useState(max || '');
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -20,8 +21,10 @@ const PriceRange = ({ setPriceRange, reset }) => {
 
 	useEffect(() => {
 
-		setMinPrice('')
-		setMaxPrice('')
+		if (reset) {
+      setMinPrice('')
+		  setMaxPrice('')
+    }
 
 	}, [reset])
 

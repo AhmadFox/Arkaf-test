@@ -99,7 +99,7 @@ const SearchTab = ({ getCategories }) => {
         setShowFilterModal(false); // Close the modal
 
         // Redirect to /search
-        router.push(`/search`);
+        router.push(`/properties-on-map/?city=${searchData.searchInput}&property_type=${searchData.activeTab}`);
     };
     const [clearfilterLocation, setClearFilerLocation] = useState(false);
 

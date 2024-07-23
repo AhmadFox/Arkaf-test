@@ -112,6 +112,9 @@ const UserInfo = () => {
 						<Link href="/user/favorites-properties" className={`${tabItemStyle} ${router.pathname === '/user/favorites-properties' && activeItemStyle }`}>{translate('favoriteList')}</Link>
 					</li>
 					<li className='mb-2'>
+						<Link href="/user/request-addition-list" className={`${tabItemStyle} ${router.pathname === '/user/request-addition-list' && activeItemStyle }`}>{translate('requestAddition')}</Link>
+					</li>
+					<li className='mb-2'>
 						<Link href="/user/request-list" className={`${tabItemStyle} ${router.pathname === '/user/request-list' && activeItemStyle }`}>{translate('requestList')}</Link>
 					</li>
 					<li className='mb-2'>

@@ -13,6 +13,7 @@ import Badeg from './Badeg'
 import Link from 'next/link';
 import { useState } from 'react';
 import ToggleSwitch from './ToggleSwitch';
+import Image from 'next/image';
 
 const TableListing = ({ data, type }) => {
 
@@ -87,26 +88,44 @@ const TableListing = ({ data, type }) => {
 						<tr className='border-b last:border-b-0' key={idx}>
 							{/* Listing component data */}
 							<td className='py-3 px-4'>
-								<ListingCard data={item} />
+								<ListingCard data={item} type={type} />
 							</td>
 							<td className='py-3 px-4'>
-								<div className="flex flex-col justify-center items-center space-y-3">
-									<Badeg
-										icon="eye"
-										count={formatPriceAbbreviated(item.total_view)}
-										type={'default'}
-									/>
-									<Badeg
-										icon="hert"
-										count={formatPriceAbbreviated(item.total_favourite_users)}
-										type={'default'}
-									/>
-									<Badeg
-										icon="share"
-										count={'0'}
-										type={'default'}
-									/>
-								</div>
+								{
+									type !== 'request-list' ?
+									<div className="flex flex-col justify-center items-center space-y-3">
+										<Badeg
+											icon="eye"
+											count={formatPriceAbbreviated(item.total_view)}
+											type={'default'}
+										/>
+										<Badeg
+											icon="hert"
+											count={formatPriceAbbreviated(item.total_favourite_users)}
+											type={'default'}
+										/>
+										<Badeg
+											icon="share"
+											count={'0'}
+											type={'default'}
+										/>
+									</div>:
+									<div className="flex flex-col justify-center items-center space-y-3">
+										{
+											item.status === 'available' ?
+											<Badeg
+												count={'Available'}
+												type={'Available'}
+											/>:
+											item.property_type === 'On Agent' ? 
+												<Badeg
+												count={'On Agent'}
+												type={'On Agent'}
+											/>: null
+										}
+									</div>
+									
+								}
 							</td>
 							<td className='py-3 px-4'>
 								<div className="flex flex-col justify-center items-center space-y-3">
@@ -127,6 +146,24 @@ const TableListing = ({ data, type }) => {
 											count={'Sold'}
 											type={'Sold'}
 										/>: null
+									}
+									{ type === "request-list" &&
+										item.request_to === 'arkaf' ?
+										<div className="flex gap-2 items-center ms-auto">
+											<Image
+												className='border rounded-full'
+												width={50}
+												height={50}
+												src={''}
+												alt="arcaf logo"
+											/>
+											<div className="flex flex-col gap-1">
+												<span>{item.request_to}</span>
+												<small>The Anwar Group Real Estate</small>
+											</div>
+										</div>
+										:
+										<div className="px-3 py-1 rounded-full border">Still fiiding Agent</div>
 									}
 									
 								</div>

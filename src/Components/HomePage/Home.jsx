@@ -351,7 +351,6 @@ const HomePage = () => {
             }
         };
         }, []);
-    
 
     return (
         <Layout  stikyNav={true}>
@@ -803,7 +802,7 @@ const HomePage = () => {
                             <div className="citys_grid">
                                 {
                                     cities && cities.filter(item => item.status !== 0).map((item, idx) => (
-                                        <Link href={`properties/city/${item.id}`} key={idx}>
+                                        <Link href={`properties-on-map/?&city_id=${item.id}&city=${item.name}`} key={idx}>
                                             <figure>
                                                 <Image 
                                                     loading="lazy"

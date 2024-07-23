@@ -45,7 +45,8 @@ import {
     GetUserIntrest,
     DeleteUserIntrest,
     getProfileApi,
-    getPropertyAdditionRequest
+    getPropertyAdditionRequest,
+    getPropertyPropertyRequest
 } from "@/utils/api";
 import { store } from "../store";
 import { apiCallBegan } from "./apiActions";
@@ -135,10 +136,12 @@ export const GetCategorieApi = (onSuccess, onError, onStart) => {
 
 
 // GET ADDITIONAL REQUEST
-export const GetAdditionRequest = (onSuccess, onError, onStart) => {
+export const GetAdditionRequest = (offset, limit, userid, onSuccess, onError, onStart) => {
+
+    console.log('onSuccess', onSuccess);
     store.dispatch(
         apiCallBegan({
-            ...getPropertyAdditionRequest(),
+            ...getPropertyAdditionRequest(offset, limit, userid),
             displayToast: false,
             onStart,
             onSuccess,
@@ -147,6 +150,20 @@ export const GetAdditionRequest = (onSuccess, onError, onStart) => {
     );
 }
 
+// GET Property REQUEST
+export const GetPropertyRequest = (offset, limit, userid, onSuccess, onError, onStart) => {
+
+    console.log('onSuccess', onSuccess);
+    store.dispatch(
+        apiCallBegan({
+            ...getPropertyPropertyRequest(offset, limit, userid),
+            displayToast: false,
+            onStart,
+            onSuccess,
+            onError,
+        })
+    );
+}
 
 
 // GET PROPERTIES
@@ -840,7 +857,6 @@ export const addReportApi = ({
 // getNearbyProperties  API
 export const getNearbyPropertiesApi = ({ 
     city = "", 
-    // state = "", 
     type = "", 
     max_price = "", 
     min_price = "", 
@@ -857,7 +873,6 @@ export const getNearbyPropertiesApi = ({
             apiCallBegan({
                 ...getNearbyProperties(
                     city, 
-                    // state, 
                     type, 
                     max_price, 
                     min_price, 

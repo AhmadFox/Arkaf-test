@@ -51,7 +51,7 @@ const ApplyRequest = ({ type }) => {
 				return;
 	
 			case tab === 3:
-				router.push('/');
+				router.push('/user/request-list/');
 				return;
 	
 			default:

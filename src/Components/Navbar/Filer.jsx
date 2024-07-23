@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Autocomplete } from "@react-google-maps/api";
 import { FiSearch } from "react-icons/fi";
 import { translate } from "@/utils";
@@ -9,29 +9,30 @@ const inputStyle = `
     p-2.5 shadow-none rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
 `;
 
-const Filer = ({ onSelectFilter }) => {
+const Filer = ({ onSelectFilter,  initialFilters }) => {
 
     const autocompleteRef = useRef(null);
     const [searchText, setSearchText] = useState("");
     const [ resetPriceRange, setResetPriceRange ] = useState(false);
-    const [filters, setFilters] = useState({ 
-        type: "", 
-        max_price: "", 
-        min_price: "", 
-        property_type: "", 
-        search: "", 
-        parameter_id: "", 
-        price_sort: "", 
-        userid: "", 
-        filter_type: "", 
-        addressInfo: {
-            city_id: "",  
+    const [ filters, setFilters] = useState({});
+
+    useEffect(() => {
+        setFilters({ 
+            type: initialFilters.type, 
+            max_price: initialFilters.max_price, 
+            min_price: initialFilters.min_price, 
+            property_type: initialFilters.property_type, 
+            search: "", 
+            parameter_id: initialFilters.parameter_id, 
+            price_sort: initialFilters.price_sort, 
+            userid: initialFilters.userid, 
+            filter_type: initialFilters.filter_type, 
+            city_id: initialFilters.city_id,  
             lat: null, 
             lng: null,
-            city: "", 
-            state: "", 
-        }
-     });
+            city: initialFilters.city, 
+        })
+    }, [initialFilters])
 
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
@@ -51,15 +52,12 @@ const Filer = ({ onSelectFilter }) => {
             price_sort: "", 
             userid: "", 
             filter_type: "", 
-            addressInfo: {
             city_id: "",  
             lat: null, 
             lng: null,
             city: "", 
-            state: "", 
-        }
         });
-        onSelectFilter({ 
+        onSelectFilter({
             type: "", 
             max_price: "", 
             min_price: "", 
@@ -69,37 +67,33 @@ const Filer = ({ onSelectFilter }) => {
             price_sort: "", 
             userid: "", 
             filter_type: "", 
-            addressInfo: {
-                city_id: "",  
-                lat: null, 
-                lng: null,
-                city: "", 
-                state: "", 
-            }
+            city_id: "",  
+            lat: null, 
+            lng: null,
+            city: "", 
         });
         setResetPriceRange(!resetPriceRange)
     };
 
     const handleSearchTextChange = (e) => {
         setSearchText(e.target.value);
+        setFilters({ ...filters, city: e.target.value });
     };
 
     const handleLocationSelect = () => {
         if (autocompleteRef.current && searchText.trim() !== "") {
             const place = autocompleteRef.current.getPlace();
             if (place.geometry) {
-                console.log('place', place);
                 const formatted_address = place.formatted_address || "Address not available";
-                const { city, state } = extractCityFromGeocodeResult(place);
-                const address = {
+                const { city } = extractCityFromGeocodeResult(place);
+                setSearchText(formatted_address);
+                setFilters({
+                    ...filters,
                     city,
-                    state,
                     type:filters.type,
                     lat: place.geometry.location.lat(),
                     lng: place.geometry.location.lng(),
-                 };
-                setSearchText(formatted_address);
-                setFilters({...filters, addressInfo: address});
+                });
             } else {
                 console.error("No geometry available for selected place.");
             }
@@ -163,12 +157,12 @@ const Filer = ({ onSelectFilter }) => {
                                 value={filters.property_type}
                             >
                                 <option value="">{translate("all")}</option>
-                                <option value={0}>{translate("forSell")}</option>
-                                <option value={1}>{translate("forRent")}</option>
+                                <option value={"0"}>{translate("forSell")}</option>
+                                <option value={"1"}>{translate("forRent")}</option>
                             </select>
                         </div>
                         <div className="col-span-2">
-                            <PriceRange reset={resetPriceRange} setPriceRange={applayPriceRange} />
+                            <PriceRange reset={resetPriceRange} setPriceRange={applayPriceRange} min={filters.min_price} max={filters.max_price} />
                         </div>
                         <div className="col-span-2">
                             <select

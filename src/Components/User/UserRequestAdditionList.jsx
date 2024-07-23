@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { translate } from '@/utils'
-import { GetPropertyRequest } from '@/store/actions/campaign'
+import { GetAdditionRequest } from '@/store/actions/campaign'
 
 import ReactPagination from '../Pagination/ReactPagination'
 import NoData from '../NoDataFound/NoData'
@@ -27,11 +27,29 @@ const UserHistory = () => {
 		window.scrollTo(0, 300);
 	};
 
+	// if (isLoggedIn) {
+	// 	GetAdditionRequest({
+	// 		offset: offsetdata.toString(),
+	// 		limit: limit.toString(),
+	// 		userid: isLoggedIn ? userCurrentId : "",
+	// 		onSuccess: (response) => {
+	// 			setListing(response.data);
+	// 			setTotal(response.total)
+	// 			// setIsLoading(false);
+	// 		},
+	// 		onError: (error) => {
+	// 			console.log(error);
+	// 			toast.error(error);
+	// 			// setIsLoading(true);
+	// 		}
+	// 	})
+	// }
+
 	// GET LISTING DATA
 	useEffect(() => {
 		// setIsLoading(true);
 		if (isLoggedIn) {
-			GetPropertyRequest(
+			GetAdditionRequest(
 				offsetdata.toString(),
 				limit.toString(),
 				userCurrentId,
