@@ -12,7 +12,7 @@ import TableListing from '../ui/TableListing'
 
 const UserHistory = () => {
 
-	const limit = 2;
+	const limit = 8;
 
 	const [ total, setTotal ] = useState(0);
 	const [ listing, setListing ] = useState([]);

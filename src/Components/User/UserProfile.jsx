@@ -18,6 +18,7 @@ import InputTel from "../ui/InputTel.jsx";
 import UserLayout from "../Layout/UserLayout.jsx";
 import GoogleMapBox from "../Location/GoogleMapBox.jsx";
 import LocationSearchBox from "../Location/LocationSearchBox";
+import InputTag from "../ui/InputTag.jsx";
 
 const UserProfile = () => {
 
@@ -41,6 +42,10 @@ const UserProfile = () => {
         phoneNumber: user?.mobile,
         profile: user?.profile,
         address: user?.address,
+        agencyName: user?.Agency_name,
+        description: user?.about_me,
+        experience: user?.experience,
+        specialties: user?.specialties,
     });
 
     const [selectedLocationAddress, setSelectedLocationAddress] = useState({
@@ -82,6 +87,33 @@ const UserProfile = () => {
        
     };
 
+    const handleAgencyName = (e) => {
+        const value = e.target.value;
+        setFormData({
+            ...formData,
+            agencyName: value,
+        });
+       
+    };
+
+    const handleDescription = (e) => {
+        const value = e.target.value;
+        setFormData({
+            ...formData,
+            description: value,
+        });
+       
+    };
+    
+    const handleExperiance = (e) => {
+        const value = e.target.value;
+        setFormData({
+            ...formData,
+            experience: value,
+        });
+       
+    };
+
     const handleUploadButtonClick = () => {
         fileInputRef.current.click(); // Trigger the file input click event
     };
@@ -110,6 +142,13 @@ const UserProfile = () => {
         })
 	};
 
+    const handleSpecialties = (value) => {
+        setFormData({
+            ...formData,
+            specialties: value
+        })
+	};
+
     // const isLoggedIn = useSelector((state) => state.User_signup);
     // const userCurrentId = isLoggedIn && isLoggedIn.data ? isLoggedIn.data.data.id : null;
 
@@ -123,7 +162,11 @@ const UserProfile = () => {
             email: user?.email,
             phoneNumber: user?.mobile,
             address: user?.address,
-            profileImage: user?.profile
+            profileImage: user?.profile,
+            agencyName: user?.agencyName,
+            description: user?.about_me,
+            experience: user?.experience,
+            specialties: user?.specialties,
         });
         setSelectedLocationAddress({
 			lat: user?.lat,
@@ -145,7 +188,6 @@ const UserProfile = () => {
             address: formData.address,
             firebase_id: '2',
             notification: "1",
-            about_me: formData.aboutMe ? formData.aboutMe : "",
             facebook_id: formData.facebook ? formData.facebook : "",
             twiiter_id: formData.twiiter ? formData.twiiter : "",
             instagram_id: formData.instagram ? formData.instagram : "",
@@ -156,6 +198,10 @@ const UserProfile = () => {
             state: selectedLocationAddress?.state,
             country: selectedLocationAddress?.country,
             profile: formData.profileImage,
+            Agency_name: formData.agencyName,
+            about_me: formData.description,
+            experience: formData.experience,
+            specialties: formData.specialties,
             onSuccess: (response) => {
                 toast.success(translate("profileupdate"));
                 loadUpdateUserData(response);
@@ -232,19 +278,34 @@ const UserProfile = () => {
                                 </div>
                             </div>
                             {/* Form Fields */}
-                            <div className="">
-                                <label className='d-block mb-1 text-[#272835] text-sm'>{translate('fullName')}</label>
-                                <input
-                                    type="text"
-                                    name="fullName"
-                                    value={formData.fullName}
-                                    onChange={handleFullName}
-                                    placeholder={translate('enterFullName')}
-                                    pattern="^[a-zA-Z]+$"
-                                    className={inputStyle}
-                                />
-                            </div>
                             <div className="grid grid-cols-2 gap-4">
+                                <div className={`${user?.user_type !== '1' && 'col-span-2'}`}>
+                                    <label className='d-block mb-1 text-[#272835] text-sm'>{translate('fullName')}</label>
+                                    <input
+                                        type="text"
+                                        name="fullName"
+                                        value={formData.fullName}
+                                        onChange={handleFullName}
+                                        placeholder={translate('enterFullName')}
+                                        pattern="^[a-zA-Z]+$"
+                                        className={inputStyle}
+                                    />
+                                </div>
+                                {
+                                    user?.user_type &&
+                                    <div className="">
+                                        <label className='d-block mb-1 text-[#272835] text-sm'>{translate('agencyName')}</label>
+                                        <input
+                                            type="text"
+                                            name="agencyName"
+                                            value={formData.agencyName}
+                                            onChange={handleAgencyName}
+                                            placeholder={translate('enterAgencyName')}
+                                            pattern="^[a-zA-Z]+$"
+                                            className={inputStyle}
+                                        />
+                                    </div>
+                                }
                                 <div className="">
                                     <label className='d-block mb-1 text-[#272835] text-sm'>{translate('email')}</label>
                                     <div className={`${inputStyle} bg-slate-100 opacity-60 select-none w-full`}>{formData.email}</div>
@@ -260,6 +321,41 @@ const UserProfile = () => {
                                     />
                                 </div>
                             </div>
+                            {
+                                user?.user_type &&
+                                <Fragment>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="">
+                                            <label className='d-block mb-1 text-[#272835] text-sm'>{translate('yearsOfExperience')}</label>
+                                            <input
+                                                type="number"
+                                                name="experience"
+                                                min={0} max={100} step={0.1} 
+                                                value={formData.experience}
+                                                onChange={handleExperiance}
+                                                placeholder={translate('yearsOfExperience')}
+                                                className={inputStyle}
+                                            />
+                                        </div>
+                                        <div className="">
+                                            <label className='d-block mb-1 text-[#272835] text-sm'>{translate('yearsOfExperience')}</label>
+                                            <InputTag onValueChange={handleSpecialties} getTags={formData.specialties} />
+                                        </div>
+                                    </div>
+                                    <div className="">
+                                        <label className='d-block mb-1 text-[#272835] text-sm'>{translate('description')}</label>
+                                        <textarea
+                                            cols={4}
+                                            rows={8}
+                                            name="description"
+                                            value={formData.description}
+                                            onChange={handleDescription}
+                                            placeholder={translate('enterDescription')}
+                                            className={inputStyle}
+                                        ></textarea>
+                                    </div>
+                                </Fragment>
+                            }
                             <div className="">
                                 <label className='d-block mb-1 text-[#272835] text-sm'>{translate('address')}</label>
                                 <LocationSearchBox

@@ -6,6 +6,7 @@ export const USER_SIGNUP = "register"
 export const USER_VERIFY_CODE = "verify-code"
 export const USER_RESEND_CODE = "resend-code"
 export const USER_LOGIN = "login"
+export const USER_LOGOUT = "logout"
 export const FORGOT_PASSWORD = "forgot-password"
 export const RESET_PASSWORD = 'change-password'
 export const UPDATE_PROFILE = "update_profile"
@@ -145,6 +146,16 @@ export const user_loginApi = (email, password) => {
     }
 }
 
+// USER LOGOUT
+export const user_logoutApi = () => {
+    return {
+        url: `${USER_LOGOUT}`,
+        method: 'POST',
+        authorizationHeader: true,
+
+    }
+}
+
 // USER FORGOT_PASSWORD
 export const user_forgotPasswordApi = (email) => {
     let data = new FormData();
@@ -175,7 +186,7 @@ export const user_resetPasswordApi = (email, code, password, passwordConfirmatio
 }
 
 // UPDATE PROFILE
-export const update_profile = (name, mobile, fcm_id, address, firebase_id, notification, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, latitude, longitude, city, state, country, profile) => {
+export const update_profile = (name, mobile, fcm_id, address, firebase_id, notification, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, latitude, longitude, city, state, country, profile, Agency_name, experience, specialties) => {
     let data = new FormData();
     data.append("name", name);
     data.append("mobile", mobile);
@@ -193,9 +204,10 @@ export const update_profile = (name, mobile, fcm_id, address, firebase_id, notif
     data.append("city", city);
     data.append("state", state);
     data.append("country", country);
+    data.append("Agency_name", Agency_name);
+    data.append("experience", experience);
+    data.append("specialties", specialties);
     data.append("profile", profile);
-
-    console.log('profile', profile);
     return {
         url: `${UPDATE_PROFILE}`,
         method: 'POST',

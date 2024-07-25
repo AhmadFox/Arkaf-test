@@ -11,6 +11,7 @@ import AreaConverter from "../AreaConverter/AreaConverter";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutSuccess, userSignUpData } from "@/store/reducer/authSlice";
+import { logoutLoaded } from "@/store/reducer/authSlice";
 
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { toast } from "react-hot-toast";
@@ -225,6 +226,8 @@ const Nav = ({ stikyNav }) => {
     };
     const handleLogout = () => {
         handleClose();
+
+        
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -239,7 +242,13 @@ const Nav = ({ stikyNav }) => {
             if (result.isConfirmed) {
                 // Clear the recaptchaVerifier by setting it to null
                 window.recaptchaVerifier = null;
-                
+
+                try {
+                    logoutLoaded();
+                } catch (error) {
+                    console.error(error);
+                }
+
                 // Perform the logout action
                 logoutSuccess();
                 signOut()

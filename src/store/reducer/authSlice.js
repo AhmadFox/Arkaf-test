@@ -1,6 +1,7 @@
 import { createSelector, createSlice, createAction } from "@reduxjs/toolkit";
 import { 
     user_loginApi,
+    user_logoutApi,
     user_signupApi,
     user_verifyCodeApi,
     user_resendCodeApi,
@@ -141,6 +142,19 @@ export const loginLoaded = (email, password, onSuccess, onError, onStart) => {
                 console.log('Error response:', error);
                 onError(error);
             }
+        })
+    );
+};
+
+// // API CALLS
+export const logoutLoaded = (onSuccess, onError, onStart) => {
+    store.dispatch(
+        apiCallBegan({
+            ...user_logoutApi(),
+            displayToast: false,
+            onStart,
+            onSuccess,
+            onError,
         })
     );
 };

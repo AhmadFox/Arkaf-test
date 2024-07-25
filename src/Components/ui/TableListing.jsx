@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
 import { deletePropertyApi, changePropertyStatusApi } from "@/store/actions/campaign";
-import { translate, formatPriceAbbreviated } from "@/utils";
+import { translate, formatPriceAbbreviated, placeholderImage } from "@/utils";
+
 
 
 import toast from "react-hot-toast";
@@ -147,14 +148,15 @@ const TableListing = ({ data, type }) => {
 											type={'Sold'}
 										/>: null
 									}
-									{ type === "request-list" &&
+									{ type === "request-list" ?
 										item.request_to === 'arkaf' ?
 										<div className="flex gap-2 items-center ms-auto">
 											<Image
 												className='border rounded-full'
 												width={50}
 												height={50}
-												src={''}
+												src={placeholderImage}
+												onError={placeholderImage}
 												alt="arcaf logo"
 											/>
 											<div className="flex flex-col gap-1">
@@ -163,7 +165,7 @@ const TableListing = ({ data, type }) => {
 											</div>
 										</div>
 										:
-										<div className="px-3 py-1 rounded-full border">Still fiiding Agent</div>
+										<div className="px-3 py-1 rounded-full border">Still fiiding Agent</div>: null
 									}
 									
 								</div>

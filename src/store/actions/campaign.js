@@ -94,12 +94,15 @@ export const UpdateProfileApi = ({
     city = "",
     state = "",
     country = "",
+    Agency_name= "",
+    experience= "",
+    specialties= "", 
     onSuccess = () => { },
     onError = () => { },
     onStart = () => { } }) => {
     store.dispatch(
         apiCallBegan({
-            ...update_profile(name, mobile, fcm_id, address, firebase_id, notification, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, latitude, longitude, city, state, country, profile),
+            ...update_profile(name, mobile, fcm_id, address, firebase_id, notification, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, latitude, longitude, city, state, country, profile, Agency_name, experience, specialties),
             displayToast: false,
             onStart,
             onSuccess,
@@ -133,6 +136,7 @@ export const GetCategorieApi = (onSuccess, onError, onStart) => {
         })
     );
 };
+
 
 
 // GET ADDITIONAL REQUEST

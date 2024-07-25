@@ -180,3 +180,7 @@ input[disabled]  {
     @apply text-sm text-slate-800
 }
 
+
+.tag-icon-class svg {
+    fill: #ffffff;
+}
