@@ -14,10 +14,10 @@ const FindAgent = () => {
 
 	const limit = 8;
 
-	const [isLoading, setIsLoading] = useState(true);
+	const [ isLoading, setIsLoading ] = useState(true);
 	const [ total, setTotal ] = useState(0);
 	const [ agents, setAgents ] = useState([]);
-	const [offsetdata, setOffsetdata] = useState(0);
+	const [ offsetdata, setOffsetdata ] = useState(0);
 	const [ search, setSearch ] = useState({});
 
 	const handelSearch = (search, city_id) => {
@@ -33,17 +33,17 @@ const FindAgent = () => {
 		window.scrollTo(0, 300);
 	};
 
-	useEffect(() => {
+	// useEffect(() => {
 
-		// API call
+	// 	// API call
 
-	}, [search])
+	// }, [search])
 
 	useEffect(() => {
         setIsLoading(true);
         getAgentsApi({
-            offset: offsetdata.toString(),
-            limit: limit.toString(),
+            offset: '',
+            limit:'',
 			city_id: '',
 			search: '',
             onSuccess: (response) => {
@@ -57,7 +57,7 @@ const FindAgent = () => {
             }
         }
         );
-    }, [offsetdata]);
+    }, [offsetdata, search]);
 
 	console.log('agents', agents);
 
@@ -110,49 +110,53 @@ const FindAgent = () => {
 							</tr>
 						</thead>
 						<tbody>
-							<tr className='border-b last:border-b-0'>
+							{
+								agents && agents.map((agent, idx) => (
+									<tr key={idx} className='border-b last:border-b-0'>
 
-								<td className='py-3 px-4'>
-									<AgentInfo />
-								</td>
+										<td className='py-3 px-4'>
+											<AgentInfo agent={agent} />
+										</td>
 
-								<td className='py-3 px-4'>
-									<div className="flex flex-col gap-1">
-										<span className="border text-sm rounded-full mb-2 px-3 py-1 flex items-center gap-2 justify-center w-max">
-											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17" fill="none">
-												<path d="M15.832 16.4998H4.16536C3.70513 16.4998 3.33203 16.1267 3.33203 15.6664V8.16644H0.832031L9.43812 0.342695C9.75595 0.053737 10.2414 0.053737 10.5593 0.342695L19.1654 8.16644H16.6654V15.6664C16.6654 16.1267 16.2923 16.4998 15.832 16.4998ZM10.832 14.8331H14.9987V6.63099L9.9987 2.08553L4.9987 6.63099V14.8331H9.16537V9.83311H10.832V14.8331Z" fill="#272835"/>
-											</svg>
-											52 {translate('listingAvailable')}
-										</span>
-										<span className="border text-sm rounded-full mb-2 px-3 py-1 flex items-center gap-2 justify-center w-max">
-											<svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
-												<path d="M2.16667 0.5V13.8333H15.5V15.5H0.5V0.5H2.16667ZM14.9107 3.24408L16.0892 4.42259L11.3333 9.1785L8.83333 6.67917L5.25593 10.2559L4.07741 9.07742L8.83333 4.32149L11.3333 6.82083L14.9107 3.24408Z" fill="#272835"/>
-											</svg>
-											502 {translate('salesInLast')} 12 {translate('months')}
-										</span>
-									</div>
-								</td>
-
-								<td className='py-3 px-4'>
-									<div className="flex flex-col">
-										<div className="flex item-center justify-between gap-3">
-											<div className="">
-												<h2 className="text-xl text-[#272835] mb-1">12 February 2024</h2>
-												<p className="w-72">George met with us and spent time with us going over comps and providing us with ...</p>
-											</div>
-											<div className="flex items-center">
-												<Link href={`find-agents/123`} className="flex items-center justify-center p-3 border rounded-full hover:bg-[#34484F] ease-in-out duration-300 group">
-													<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 group-hover:stroke-white ease-in-out duration-300">
-														<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+										<td className='py-3 px-4'>
+											<div className="flex flex-col gap-1">
+												<span className="border text-sm rounded-full mb-2 px-3 py-1 flex items-center gap-2 justify-center w-max">
+													<svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17" fill="none">
+														<path d="M15.832 16.4998H4.16536C3.70513 16.4998 3.33203 16.1267 3.33203 15.6664V8.16644H0.832031L9.43812 0.342695C9.75595 0.053737 10.2414 0.053737 10.5593 0.342695L19.1654 8.16644H16.6654V15.6664C16.6654 16.1267 16.2923 16.4998 15.832 16.4998ZM10.832 14.8331H14.9987V6.63099L9.9987 2.08553L4.9987 6.63099V14.8331H9.16537V9.83311H10.832V14.8331Z" fill="#272835"/>
 													</svg>
-													<span class="sr-only">view agent details</span>
-												</Link>
+													{agent.listing_available} {` `} {translate('listingAvailable')}
+												</span>
+												<span className="border text-sm rounded-full mb-2 px-3 py-1 flex items-center gap-2 justify-center w-max">
+													<svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+														<path d="M2.16667 0.5V13.8333H15.5V15.5H0.5V0.5H2.16667ZM14.9107 3.24408L16.0892 4.42259L11.3333 9.1785L8.83333 6.67917L5.25593 10.2559L4.07741 9.07742L8.83333 4.32149L11.3333 6.82083L14.9107 3.24408Z" fill="#272835"/>
+													</svg>
+													{agent.sales_properties_last_12_months} {` `} {translate('salesInLast')} 12 {translate('months')}
+												</span>
 											</div>
-										</div>
-									</div>
-								</td>
+										</td>
 
-							</tr>
+										<td className='py-3 px-4'>
+											<div className="flex flex-col">
+												<div className="flex item-center justify-between gap-3">
+													<div className="">
+														<h2 className="text-xl text-[#272835] mb-1">12 February 2024</h2>
+														<p className="w-72">George met with us and spent time with us going over comps and providing us with ...</p>
+													</div>
+													<div className="flex items-center">
+														<Link href={`find-agents/${agent.id}`} className="flex items-center justify-center p-3 border rounded-full hover:bg-[#34484F] ease-in-out duration-300 group">
+															<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 group-hover:stroke-white ease-in-out duration-300">
+																<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+															</svg>
+															<span class="sr-only">view agent details</span>
+														</Link>
+													</div>
+												</div>
+											</div>
+										</td>
+
+									</tr>
+								))
+							}
 						</tbody>
 					</table>
 					{/* Pagenations */}

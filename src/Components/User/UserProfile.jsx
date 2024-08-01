@@ -39,7 +39,7 @@ const UserProfile = () => {
 
     const [formData, setFormData] = useState({
         fullName: user?.name,
-        cityId: user.city_id,
+        cityId: user?.city_id,
         email: user?.email,
         phoneNumber: user?.mobile,
         profile: user?.profile,

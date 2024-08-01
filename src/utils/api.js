@@ -368,15 +368,15 @@ export const getAgent = (agentId) => {
 }
 
 // GET AGENT
-export const getAgents = (offset, limit, search, city_id) => {
+export const getAgents = (search, city_id, offset, limit) => {
     return {
         url: `${GET_AGENTS}`,
         method: "GET",
         params: {
             search: search,
+            city_id: city_id,
             offset: offset,
             limit: limit,
-            city_id: city_id,
         },
         authorizationHeader: false,
 
