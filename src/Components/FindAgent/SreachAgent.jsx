@@ -10,21 +10,22 @@ const inputStyle = `
 	p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
 `;
 
-const SreachAgent = ({ searchApplay }) => {
+const SreachAgent = ({ handelSearchApplay }) => {
 	
 	const [cities, setCities] = useState([]);
+	const [cityId, setCityId] = useState('');
+	const [search, setSeach] = useState('');
 
 	const handelLocation = (e) => {
-		const value = e.target.value;
-		console.log('select location', value);
+		setCityId( e.target.value);
 	}
 
-	const handelAgents = (valid, value) => {
-		console.log('select Agent', value);
+	const handelAgentName = (valid, value) => {
+		setSeach(value)
 	}
 
-	const handelSearch = () => {
-		console.log('handel search');
+	const handelApplaySearch = () => {
+		handelSearchApplay(search, cityId)
 	}
 
 	useEffect(() => {
@@ -63,7 +64,7 @@ const SreachAgent = ({ searchApplay }) => {
 				<InputText
 					placeholder={'enterAnAgentOrAgency'}
 					label={'agents'}
-					onValueChange={handelAgents}
+					onValueChange={handelAgentName}
 					type="text"
 					className={'ps-9'}
 				/>
@@ -77,7 +78,7 @@ const SreachAgent = ({ searchApplay }) => {
 					loading={false}
 					className={'tw-btn-solid w-full'}
 					disabled={false}
-					onClick={handelSearch}
+					onClick={handelApplaySearch}
 				/>
 			</div>
 		</div>

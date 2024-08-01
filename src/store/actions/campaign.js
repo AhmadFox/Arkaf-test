@@ -344,17 +344,17 @@ export const getAgentApi = (agentId, onSuccess, onError, onStart) => {
 
 // GET_AGENTS
 export const getAgentsApi = ({
-    search = "",
-    city_id = "",
     offset = "",
     limit = "",
+    city_id = "",
+    search = "",
     onSuccess = () => { },
     onError = () => { },
     onStart = () => { }
 }) => {
     store.dispatch(
         apiCallBegan({
-            ...getAgents(offset, limit, search, city_id),
+            ...getAgents(offset, limit, city_id, search),
             displayToast: false,
             onStart,
             onSuccess,

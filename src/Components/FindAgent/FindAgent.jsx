@@ -18,12 +18,12 @@ const FindAgent = () => {
 	const [ total, setTotal ] = useState(0);
 	const [ agents, setAgents ] = useState([]);
 	const [ offsetdata, setOffsetdata ] = useState(0);
-	const [ search, setSearch ] = useState({});
+	const [ filter, setFilter ] = useState({});
 
-	const handelSearch = (search, city_id) => {
-		setSearch({
+	const handelSearch = (search, cityId) => {
+		setFilter({
 			search: search,
-			city: city_id
+			city: cityId
 		})
 	}
 
@@ -33,19 +33,13 @@ const FindAgent = () => {
 		window.scrollTo(0, 300);
 	};
 
-	// useEffect(() => {
-
-	// 	// API call
-
-	// }, [search])
-
 	useEffect(() => {
         setIsLoading(true);
         getAgentsApi({
             offset: '',
             limit:'',
-			city_id: '',
-			search: '',
+			city_id: filter.city,
+			search: filter.search,
             onSuccess: (response) => {
                 setTotal(response.total);
                 setIsLoading(false);
@@ -57,9 +51,9 @@ const FindAgent = () => {
             }
         }
         );
-    }, [offsetdata, search]);
+    }, [offsetdata, filter]);
 
-	console.log('agents', agents);
+	const featuredAgents = agents.filter(agent => agent.is_featured === 1);
 
     return (
         <Layout stikyNav={true}>
@@ -78,26 +72,31 @@ const FindAgent = () => {
 						<h1 className="col-span-6 mb-2 col-spa font-medium md:text-start md:text-4xl xl:text-6xl text-white">{translate('findAgentHeading')}</h1>
 						<p className="col-span-8 text-white text-xl">{translate('findAgentSubHeading')}</p>
 					</div>
-					<SreachAgent searchApplay={handelSearch} />
+					<SreachAgent handelSearchApplay={handelSearch} />
 				</div>
 			</header>
 
-			<div className="container mb-9 xl:mb-14">
-				<div className="flex justify-between items-center mb-6">
-					<p className="text-xl xl:text-2xl text-[#272835] font-medium mb-4">{translate('featuredAgents')}</p>
-					<button className="flex gap-2 items-center text-slate-500 hover:text-[#272835] ease-in-out duration-200 group">
-						{translate('seeMore')}
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 group-hover:translate-x-1 ease-in-out duration-200">
-							<path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-						</svg>
-					</button>
-				</div>
-				<div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-					<AgentInfo />
-					<AgentInfo />
-					<AgentInfo />
-				</div>
-			</div>
+			
+			{
+				featuredAgents.length > 0 ? (
+					<div className="container mb-9 xl:mb-14">
+						<div className="flex justify-between items-center mb-6">
+							<p className="text-xl xl:text-2xl text-[#272835] font-medium mb-4">{translate('featuredAgents')}</p>
+							<button className="flex gap-2 items-center text-slate-500 hover:text-[#272835] ease-in-out duration-200 group">
+								{translate('seeMore')}
+								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 group-hover:translate-x-1 ease-in-out duration-200">
+									<path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+								</svg>
+							</button>
+						</div>
+						<div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+							{featuredAgents.map((agent, idx) => (
+								<AgentInfo key={idx} agent={agent} />
+							))}
+						</div>
+					</div>
+				) : null
+			}
 
 			<div className="container mb-9 xl:mb-14">
 				<div className="border rounded-xl">
