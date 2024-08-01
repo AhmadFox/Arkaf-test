@@ -46,7 +46,9 @@ import {
     DeleteUserIntrest,
     getProfileApi,
     getPropertyAdditionRequest,
-    getPropertyPropertyRequest
+    getPropertyPropertyRequest,
+    getAgent,
+    getAgents,
 } from "@/utils/api";
 import { store } from "../store";
 import { apiCallBegan } from "./apiActions";
@@ -77,6 +79,7 @@ export const UpdateProfileApi = ({
     userid = "",
     name = "",
     mobile = "",
+    city_id = "",
     type = "",
     address = "",
     firebase_id = "",
@@ -102,7 +105,7 @@ export const UpdateProfileApi = ({
     onStart = () => { } }) => {
     store.dispatch(
         apiCallBegan({
-            ...update_profile(name, mobile, fcm_id, address, firebase_id, notification, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, latitude, longitude, city, state, country, profile, Agency_name, experience, specialties),
+            ...update_profile(name, mobile, city_id, fcm_id, address, firebase_id, notification, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, latitude, longitude, city, state, country, profile, Agency_name, experience, specialties),
             displayToast: false,
             onStart,
             onSuccess,
@@ -318,6 +321,32 @@ export const GetCitiesApi = (onSuccess, onError, onStart) => {
     store.dispatch(
         apiCallBegan({
             ...getCities(),
+            displayToast: false,
+            onStart,
+            onSuccess,
+            onError,
+        })
+    );
+};
+
+// GET_AGENT
+export const getAgentApi = (agentId, onSuccess, onError, onStart) => {
+    store.dispatch(
+        apiCallBegan({
+            ...getAgent(agentId),
+            displayToast: false,
+            onStart,
+            onSuccess,
+            onError,
+        })
+    );
+};
+
+// GET_AGENTS
+export const getAgentsApi = (offset, limit, search, city_id, onSuccess, onError, onStart) => {
+    store.dispatch(
+        apiCallBegan({
+            ...getAgent(offset, limit, search, city_id),
             displayToast: false,
             onStart,
             onSuccess,

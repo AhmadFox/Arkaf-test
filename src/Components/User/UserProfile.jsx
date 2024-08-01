@@ -10,7 +10,7 @@ import { placeholderImage, translate } from "@/utils";
 
 import { userSignUpData } from "@/store/reducer/authSlice";
 import { Fcmtoken, settingsData } from "@/store/reducer/settingsSlice";
-import { UpdateProfileApi } from "@/store/actions/campaign";
+import { UpdateProfileApi, GetCitiesApi } from "@/store/actions/campaign";
 import { loadUpdateUserData } from "@/store/reducer/authSlice";
 import { languageData } from "@/store/reducer/languageSlice";
 
@@ -32,12 +32,14 @@ const UserProfile = () => {
     const [resetLocationValue, setresetLocationValue] = useState(false)
     const [disabledButtons, setDisabledButtons] = useState(true);
     const [uploadedImage, setUploadedImage] = useState(null);
+    const [cities, setCities] = useState([]);
     const user = signupData?.data?.data
 
     console.log('user', user);
 
     const [formData, setFormData] = useState({
         fullName: user?.name,
+        cityId: user.city_id,
         email: user?.email,
         phoneNumber: user?.mobile,
         profile: user?.profile,
@@ -118,6 +120,14 @@ const UserProfile = () => {
         fileInputRef.current.click(); // Trigger the file input click event
     };
 
+    const handelCityId = (e) => {
+		const value = e.target.value;
+		setFormData({
+            ...formData,
+            cityId: value
+        });
+	}
+
 	const handleLocationSelect = (address) => {
         // Update the form field with the selected address
 		setSelectedLocationAddress({
@@ -167,6 +177,7 @@ const UserProfile = () => {
             description: user?.about_me,
             experience: user?.experience,
             specialties: user?.specialties,
+            cityId: user?.city_id,
         });
         setSelectedLocationAddress({
 			lat: user?.lat,
@@ -183,6 +194,7 @@ const UserProfile = () => {
         setDisabledButtons(true);
         UpdateProfileApi({
             name: formData.fullName,
+            city_id: formData.cityId,
             mobile: formData.phoneNumber,
             fcm_id: FcmToken,
             address: formData.address,
@@ -202,6 +214,7 @@ const UserProfile = () => {
             about_me: formData.description,
             experience: formData.experience,
             specialties: formData.specialties,
+            city_id: formData.cityId,
             onSuccess: (response) => {
                 toast.success(translate("profileupdate"));
                 loadUpdateUserData(response);
@@ -240,6 +253,17 @@ const UserProfile = () => {
         // });
 
     }, [formData, user]);
+
+    useEffect(() => {
+        GetCitiesApi(
+            (response) => {
+                setCities(response.data);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }, []);
 
     const inputStyle = `
         p-2.5 rounded-[8px] w-full border border-[#DFE1E7] outline-none focus:border-[#34484F]
@@ -338,7 +362,7 @@ const UserProfile = () => {
                                             />
                                         </div>
                                         <div className="">
-                                            <label className='d-block mb-1 text-[#272835] text-sm'>{translate('yearsOfExperience')}</label>
+                                            <label className='d-block mb-1 text-[#272835] text-sm'>{translate('specialities')}</label>
                                             <InputTag onValueChange={handleSpecialties} getTags={formData.specialties} />
                                         </div>
                                     </div>
@@ -356,14 +380,35 @@ const UserProfile = () => {
                                     </div>
                                 </Fragment>
                             }
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="">
+                                    <label className='d-block mb-1 text-[#272835] text-sm'>{translate('city')}</label>
+                                    <select
+                                        // value={formData.}
+                                        onChange={e => handelCityId(e)}
+                                        className={`${inputStyle}`}
+                                    >
+                                        {cities.map((item, idx) => (
+                                            <option
+                                                value={item.id}
+                                                key={idx}
+                                            >{translate(item.name)}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="">
+                                    <label className='d-block text-[#272835] text-sm'>{translate('address')}</label>
+                                    <LocationSearchBox
+                                        onLocationSelected={handleLocationSelect}
+                                        initialLatitude={selectedLocationAddress.lat}
+                                        initialLongitude={selectedLocationAddress.lng}
+                                        className={`${inputStyle}`}
+                                    />
+                                </div>
+                            </div>
                             <div className="">
-                                <label className='d-block mb-1 text-[#272835] text-sm'>{translate('address')}</label>
-                                <LocationSearchBox
-                                    onLocationSelected={handleLocationSelect}
-                                    initialLatitude={selectedLocationAddress.lat}
-                                    initialLongitude={selectedLocationAddress.lng}
-                                    className={`${inputStyle} my-4`}
-                                />
+                                
                                 <GoogleMapBox
                                     apiKey={GoogleMapApi}
                                     onSelectLocation={handleLocationSelect}

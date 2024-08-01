@@ -55,6 +55,8 @@ export const USER_INTREST = "personalised-fields"
 export const GET_USER_RECOMMENDATION = "get_user_recommendation"
 export const GET_PROPERTY_ADDITION_REQUEST = "get_property_addition_request"
 export const GET_PROPERTY_REQUEST = "get_property_request"
+export const GET_AGENT = "agent"
+export const GET_AGENTS = "agents"
 
 
 // is login user check
@@ -186,7 +188,7 @@ export const user_resetPasswordApi = (email, code, password, passwordConfirmatio
 }
 
 // UPDATE PROFILE
-export const update_profile = (name, mobile, fcm_id, address, firebase_id, notification, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, latitude, longitude, city, state, country, profile, Agency_name, experience, specialties) => {
+export const update_profile = (name, mobile, city_id, fcm_id, address, firebase_id, notification, about_me, facebook_id, twiiter_id, instagram_id, pintrest_id, latitude, longitude, city, state, country, profile, Agency_name, experience, specialties) => {
     let data = new FormData();
     data.append("name", name);
     data.append("mobile", mobile);
@@ -202,6 +204,7 @@ export const update_profile = (name, mobile, fcm_id, address, firebase_id, notif
     data.append("latitude", latitude);
     data.append("longitude", longitude);
     data.append("city", city);
+    data.append("city_id", city_id);
     data.append("state", state);
     data.append("country", country);
     data.append("Agency_name", Agency_name);
@@ -345,6 +348,35 @@ export const getCities = () => {
         method: "GET",
         params: {
 
+        },
+        authorizationHeader: false,
+
+    }
+}
+
+// GET AGENT
+export const getAgent = (agentId) => {
+    return {
+        url: `${GET_AGENT}/${agentId}`,
+        method: "GET",
+        params: {
+
+        },
+        authorizationHeader: false,
+
+    }
+}
+
+// GET AGENT
+export const getAgents = (offset, limit, search, city_id) => {
+    return {
+        url: `${GET_AGENTS}`,
+        method: "GET",
+        params: {
+            search: search,
+            offset: offset,
+            limit: limit,
+            city_id: city_id,
         },
         authorizationHeader: false,
 

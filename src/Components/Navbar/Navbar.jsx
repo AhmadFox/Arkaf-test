@@ -309,7 +309,7 @@ const Nav = ({ stikyNav }) => {
                                         <button onClick={handelRequistProperty} className="nav-link" href="/add-request">{translate("propertyRequest")}</button>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" href="/find-agent">{translate("findAgent")}</Link>
+                                        <Link className="nav-link" href="/find-agents">{translate("findAgent")}</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -547,7 +547,7 @@ const Nav = ({ stikyNav }) => {
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" href="/find-agent" onClick={handleClose}>
+                                    <Link className="nav-link" href="/find-agents" onClick={handleClose}>
                                         {translate("findAgent")}
                                     </Link>
                                 </li>
