@@ -942,13 +942,13 @@ export const assignFreePackage = (package_id) => {
 }
 
 // GET CHAT LIST
-export const getChatList = () => {
+export const getChatList = (search) => {
 
     return {
         url: `${GET_CHATS}`,
         method: "GET",
         params: {
-
+            search: search
         },
         authorizationHeader: true,
 

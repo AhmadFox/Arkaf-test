@@ -803,10 +803,10 @@ export const assignFreePackageApi = (package_id, onSuccess, onError, onStart) =>
 
 
 // GET CHATS API
-export const getChatsListApi = (onSuccess, onError, onStart) => {
+export const getChatsListApi = (search, onSuccess, onError, onStart) => {
     store.dispatch(
         apiCallBegan({
-            ...getChatList(),
+            ...getChatList(search),
             displayToast: false,
             onStart,
             onSuccess,

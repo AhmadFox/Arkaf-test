@@ -415,7 +415,7 @@ const Nav = ({ stikyNav }) => {
                                             ) : // Check if mobile and firebase_id are present
                                             signupData? (
                                                     <div className="flex items-center justify-center gap-x-3">
-                                                        <Link href="/chat" className="p-2.5 border rounded-full hover:bg-[#34484F] hover:border-[#34484F] ease-in-out duration-200 group">
+                                                        <Link href="/user/chat" className="p-2.5 border rounded-full hover:bg-[#34484F] hover:border-[#34484F] ease-in-out duration-200 group">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
                                                                 <g id="Group_2"  transform="translate(-749 -415)">
                                                                     <rect id="Rectangle_3" data-name="Rectangle 3" width="21" height="21" transform="translate(749 415)" fill="none"/>
@@ -424,7 +424,7 @@ const Nav = ({ stikyNav }) => {
                                                             </svg>
                                                             <span className="sr-only">Chat link redirect</span>
                                                         </Link>
-                                                        <Link href="/chat" className="p-2.5 border rounded-full hover:bg-[#34484F] hover:border-[#34484F] ease-in-out duration-200 group">
+                                                        <Link href="#" className="p-2.5 border rounded-full hover:bg-[#34484F] hover:border-[#34484F] ease-in-out duration-200 group">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
                                                                 <g id="Group_3" data-name="Group 3" transform="translate(-714 -415)">
                                                                     <rect id="Rectangle_2" data-name="Rectangle 2" width="21" height="21" transform="translate(714 415)" fill="none"/>

@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 import ChatApp from '@/Components/Messages/ChatApp'
 import dynamic from 'next/dynamic.js'
 import PushNotificationLayout from '../firebaseNotification/PushNotificationLayout.jsx'
-const VerticleLayout = dynamic(() => import('../AdminLayout/VerticleLayout.jsx'), { ssr: false })
+const Layout = dynamic(() => import('../Layout/Layout.jsx'), { ssr: false })
+
 
 const Messages = () => {
     const [notificationData, setNotificationData] = useState(null);
@@ -14,9 +15,9 @@ const Messages = () => {
     useEffect(() => { }, [notificationData])
     return (
         <PushNotificationLayout onNotificationReceived={handleNotificationReceived}>
-            <VerticleLayout>
+            <Layout stikyNav={false}>
                 <ChatApp notificationData={notificationData} />
-            </VerticleLayout>
+            </Layout>
         </PushNotificationLayout>
     )
 }

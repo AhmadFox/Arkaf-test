@@ -316,7 +316,7 @@ const UserProfile = () => {
                                     />
                                 </div>
                                 {
-                                    user?.user_type &&
+                                   user?.user_type == '0' || user?.user_type == '1'  &&
                                     <div className="">
                                         <label className='d-block mb-1 text-[#272835] text-sm'>{translate('agencyName')}</label>
                                         <input
@@ -346,7 +346,7 @@ const UserProfile = () => {
                                 </div>
                             </div>
                             {
-                                user?.user_type &&
+                                user?.user_type == '0' || user?.user_type == '1'  &&
                                 <Fragment>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="">

@@ -38,7 +38,7 @@ const FindAgent = () => {
         getAgentsApi({
             offset: '',
             limit:'',
-			city_id: filter.city,
+			city_id: filter.city || '1',
 			search: filter.search,
             onSuccess: (response) => {
                 setTotal(response.total);

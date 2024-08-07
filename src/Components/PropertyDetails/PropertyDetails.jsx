@@ -778,7 +778,7 @@ const PropertyDetails = () => {
                                                         </div>
                                                     }
                                                    </div>
-                                                    <button className="button button-outline mt-auto" disabled>{translate("getMoreInfo")}</button>
+                                                    <Link href={`/find-agents/${getPropData.added_by}`} className="button button-outline mt-auto">{translate("getMoreInfo")}</Link>
                                                 </div>
                                                 
                                             </div>
